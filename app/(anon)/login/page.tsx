@@ -18,7 +18,7 @@ export default function Login() {
         <Image src="/logoPurple.svg" alt="Login-logo" width={66} height={66} />
       </Link>
 
-      <form action="/api/login" method="POST">
+      <form action="" method="POST">
         <InputField label="이메일" type="text" placeholder="이메일" />
         <InputField label="비밀번호" type="password" placeholder="비밀번호" />
         <Button type="submit" size="long">
