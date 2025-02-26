@@ -1,3 +1,5 @@
+// 글로벌 레이아웃
+
 import type { ReactNode } from "react";
 
 import Header from "@/components/header/Header";

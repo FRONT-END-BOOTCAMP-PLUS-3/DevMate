@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import React from "react";
 
 import Button from "@/components/button/button";
@@ -67,7 +69,9 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
         <div className={styles["recruitmentContent__content"]}>{description}</div>
         <div className={styles["recruitmentContent__actions"]}>
           <LikeButton projectId={id} likes={like} />
-          <Button>지원하기</Button>
+          <Button>
+            <Link href={`/user/recruitments/${id}/apply`}>지원하기</Link>
+          </Button>
         </div>
       </section>
     </div>

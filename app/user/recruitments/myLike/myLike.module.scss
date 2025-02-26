@@ -1,0 +1,49 @@
+.mylike {
+  &__title-container {
+    display: flex;
+    align-items: end;
+    gap: 13px;
+    margin-bottom: 30px;
+  }
+
+  &__title {
+    color: $color-main;
+    font-size: 25px;
+  }
+
+  &__subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    padding-bottom: 3px;
+
+  }
+
+  &__filter {
+    font-weight: 500;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    height: 38px;
+
+    &-item {
+      width: 65px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #adb5bd;
+
+      &--active {
+        font-weight: bold;
+        height: 38px;
+        border-bottom: 2px solid #333b3d;
+        color: #333b3d;
+      }
+    }
+  }
+
+  &__separator {
+    border-bottom: 1px solid $color-solid-line;
+    margin-bottom: 16px;
+  }
+}

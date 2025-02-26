@@ -1,8 +1,10 @@
+// user/recruitments의 레이아웃
+
 import type { ReactNode } from "react";
 
 import styles from "./layout.module.scss";
 
-import Sidebar from "./_components/sidebar/Sidebar";
+import Sidebar from "../_components/sidebar/Sidebar";
 
 export default function MypageLayout({ children }: { children: ReactNode }) {
   return (

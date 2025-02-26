@@ -1,0 +1,116 @@
+.mycreateitem {
+
+  
+  &__post-item {
+    width: 850px;
+    border: 1px solid rgb(233, 236, 239);
+    border-radius: 10px;
+    padding: 18px 16px;
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+    
+
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px); // 위로 살짝 이동
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    
+    &:not(:hover) {
+      transform: translateY(0); // 원래 위치로 부드럽게 복귀
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    
+    
+  }
+
+  &__post-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  &__post-status {
+    background: $color-main;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    width: 56px;
+    height: 24px;
+  }
+
+  &__post-content {
+    flex-grow: 1;
+  }
+
+  &__post-title {
+    font-size: 16px;
+    color: #212529;
+  }
+
+  &__post-description {
+    color: #495057;
+    font-size: 14px;
+    margin-bottom: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+
+  &__post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+
+  }
+
+  &__post-author {
+    font-size: 12px;
+    margin-right: 4px;
+    color: #868e96;
+  }
+
+  &__post-dot {
+    font-size: 12px;
+    margin-right: 4px;
+    color: #868e96;
+  }
+
+  &__post-date {
+    font-size: 12px;
+    color: #868e96;
+  }
+
+  &__post-stats {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    align-items: center;
+  }
+
+  &__post-stats-heart,
+  &__post-stats-eye,
+  &__post-stats-comment {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #868e96;
+  }
+
+  &__post-stats svg {
+    color: #868e96;
+  }
+
+  &__separator {
+    border-bottom: 1px solid $color-solid-line;
+    margin-bottom: 16px;
+    background-color: aqua;
+  }
+}

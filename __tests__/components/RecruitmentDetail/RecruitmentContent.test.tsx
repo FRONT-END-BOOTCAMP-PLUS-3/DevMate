@@ -5,7 +5,7 @@ import type { Comment } from "@/domain/entities/comment";
 import type { Project } from "@/domain/entities/project";
 
 import { describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 const exampleUser: User = {
   id: "user123",
@@ -99,5 +99,15 @@ describe("CommentContent", () => {
     expect(
       screen.getByText("이 프로젝트는 스터디 그룹을 쉽게 만들고 관리할 수 있도록 돕는 웹 애플리케이션입니다."),
     ).toBeInTheDocument();
+  });
+
+  it("지원하기 버튼을 누르면 apply 페이지로 이동 되는지", () => {
+    render(<RecruitmentContent project={exampleProject} />);
+
+    const applyButton = screen.getByRole("button", { name: /지원하기/i });
+    const applyLink = applyButton.querySelector("a");
+
+    expect(applyButton).toBeInTheDocument();
+    expect(applyLink).toHaveAttribute("href", "/user/recruitments/1/apply");
   });
 });

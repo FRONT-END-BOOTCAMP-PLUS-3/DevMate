@@ -13,7 +13,7 @@ const RecruitmentDetail = () => {
     <div className={styles.container}>
       <RecruitmentContent project={exampleProject} />
 
-      <CommentContentList project={exampleProject} />
+      <CommentContentList comments={exampleProject.comments} />
 
       <CommentForm projectId={exampleProject.id} />
     </div>

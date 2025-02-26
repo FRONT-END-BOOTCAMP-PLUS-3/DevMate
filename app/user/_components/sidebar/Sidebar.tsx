@@ -14,21 +14,21 @@ const sidebarItems = [
   {
     title: "모집글 조회",
     subItems: [
-      { name: "작성한 모집글", path: "/user/recruitments/create" },
-      { name: "좋아요한 모집글", path: "/user/recruitments/like" },
-      { name: "댓글 쓴 모집글", path: "/user/recruitments/comment" },
+      { name: "작성한 모집글", path: "/user/recruitments/myCreate" },
+      { name: "좋아요한 모집글", path: "/user/recruitments/myLike" },
+      { name: "댓글 쓴 모집글", path: "/user/recruitments/myComment" },
     ],
   },
   {
     title: "프로젝트 조회",
     subItems: [
-      { name: "개설한 프로젝트", path: "/user/recruitments/open" },
-      { name: "참여한 프로젝트", path: "/user/recruitments/participate" },
+      { name: "개설한 프로젝트", path: "/user/projects/myCreate" },
+      { name: "참여한 프로젝트", path: "/user/projects/myParticipate" },
     ],
   },
   {
     title: "신청 현황",
-    subItems: [{ name: "신청 현황", path: "/user/recruitments/applyStatus" }],
+    subItems: [{ name: "신청 현황", path: "/user/recruitments/myApplyStatus" }],
   },
 ];
 

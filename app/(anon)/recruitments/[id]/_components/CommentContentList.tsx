@@ -1,20 +1,20 @@
 import styles from "./CommentContentList.module.scss";
 
-import type { Project } from "@/domain/entities/project";
+import type { Comment } from "@/domain/entities/comment";
 
 import CommentContent from "./CommentContent";
 
 interface CommentContentProps {
-  project: Project;
+  comments: Comment[];
 }
 
-const CommentContentList: React.FC<CommentContentProps> = ({ project }) => {
+const CommentContentList: React.FC<CommentContentProps> = ({ comments }) => {
   return (
     <div className={styles.commentContentList}>
       <p>
-        댓글 <span>{project.comments.length}</span>
+        댓글 <span>{comments.length}</span>
       </p>
-      {project.comments.map((comment) => (
+      {comments.map((comment) => (
         <CommentContent key={comment.id} comment={comment} comments={comment.replies} />
       ))}
     </div>
