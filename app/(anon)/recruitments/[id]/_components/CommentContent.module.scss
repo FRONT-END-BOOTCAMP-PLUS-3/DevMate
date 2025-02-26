@@ -1,0 +1,53 @@
+.commentContent {
+  padding-left: 16px;
+  margin-top: 24px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+
+    & > img {
+      background: $color-solid-line;
+    }
+  }
+
+  &__avatar {
+    border-radius: 50%;
+  }
+
+  &__nickname {
+    font-size: 12px !important;
+  }
+
+  &__date {
+    font-size: 10px !important;
+    color: #888;
+  }
+
+  &__body {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: end;
+    border-bottom: 1px solid $color-solid-line;
+    padding-bottom: 5px;
+
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 10px;
+      transition: color 0.2s;
+
+      &:hover {
+        color: $color-main;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import type { User } from "@/domain/entities/user";
+import type { User } from "@prisma/client";
 
 export interface UserRepository {
   create(user: Omit<User, "id" | "createdAt">): Promise<User>;

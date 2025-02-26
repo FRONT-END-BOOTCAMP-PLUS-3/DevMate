@@ -10,8 +10,10 @@
     "lint": "next lint",
     "format": "prettier --write ."
   },
+  "type": "module",
   "dependencies": {
     "@prisma/client": "^6.4.0",
+    "bcryptjs": "^3.0.2",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-calendar": "^5.1.0",
@@ -24,6 +26,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@prisma/client": "^6.4.1",
+    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -48,6 +51,7 @@
     "prisma": "^6.4.1",
     "sass": "^1.85.0",
     "typescript": "^5",
+    "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.6"
   }
 }

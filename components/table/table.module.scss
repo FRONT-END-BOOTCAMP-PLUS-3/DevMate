@@ -54,3 +54,33 @@
     text-overflow: ellipsis;
   }
 }
+
+.status {
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 4px 6px;
+  background-color: $color-table-row-hover;
+
+  &.statusAccepted {
+    color: $color-blue;
+  }
+
+  &.statusRejected {
+    color: $color-red;
+  }
+
+  &.statusWaiting {
+    color: $color-dark-gray;
+  }
+}
+
+.portfolioButton {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 4px 10px;
+  background-color: $color-main;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}

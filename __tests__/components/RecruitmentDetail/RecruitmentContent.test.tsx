@@ -1,26 +1,11 @@
-import styles from "./RecruitmentDetail.module.scss";
+import RecruitmentContent from "@/app/(anon)/recruitments/[id]/_components/RecruitmentContent";
 
 import type { User } from "@/domain/entities/user";
 import type { Comment } from "@/domain/entities/comment";
 import type { Project } from "@/domain/entities/project";
 
-import CommentForm from "./_components/CommentForm";
-import CommentContentList from "./_components/CommentContentList";
-import RecruitmentContent from "./_components/RecruitmentContent";
-
-const RecruitmentDetail = () => {
-  return (
-    <div className={styles.container}>
-      <RecruitmentContent project={exampleProject} />
-
-      <CommentContentList project={exampleProject} />
-
-      <CommentForm projectId={exampleProject.id} />
-    </div>
-  );
-};
-
-export default RecruitmentDetail;
+import { describe, expect, it } from "vitest";
+import { render, screen } from "@testing-library/react";
 
 const exampleUser: User = {
   id: "user123",
@@ -106,3 +91,13 @@ const exampleProject: Project = {
   leader: exampleUser,
   comments: exampleComments,
 };
+
+describe("CommentContent", () => {
+  it("모집글 상세 글이 정상적으로 렌더링 되는지 확인", () => {
+    render(<RecruitmentContent project={exampleProject} />);
+    expect(screen.getByText("스터디 관리 플랫폼")).toBeInTheDocument();
+    expect(
+      screen.getByText("이 프로젝트는 스터디 그룹을 쉽게 만들고 관리할 수 있도록 돕는 웹 애플리케이션입니다."),
+    ).toBeInTheDocument();
+  });
+});

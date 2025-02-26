@@ -1,10 +1,10 @@
-import type { User, UserBasicInfo } from "@/domain/entities/user";
+import type { User } from "@prisma/client";
 import type { UserRepository } from "@/domain/repositories/userRepository";
 
 import { PrismaClient } from "@prisma/client";
 
 export class PsUserRepository implements UserRepository {
-  async create(user: Omit<UserBasicInfo, "id" | "createdAt">): Promise<User> {
+  async create(user: Omit<User, "id" | "createdAt">): Promise<User> {
     const prisma = new PrismaClient();
     const createdUser = await prisma.user.create({
       data: user,
@@ -22,7 +22,7 @@ export class PsUserRepository implements UserRepository {
     return prisma.user.findUnique({ where: { email } });
   }
 
-  async update(id: string, user: Partial<Omit<UserBasicInfo, "id" | "createdAt">>): Promise<User> {
+  async update(id: string, user: Partial<Omit<User, "id" | "createdAt">>): Promise<User> {
     const prisma = new PrismaClient();
     return prisma.user.update({
       where: { id },

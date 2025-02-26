@@ -1,4 +1,4 @@
-import type { Dispatch, ChangeEvent, FocusEvent } from "react";
+import { type Dispatch, type ChangeEvent, type FocusEvent, useCallback } from "react";
 
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
 
@@ -6,6 +6,8 @@ import type { SelectOption } from "@/types";
 import type { MultiValue, SingleValue } from "react-select";
 
 import type { postCode, SignupState, SignupAction } from "./use-signupReducer";
+
+import { checkEmailDup } from "../apis/checkEmailDup";
 
 export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupAction>) {
   // 일반 입력 필드 핸들러
@@ -55,8 +57,8 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
 
   // 입력 필드 포커스 아웃 핸들러
   const onBlurHandler = (e: FocusEvent<HTMLInputElement>) => {
+    dispatch({ type: "RESET_SUCCESS_MESSAGES" });
     const { name, value } = e.target;
-
     const validationRules: { [key: string]: (value: string) => string | null } = {
       email: (val) => (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) ? ERROR_MESSAGES.EMAIL_INVALID : null),
       password: (val) => {
@@ -88,8 +90,44 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
     setPasswordConfirmError(errorMessage);
   };
 
+  const emailCheckHandler = async () => {
+    const email = state.email.trim();
+    if (!email) {
+      dispatch({ type: "SET_ERRORS", errors: { ...state.errors, email: "이메일을 입력해주세요." } });
+      dispatch({ type: "RESET_SUCCESS_MESSAGES" }); // ✅ 성공 메시지 초기화
+      return;
+    }
+
+    try {
+      const isDuplicated = await checkEmailDup(email);
+
+      if (isDuplicated) {
+        dispatch({
+          type: "SET_ERRORS",
+          errors: { ...state.errors, email: "이미 사용 중인 이메일입니다." },
+        });
+        dispatch({ type: "RESET_SUCCESS_MESSAGES" }); // ✅ 중복이면 성공 메시지 삭제
+      } else {
+        dispatch({
+          type: "SET_SUCCESS_MESSAGES",
+          successMessages: { ...state.successMessages, email: "사용 가능한 이메일입니다." },
+        });
+        dispatch({ type: "SET_ERRORS", errors: {} }); // ✅ 성공 시 에러 초기화
+      }
+
+      dispatch({ type: "SET_EMAIL_CHECKED", value: !isDuplicated });
+    } catch (error) {
+      console.error("이메일 중복 확인 오류:", error);
+      dispatch({
+        type: "SET_ERRORS",
+        errors: { ...state.errors, email: "이메일 중복 확인에 실패했습니다." },
+      });
+      dispatch({ type: "RESET_SUCCESS_MESSAGES" }); // ✅ 실패하면 성공 메시지 삭제
+    }
+  };
+
   // 회원가입 제출 핸들러 (필수 입력값 체크)
-  const submitHandler = () => {
+  const validateAndSubmit = () => {
     dispatch({ type: "RESET_ERRORS" });
 
     const newErrors: SignupState["errors"] = {};
@@ -116,16 +154,17 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
 
     if (Object.keys(state.errors).length > 0) {
       console.log("기존 에러 메시지가 존재하여 제출 불가!", state.errors);
-      return;
+      return false;
     }
 
     if (Object.keys(newErrors).length > 0) {
       dispatch({ type: "SET_ERRORS", errors: newErrors });
       console.log("필수 입력값 누락으로 제출 불가!", newErrors);
-      return;
+      return false;
     }
 
-    console.log("회원가입 요청 실행!", state);
+    console.log("회원가입 유효성 검사 통과");
+    return true;
   };
 
   return {
@@ -136,6 +175,7 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
     addressChangeHandler,
     onBlurHandler,
     onBlurPwdConfHandler,
-    submitHandler,
+    emailCheckHandler,
+    validateAndSubmit,
   };
 }

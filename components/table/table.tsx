@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-object-injection */
 import { useState } from "react";
 import type { ReactNode } from "react";
 
@@ -14,11 +15,42 @@ interface TableProps {
   fontSize?: string;
   data: TableRowData[];
   headers: { key: string; label: string }[];
-  className?: string;
   onRowClick?: (row: TableRowData) => void;
+  onFormClick?: (id: number) => void;
 }
 
-const Table = ({ data, headers, onRowClick, headerColor, fontSize = "16px" }: TableProps) => {
+export const renderCell = (key: string, value: string | number | ReactNode, onFormClick?: (id: number) => void) => {
+  if (key === "status") {
+    const statusClass =
+      value === "accept" ? styles.statusAccepted : value === "reject" ? styles.statusRejected : styles.statusWaiting;
+
+    return (
+      <span className={`${styles.status} ${statusClass}`}>
+        {value === "accept" ? "수락됨" : value === "reject" ? "거절됨" : "대기 중"}
+      </span>
+    );
+  }
+
+  if (key === "id") {
+    return (
+      <button
+        type="button"
+        className={styles.portfolioButton}
+        style={{ fontSize: "12px" }}
+        onClick={(e) => {
+          onFormClick?.(value as number);
+          e.stopPropagation();
+        }}
+      >
+        열람하기
+      </button>
+    );
+  }
+
+  return value;
+};
+
+const Table = ({ data, headers, onRowClick, headerColor, fontSize = "16px", onFormClick }: TableProps) => {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
@@ -77,7 +109,7 @@ const Table = ({ data, headers, onRowClick, headerColor, fontSize = "16px" }: Ta
           <tr key={rowIndex} className={styles.table__row} onClick={() => onRowClick?.(row)}>
             {headers.map((header) => (
               <td key={header.key} className={styles.table__cell}>
-                {row[header.key]}
+                {renderCell(header.key, row[header.key], onFormClick)}
               </td>
             ))}
           </tr>

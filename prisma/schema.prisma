@@ -17,7 +17,7 @@ model User {
   email      String   @unique // 이메일 (로그인 ID)
   password   String   // 비밀번호
   name       String   // 이름
-  nickname   String   @unique // 닉네임
+  nickname   String   // 닉네임
   gender     String   // 성별 (Enum)
   birthDate  DateTime // 생년월일
   position   String   // 직군
@@ -27,11 +27,12 @@ model User {
   createdAt  DateTime @default(now()) // 생성일
 
   techStack  TechStackTag[] // 사용자의 기술 스택
-  comments   Comment[] // 사용자가 작성한 댓글
-  notices    Notice[]  // 사용자가 작성한 공지사항
-  applications Apply[] // 사용자가 지원한 프로젝트 목록
-  member     Member[] // 사용자가 속한 프로젝트 멤버 정보
-  projects Project[] // 사용자가 만든 프로젝트
+  comments   Comment[]      // 사용자가 작성한 댓글
+  notices    Notice[]       // 사용자가 작성한 공지사항
+  applications Apply[]      // 사용자가 지원한 프로젝트 목록
+  member     Member[]       // 사용자가 속한 프로젝트 멤버 정보
+  projects   Project[]      // 사용자가 만든 프로젝트
+  like       Like[]         // 사용자가 누른 좋아요 목록
 
   @@index([email])
   @@index([nickname])
@@ -59,6 +60,7 @@ model Project {
   tags              ProjectTag[] // 프로젝트 관련 태그
   applications      Apply[]    // 프로젝트 지원자 목록
   member            Member[]   // 프로젝트 멤버 목록
+  likes             Like[]     // 프로젝트가 받은 좋아요 목록
 
   @@index([leaderId])
 }
@@ -74,6 +76,20 @@ model Member {
 
   @@unique([projectId, userId])
   @@index([userId])
+}
+
+// 프로젝트 좋아요
+model Like {
+  id         Int     @id @default(autoincrement()) // 좋아요 ID
+  userId     String  // 좋아요를 누른 사용자 ID
+  projectId  Int     // 좋아요를 받은 프로젝트 ID
+  createdAt  DateTime @default(now()) // 좋아요 누른 날짜
+
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade) // 사용자와 연결
+  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade) // 프로젝트와 연결
+
+  @@unique([userId, projectId]) // 같은 사용자가 같은 프로젝트에 중복 좋아요 금지
+  @@index([projectId])
 }
 
 // 프로젝트 지원서
