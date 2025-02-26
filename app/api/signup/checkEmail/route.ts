@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const { email } = await req.json();
     if (!email) return NextResponse.json(false, { status: 400 });
 
-    const isDuplicated = await userAuthUsecase.findByEmail(email);
+    const isDuplicated = await userAuthUsecase.findByEmailBool(email);
     return NextResponse.json(isDuplicated, { status: 200 });
   } catch (error) {
     console.error("서버 오류:", error);

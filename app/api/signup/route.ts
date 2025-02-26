@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository";
 
-import type { UserSignUpDto } from "@/application/usecases/user/dtos/userPost";
+import type { UserSignUpDto } from "@/application/usecases/user/dtos/userPostDto";
 
 import { UserAuthUsecase } from "@/application/usecases/user/userAuthUsecase";
 

@@ -3,9 +3,10 @@ import type { UserRepository } from "@/domain/repositories/userRepository";
 
 import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
+
 export class PsUserRepository implements UserRepository {
   async create(user: Omit<User, "id" | "createdAt">): Promise<User> {
-    const prisma = new PrismaClient();
     const createdUser = await prisma.user.create({
       data: user,
     });
@@ -13,25 +14,24 @@ export class PsUserRepository implements UserRepository {
   }
 
   async findById(id: string): Promise<User | null> {
-    const prisma = new PrismaClient();
-    return prisma.user.findUnique({ where: { id } });
+    const user = await prisma.user.findUnique({ where: { id } });
+    return user || null;
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const prisma = new PrismaClient();
-    return prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email } });
+    return user || null;
   }
 
   async update(id: string, user: Partial<Omit<User, "id" | "createdAt">>): Promise<User> {
-    const prisma = new PrismaClient();
-    return prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id },
       data: user,
     });
+    return updatedUser;
   }
 
   async delete(id: string): Promise<void> {
-    const prisma = new PrismaClient();
     await prisma.user.delete({ where: { id } });
   }
 }
