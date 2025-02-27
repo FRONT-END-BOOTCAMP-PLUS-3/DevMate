@@ -35,11 +35,20 @@ export class SignupUsecase {
   }
 
   public async execute(user: Omit<SignUpDto, "id" | "createdAt">): Promise<SignUpDto> {
-    const { password, address, ...rest } = user;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const encryptedAddress = this.encryptAddress(address);
-    const userData = { ...rest, password: hashedPassword, address: encryptedAddress };
+    try {
+      const { password, address, ...rest } = user;
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const encryptedAddress = this.encryptAddress(address);
+      const userData = { ...rest, password: hashedPassword, address: encryptedAddress };
 
-    return await this.userRepository.create(userData);
+      return await this.userRepository.create(userData);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("An unknown error occurred");
+      }
+      throw new Error("An error occurred during signup");
+    }
   }
 }

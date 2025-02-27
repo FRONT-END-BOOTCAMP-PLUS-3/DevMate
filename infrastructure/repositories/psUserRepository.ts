@@ -7,31 +7,76 @@ const prisma = new PrismaClient();
 
 export class PsUserRepository implements UserRepository {
   async create(user: Omit<User, "id" | "createdAt">): Promise<User> {
-    const createdUser = await prisma.user.create({
-      data: user,
-    });
-    return createdUser;
+    try {
+      const createdUser = await prisma.user.create({
+        data: user,
+      });
+      return createdUser;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("An unknown error occurred");
+      }
+      throw new Error("An error occurred during user creation");
+    }
   }
 
   async findById(id: string): Promise<User | null> {
-    const user = await prisma.user.findUnique({ where: { id } });
-    return user || null;
+    try {
+      const user = await prisma.user.findUnique({ where: { id } });
+      return user || null;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("An unknown error occurred");
+      }
+      return null;
+    }
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const user = await prisma.user.findUnique({ where: { email } });
-    return user || null;
+    try {
+      const user = await prisma.user.findUnique({ where: { email } });
+      return user || null;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("An unknown error occurred");
+      }
+      return null;
+    }
   }
 
   async update(id: string, user: Partial<Omit<User, "id" | "createdAt">>): Promise<User> {
-    const updatedUser = await prisma.user.update({
-      where: { id },
-      data: user,
-    });
-    return updatedUser;
+    try {
+      const updatedUser = await prisma.user.update({
+        where: { id },
+        data: user,
+      });
+      return updatedUser;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("An unknown error occurred");
+      }
+      throw new Error("An error occurred during user update");
+    }
   }
 
   async delete(id: string): Promise<void> {
-    await prisma.user.delete({ where: { id } });
+    try {
+      await prisma.user.delete({ where: { id } });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("An unknown error occurred");
+      }
+      throw new Error("An error occurred during user deletion");
+    }
   }
 }

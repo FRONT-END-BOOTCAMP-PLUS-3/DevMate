@@ -10,9 +10,18 @@ export class SignupCheckEmailUsecase {
   }
 
   public async execute(inputEmail: string): Promise<SignUPCheckEmailDto | null> {
-    const userData = await this.userRepository.findByEmail(inputEmail);
-    if (!userData) return null;
-    const { email, password } = userData;
-    return { email, password };
+    try {
+      const userData = await this.userRepository.findByEmail(inputEmail);
+      if (!userData) return null;
+      const { email, password } = userData;
+      return { email, password };
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("An unknown error occurred");
+      }
+      return null;
+    }
   }
 }
