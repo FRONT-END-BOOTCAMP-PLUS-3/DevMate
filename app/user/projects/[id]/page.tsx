@@ -11,8 +11,9 @@ import NoticeSection from "./_components/noticeSection";
 import MembersSection from "./_components/membersSection";
 import ApplicationsSection from "./_components/applicationsSection";
 
-export default async function ProjectDetail({ params }: { params: { id: string } }) {
-  const projectId = Number(params.id);
+export default async function ProjectDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const projectId = Number(id);
   const project = projectData.find((p) => p.id === projectId);
 
   if (!project) return notFound();
