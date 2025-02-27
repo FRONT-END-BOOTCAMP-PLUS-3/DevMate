@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 import styles from "./layout.module.scss";
 
-import Sidebar from "../_components/sidebar/Sidebar";
+import Sidebar from "../_components/sidebar/sidebar";
 
 export default function MypageLayout({ children }: { children: ReactNode }) {
   return (

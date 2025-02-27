@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useActionState } from "react";
 
 import Button from "@/components/button/button";
-import InputField from "@/components/inputField/InputField";
+import InputField from "@/components/inputField/inputField";
 
 import styles from "./login.module.scss";
 

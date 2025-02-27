@@ -1,4 +1,4 @@
-import styles from "./RecruitmentsTag.module.scss";
+import styles from "./recruitmentsTag.module.scss";
 
 interface RecruitmentsTagProps {
   tags: string[];

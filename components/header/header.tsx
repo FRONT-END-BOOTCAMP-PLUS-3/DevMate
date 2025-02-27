@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import { useState, useRef, useEffect } from "react";
 
-import styles from "./Header.module.scss";
+import styles from "./header.module.scss";
 
 import { FaUser } from "react-icons/fa";
 

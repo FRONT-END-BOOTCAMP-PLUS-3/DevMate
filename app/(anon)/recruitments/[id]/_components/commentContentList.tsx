@@ -1,8 +1,8 @@
-import styles from "./CommentContentList.module.scss";
+import styles from "./commentContentList.module.scss";
 
 import type { CommentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
 
-import CommentContent from "./CommentContent";
+import CommentContent from "./commentContent";
 
 interface CommentContentProps {
   comments: CommentDetailDto[];

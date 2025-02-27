@@ -1,4 +1,4 @@
-import styles from "./MyProjectItem.module.scss";
+import styles from "./myProjectItem.module.scss";
 
 export default function MyProjectItem() {
   return (

@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 
 import Button from "@/components/button/button";
-import InputField from "@/components/inputField/InputField";
+import InputField from "@/components/inputField/inputField";
 
-import styles from "./Apply.module.scss";
+import styles from "./apply.module.scss";
 
 import type { Project } from "@/domain/entities/project";
 

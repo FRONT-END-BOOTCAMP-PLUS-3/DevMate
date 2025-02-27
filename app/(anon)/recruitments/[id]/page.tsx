@@ -1,10 +1,10 @@
-import styles from "./RecruitmentDetail.module.scss";
+import styles from "./recruitmentDetail.module.scss";
 
 import type { RecruitmentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
 
-import CommentForm from "./_components/CommentForm";
-import CommentContentList from "./_components/CommentContentList";
-import RecruitmentContent from "./_components/RecruitmentContent";
+import CommentForm from "./_components/commentForm";
+import CommentContentList from "./_components/commentContentList";
+import RecruitmentContent from "./_components/recruitmentContent";
 
 const RecruitmentDetail = () => {
   return (

@@ -1,4 +1,4 @@
-import RecruitmentContent from "@/app/(anon)/recruitments/[id]/_components/RecruitmentContent";
+import RecruitmentContent from "@/app/(anon)/recruitments/[id]/_components/recruitmentContent";
 
 import type { User } from "@/domain/entities/user";
 import type { Comment } from "@/domain/entities/comment";

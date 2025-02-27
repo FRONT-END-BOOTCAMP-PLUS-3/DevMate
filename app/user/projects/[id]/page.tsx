@@ -4,7 +4,7 @@ import { notFound, useParams } from "next/navigation";
 
 import { useState } from "react";
 
-import styles from "./ProjectDetail.module.scss";
+import styles from "./projectDetail.module.scss";
 
 import type { Applicant } from "./_components/projectData";
 
