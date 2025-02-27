@@ -16,17 +16,14 @@ export class LoginUsecase {
     try {
       const userData = await this.userRepository.findByEmail(email);
       if (!userData) {
-        console.error("유저를 찾을수 없습니다다");
-        return null;
+        throw new Error("유저를 찾을 수 없습니다");
       }
 
       const { password: hashedPassword } = userData;
       const isValidPassword = await bcrypt.compare(password, hashedPassword);
       if (!isValidPassword) {
-        console.error("비밀번호가 일치하지 않습니다");
-        return null;
+        throw new Error("비밀번호가 일치하지 않습니다");
       }
-
       const payload = {
         id: userData.id,
         name: userData.name,
@@ -38,7 +35,7 @@ export class LoginUsecase {
       return token;
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        throw new Error(`비밀번호가 일치하지 않습니다 catch에러 ${error.message}`);
       } else {
         console.error("An unknown error occurred");
       }
