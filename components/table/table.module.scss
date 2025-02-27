@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -8,7 +10,7 @@
   border-radius: 5px;
 
   &__head {
-    background-color: lighten($color-light-gray, 7%);
+    background-color: color.adjust($color-light-gray, $lightness: 7%);
     color: $color-black;
 
     &__title {
@@ -23,7 +25,7 @@
       border-right: 1px solid $color-light-gray;
 
       &:hover {
-        background-color: darken($color-light-gray, 10%);
+        background-color: color.adjust($color-light-gray, $lightness: -10%);
         transform: scale(1.05);
       }
     }

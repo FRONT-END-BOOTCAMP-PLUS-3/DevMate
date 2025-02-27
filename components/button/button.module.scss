@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .button {
   border-radius: 4px;
   outline: none;
@@ -24,7 +26,7 @@
   border-color: $color-main;
 
   &:active {
-    background-color: darken($color-main, 10%);
+    background-color: color.adjust($color-main, $lightness: -10%);
   }
 }
 
@@ -34,7 +36,7 @@
   border-color: $color-solid-line;
 
   &:active {
-    background-color: darken(white, 10%);
+    background-color: color.adjust(white, $lightness: -10%);
   }
 }
 
@@ -44,7 +46,7 @@
   border-color: $color-solid-line;
 
   &:active {
-    background-color: darken(#3e4042, 10%);
+    background-color: color.adjust(#3e4042, $lightness: -10%);
   }
 }
 
@@ -54,7 +56,7 @@
   border-color: $color-main;
 
   &:active {
-    background-color: darken(white, 10%);
+    background-color: color.adjust(white, $lightness: -10%);
   }
 }
 
