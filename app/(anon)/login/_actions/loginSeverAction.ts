@@ -52,7 +52,7 @@ export async function loginSeverAction(state: { message: string }, formData: For
     cookieStore.delete("returnUrl"); // 로그인 성공 시에만 쿠키 삭제
   }
   // returnUrl이 있는 경우 디코딩 후 리다이렉트
-  const redirectUrl = returnUrl ? decodeURIComponent(returnUrl) : "/";
+  const redirectUrl = returnUrl ? decodeURIComponent(returnUrl) : "/recruitments";
 
   // 로그인 성공 시 메인 페이지로 리다이렉트
   redirect(redirectUrl);
