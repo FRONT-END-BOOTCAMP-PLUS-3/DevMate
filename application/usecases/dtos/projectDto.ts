@@ -3,13 +3,13 @@ export interface ProjectDto {
   leaderId: string;
   recruitmentTitle: string;
   projectTitle: string;
-  goal: string | null;
+  goal: string;
   description: string;
   projectPeriodStart: Date;
   projectPeriodEnd: Date;
   recruitmentStart: Date;
   recruitmentEnd: Date;
-  like: number;
   hits: number;
   createdAt: Date;
+  notice: string;
 }

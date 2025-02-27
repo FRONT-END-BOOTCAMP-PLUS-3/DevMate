@@ -6,12 +6,12 @@ import Button from "@/components/button/button";
 
 import styles from "./RecruitmentContent.module.scss";
 
-import type { Project } from "@/domain/entities/project";
+import type { RecruitmentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
 
 import LikeButton from "./LikeButton";
 
 interface RecruitmentContentProps {
-  project: Project;
+  project: RecruitmentDetailDto;
 }
 
 const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
@@ -28,7 +28,6 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
     projectPeriodEnd,
     recruitmentStart,
     recruitmentEnd,
-    like,
   } = project;
 
   return (
@@ -68,7 +67,7 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
         </div>
         <div className={styles["recruitmentContent__content"]}>{description}</div>
         <div className={styles["recruitmentContent__actions"]}>
-          <LikeButton projectId={id} likes={like} />
+          <LikeButton projectId={id} likes={10} />
           <Button>
             <Link href={`/user/recruitments/${id}/apply`}>지원하기</Link>
           </Button>
