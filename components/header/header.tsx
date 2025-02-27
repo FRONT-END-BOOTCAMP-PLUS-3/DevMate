@@ -43,7 +43,7 @@ export default function Header() {
           </button>
           {isOpen && (
             <div className={styles.header__dropdownMenu}>
-              <Link href="/user/mypage" className={styles.header__dropdownMenuItem}>
+              <Link href="/user/information" className={styles.header__dropdownMenuItem}>
                 마이페이지
               </Link>
               <button className={styles.header__dropdownMenuItem}>로그아웃</button>
