@@ -11,12 +11,14 @@ import Sidebar from "../_components/sidebar/Sidebar";
 export default function MypageLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
-  // `/user/recruitments/[id]/apply` 또는 `/user/recruitments/[id]/edit` 경로 예외 처리
-  const isApplyOrEditPage =
-    /^\/user\/recruitments\/[^/]+\/apply$/.test(pathname) || /^\/user\/recruitments\/[^/]+\/edit$/.test(pathname);
+  // `/user/recruitments/[id]/apply`, `/user/recruitments/[id]/edit`, `/user/recruitments/create` 경로 예외 처리
+  const isExcludedPage =
+    /^\/user\/recruitments\/[^/]+\/apply$/.test(pathname) ||
+    /^\/user\/recruitments\/[^/]+\/edit$/.test(pathname) ||
+    pathname === "/user/recruitments/create";
 
   // 해당 경로에서는 레이아웃을 적용하지 않음
-  if (isApplyOrEditPage) return <>{children}</>;
+  if (isExcludedPage) return <>{children}</>;
 
   return (
     <div className={styles.layout}>
