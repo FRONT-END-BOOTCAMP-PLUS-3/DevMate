@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -26,10 +27,11 @@ export default function Login() {
         <Image src="/logoPurple.svg" alt="Login-logo" width={66} height={66} />
       </Link>
 
-      <form action="" method="POST">
-        <InputField label="이메일" type="text" placeholder="이메일" />
-        <InputField label="비밀번호" type="password" placeholder="비밀번호" />
-        <Button type="submit" size="long">
+      <form action={formAction}>
+        <InputField type="email" name="email" label="이메일" placeholder="이메일" />
+        <InputField type="password" name="password" label="비밀번호" placeholder="비밀번호" />
+        {state.message && <div>😒 오류 : {state.message}</div>}
+        <Button type="submit" size="long" disabled={pending}>
           로그인
         </Button>
         <div className={container__links}>
