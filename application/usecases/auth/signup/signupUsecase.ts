@@ -1,13 +1,12 @@
 import { getEncryptionKey } from "@/utils/security";
 
 import type { UserRepository } from "@/domain/repositories/userRepository";
-
-import type { UserSignUpDto } from "./dtos/userPost";
+import type { SignUpDto } from "@/application/usecases/auth/signup/dtos/signupDto";
 
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 
-export class UserAuthUsecase {
+export class SignupUsecase {
   private userRepository: UserRepository;
   private encryptionKey: Buffer;
   private algorithm = "aes-256-cbc";
@@ -16,7 +15,6 @@ export class UserAuthUsecase {
     this.encryptionKey = getEncryptionKey();
   }
 
-  // 주소 암호화 함수
   private encryptAddress(address: string): string {
     const iv = crypto.randomBytes(16);
     const cipher = crypto.createCipheriv(this.algorithm, this.encryptionKey, iv);
@@ -36,16 +34,21 @@ export class UserAuthUsecase {
     return decrypted;
   }
 
-  public async createUser(user: Omit<UserSignUpDto, "id" | "createdAt">): Promise<UserSignUpDto> {
-    const { password, address, ...rest } = user;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const encryptedAddress = this.encryptAddress(address);
-    const userData = { ...rest, password: hashedPassword, address: encryptedAddress };
+  public async execute(user: Omit<SignUpDto, "id" | "createdAt">): Promise<SignUpDto> {
+    try {
+      const { password, address, ...rest } = user;
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const encryptedAddress = this.encryptAddress(address);
+      const userData = { ...rest, password: hashedPassword, address: encryptedAddress };
 
-    return await this.userRepository.create(userData);
-  }
-  public async findByEmail(email: string): Promise<boolean> {
-    const existingUser = await this.userRepository.findByEmail(email);
-    return existingUser !== null;
+      return await this.userRepository.create(userData);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("An unknown error occurred");
+      }
+      throw new Error("An error occurred during signup");
+    }
   }
 }

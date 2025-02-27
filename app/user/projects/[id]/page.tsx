@@ -1,22 +1,33 @@
-"use server";
+"use client";
 
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 
-import { Suspense } from "react";
+import { useState } from "react";
 
 import styles from "./ProjectDetail.module.scss";
+
+import type { Applicant } from "./_components/projectData";
 
 import projectData from "./_components/projectData";
 import NoticeSection from "./_components/noticeSection";
 import MembersSection from "./_components/membersSection";
 import ApplicationsSection from "./_components/applicationsSection";
 
-export default async function ProjectDetail({ params }: { params: { id: string } }) {
-  const projectId = Number(params.id);
+export default function ProjectDetail() {
+  const projectId = Number(useParams().id);
   const project = projectData.find((p) => p.id === projectId);
 
-  if (!project) return notFound();
+  const [applications, setApplications] = useState<Applicant[]>(project?.applications || []);
 
+  const acceptApplicant = (id: number) => {
+    setApplications((prev) => prev.map((app) => (app.id === id ? { ...app, status: "accept" } : app)));
+  };
+
+  const rejectApplicant = (id: number) => {
+    setApplications((prev) => prev.map((app) => (app.id === id ? { ...app, status: "reject" } : app)));
+  };
+
+  if (!project) return notFound();
   return (
     <div className={styles.container}>
       <h1 className={styles.container__title}>{project.projectTitle}</h1>
@@ -36,20 +47,18 @@ export default async function ProjectDetail({ params }: { params: { id: string }
         </div>
 
         {/* 공지사항 */}
-        <Suspense fallback={<p>공지사항 로딩 중...</p>}>
-          <NoticeSection notices={project.notices} />
-        </Suspense>
+        <NoticeSection notices={project.notices} />
       </div>
 
       {/* 신청 현황 */}
-      <Suspense fallback={<p>신청 현황 로딩 중...</p>}>
-        <ApplicationsSection initialApplications={project.applications} />
-      </Suspense>
+      <ApplicationsSection
+        applications={applications}
+        acceptApplicant={acceptApplicant}
+        rejectApplicant={rejectApplicant}
+      />
 
       {/* 참여 멤버 */}
-      <Suspense fallback={<p>참여 멤버 로딩 중...</p>}>
-        <MembersSection />
-      </Suspense>
+      <MembersSection applications={applications} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Table from "@/components/table/table";
 import Modal from "@/components/modal/Modal";
@@ -12,20 +12,19 @@ import type { Applicant } from "./projectData";
 
 import ApplicantDetails from "./applicantDetails";
 
-import { useApplicationsStore } from "@/stores/useApplicationsStore";
-
-interface ApplicaitonsSectionProps {
-  initialApplications: Applicant[];
+interface ApplicationsSectionProps {
+  applications: Applicant[];
+  acceptApplicant: (id: number) => void;
+  rejectApplicant: (id: number) => void;
 }
 
-export default function ApplicationsSection({ initialApplications }: ApplicaitonsSectionProps) {
-  const { applications, setApplications, acceptApplicant, rejectApplicant } = useApplicationsStore();
+export default function ApplicationsSection({
+  applications,
+  acceptApplicant,
+  rejectApplicant,
+}: ApplicationsSectionProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null);
-
-  useEffect(() => {
-    setApplications(initialApplications);
-  }, [initialApplications, setApplications]);
 
   const handleModal = (id: number) => {
     const applicant = applications.find((app) => app.id === id);

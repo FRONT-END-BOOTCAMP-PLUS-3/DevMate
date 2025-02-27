@@ -4,16 +4,19 @@ import Table from "@/components/table/table";
 
 import styles from "../ProjectDetail.module.scss";
 
-import { useApplicationsStore } from "@/stores/useApplicationsStore";
+import type { Applicant } from "./projectData";
 
-export default function MembersSection() {
-  const { applications } = useApplicationsStore();
+interface MembersSectionProps {
+  applications: Applicant[];
+}
+
+export default function MembersSection({ applications }: MembersSectionProps) {
   const transformedMembers = applications
+    .filter((app) => app.status === "accept")
     .map((app) => ({
       ...app,
       user: typeof app.user === "object" ? app.user.name : app.user,
-    }))
-    .filter((app) => app.status === "accept");
+    }));
 
   return (
     <div className={styles.container__content} style={{ width: "50%" }}>

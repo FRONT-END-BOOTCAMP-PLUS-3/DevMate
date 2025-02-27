@@ -1,4 +1,4 @@
-import type { UserDto } from "@/application/usecases/user/dtos/userDto"; // 타입이 있으면 적용
+import type { UserDto } from "@/application/usecases/dtos/userDto"; // 타입이 있으면 적용
 
 export const signUp = async (userData: Omit<UserDto, "id" | "createdAt">) => {
   try {
