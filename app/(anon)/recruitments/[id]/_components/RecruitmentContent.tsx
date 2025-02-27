@@ -28,7 +28,6 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
     projectPeriodEnd,
     recruitmentStart,
     recruitmentEnd,
-    like,
   } = project;
 
   return (
@@ -68,7 +67,7 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
         </div>
         <div className={styles["recruitmentContent__content"]}>{description}</div>
         <div className={styles["recruitmentContent__actions"]}>
-          <LikeButton projectId={id} likes={like} />
+          <LikeButton projectId={id} likes={10} />
           <Button>
             <Link href={`/user/recruitments/${id}/apply`}>지원하기</Link>
           </Button>

@@ -1,10 +1,7 @@
 import styles from "./RecruitmentDetail.module.scss";
 
-import type {
-  CommentDto,
-  ProjectDetailDto,
-  UserNicknameDto,
-} from "@/application/usecases/projectDetail/dtos/projectDetailDto";
+import type { UserDto } from "@/application/usecases/user/dtos/userDto";
+import type { CommentDto, ProjectDetailDto } from "@/application/usecases/projectDetail/dtos/projectDetailDto";
 
 import CommentForm from "./_components/CommentForm";
 import CommentContentList from "./_components/CommentContentList";
@@ -24,9 +21,19 @@ const RecruitmentDetail = () => {
 
 export default RecruitmentDetail;
 
-const exampleUser: UserNicknameDto = {
-  id: "user123",
-  nickname: "길동이",
+const exampleUser: UserDto = {
+  id: "user789",
+  nickname: "춘향이",
+  address: "Jeonju, Korea",
+  name: "Sung Chun-hyang",
+  email: "chun@example.com",
+  password: "password123",
+  birthDate: new Date("1992-02-02"),
+  gender: "female",
+  profileImg: "profile2.jpg",
+  career: 5,
+  createdAt: new Date(),
+  position: "백엔드",
 };
 
 const exampleComments: CommentDto[] = [
@@ -35,10 +42,7 @@ const exampleComments: CommentDto[] = [
     projectId: 1,
     content: "정말 좋은 프로젝트네요! 같이 하고 싶어요!",
     createdAt: new Date(),
-    user: {
-      id: "user456",
-      nickname: "몽룡",
-    },
+    user: exampleUser,
     replies: [
       {
         id: 2,
@@ -46,10 +50,7 @@ const exampleComments: CommentDto[] = [
         parentCommentId: 1,
         content: "저도 관심 있습니다!",
         createdAt: new Date(),
-        user: {
-          id: "user789",
-          nickname: "춘향이",
-        },
+        user: exampleUser,
       },
       {
         id: 3,
@@ -57,10 +58,7 @@ const exampleComments: CommentDto[] = [
         parentCommentId: 1,
         content: "저도 관심 있습니다!",
         createdAt: new Date(),
-        user: {
-          id: "user785",
-          nickname: "춘향이",
-        },
+        user: exampleUser,
       },
     ],
   },
@@ -76,7 +74,6 @@ const exampleProject: ProjectDetailDto = {
   projectPeriodEnd: new Date("2025-06-30"),
   recruitmentStart: new Date("2025-02-20"),
   recruitmentEnd: new Date("2025-02-29"),
-  like: 12,
   hits: 150,
   createdAt: new Date(),
   leader: exampleUser,

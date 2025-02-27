@@ -1,15 +1,12 @@
-export interface UserNicknameDto {
-  id: string;
-  nickname: string;
-}
+import type { UserDto } from "../../user/dtos/userDto";
 
 export interface CommentDto {
   id: number;
   projectId: number;
   parentCommentId?: number;
-  content?: string;
+  content: string;
   createdAt: Date;
-  user: UserNicknameDto;
+  user: UserDto;
   replies?: CommentDto[];
 }
 
@@ -17,17 +14,15 @@ export interface ProjectDetailDto {
   id: number;
   projectTitle: string;
   recruitmentTitle: string;
-  goal?: string;
+  goal: string;
   description: string;
   projectPeriodStart: Date;
   projectPeriodEnd: Date;
   recruitmentStart: Date;
   recruitmentEnd: Date;
-  like: number;
   hits: number;
   createdAt: Date;
 
-  leader: UserNicknameDto;
-
+  leader: UserDto;
   comments: CommentDto[];
 }
