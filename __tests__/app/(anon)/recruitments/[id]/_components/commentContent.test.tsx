@@ -1,6 +1,6 @@
-import type { Comment } from "@/domain/entities/comment";
+import CommentContent from "@/app/(anon)/recruitments/[id]/_components/commentContent";
 
-import CommentContent from "../../app/(anon)/recruitments/[id]/_components/CommentContent";
+import type { Comment } from "@/domain/entities/comment";
 
 import { describe, it, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
