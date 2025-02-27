@@ -35,7 +35,7 @@ export default async function middleware(req: NextRequest) {
   response.cookies.set("token", jwtToken, {
     httpOnly: true,
     sameSite: "strict",
-    maxAge: 60 * 60,
+    maxAge: 60 * 60 * 6,
   });
 
   return response;
