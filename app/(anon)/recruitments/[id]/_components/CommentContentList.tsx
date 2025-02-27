@@ -1,11 +1,11 @@
 import styles from "./CommentContentList.module.scss";
 
-import type { Comment } from "@/domain/entities/comment";
+import type { CommentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
 
 import CommentContent from "./CommentContent";
 
 interface CommentContentProps {
-  comments: Comment[];
+  comments: CommentDetailDto[];
 }
 
 const CommentContentList: React.FC<CommentContentProps> = ({ comments }) => {
@@ -15,7 +15,7 @@ const CommentContentList: React.FC<CommentContentProps> = ({ comments }) => {
         댓글 <span>{comments.length}</span>
       </p>
       {comments.map((comment) => (
-        <CommentContent key={comment.id} comment={comment} comments={comment.replies} />
+        <CommentContent key={comment.id} comment={comment} replies={comment.replies} />
       ))}
     </div>
   );
