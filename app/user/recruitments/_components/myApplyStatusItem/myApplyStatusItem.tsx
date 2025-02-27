@@ -1,6 +1,6 @@
 import Badge from "@/components/badge/badge";
 
-import styles from "./MyApplyStatusItem.module.scss";
+import styles from "./myApplyStatusItem.module.scss";
 
 import { FaHeart, FaEye, FaComment } from "react-icons/fa";
 

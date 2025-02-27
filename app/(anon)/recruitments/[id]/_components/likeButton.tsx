@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import styles from "./LikeButton.module.scss";
+import styles from "./likeButton.module.scss";
 
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
 

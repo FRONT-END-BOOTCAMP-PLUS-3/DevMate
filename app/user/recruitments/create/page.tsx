@@ -8,7 +8,7 @@ import styles from "./Create.module.scss";
 
 import type { SelectionRange } from "react-date-range";
 
-import Toolbar from "../_components/Toolbar/Toolbar";
+import Toolbar from "../_components/Toolbar/toolbar";
 
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";

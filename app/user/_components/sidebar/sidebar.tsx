@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { useState } from "react";
 
-import styles from "./Sidebar.module.scss";
+import styles from "./sidebar.module.scss";
 
 const sidebarItems = [
   {

@@ -1,7 +1,7 @@
 // 마이페이지 - 좋아요한 모집글
 import styles from "./myLike.module.scss";
 
-import MyRecruitmentItem from "../_components/myRecruitmentItem/MyRecruitmentItem";
+import MyRecruitmentItem from "../_components/myRecruitmentItem/myRecruitmentItem";
 
 export default function Page() {
   return (

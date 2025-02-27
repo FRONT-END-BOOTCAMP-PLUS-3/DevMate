@@ -3,7 +3,7 @@ import type { Dispatch } from "react";
 
 import Button from "@/components/button/button";
 import Selector from "@/components/selector/selector";
-import InputField from "@/components/inputField/InputField";
+import InputField from "@/components/inputField/inputField";
 
 import styles from "./signupForm.module.scss";
 

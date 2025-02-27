@@ -1,6 +1,6 @@
 import styles from "./myApplyStatus.module.scss";
 
-import MyApplyStatusItem from "../_components/myApplyStatusItem/MyApplyStatusItem";
+import MyApplyStatusItem from "../_components/myApplyStatusItem/myApplyStatusItem";
 
 export default function Page() {
   return (

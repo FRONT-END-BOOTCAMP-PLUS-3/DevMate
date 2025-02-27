@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
-import InputField from "@/components/inputField/InputField";
+import InputField from "@/components/inputField/inputField";
 
-import styles from "../ProjectDetail.module.scss";
+import styles from "../projectDetail.module.scss";
 
 export default function NoticeSection({ notices }: { notices: { content: string }[] }) {
   const [isNoticeEdit, setIsNoticeEdit] = useState(false);

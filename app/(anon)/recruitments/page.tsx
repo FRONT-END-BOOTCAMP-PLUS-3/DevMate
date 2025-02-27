@@ -1,6 +1,6 @@
-import styles from "./Recruitments.module.scss";
+import styles from "./recruitments.module.scss";
 
-import RecruitmentsItem from "./_components/RecruitmentsItem/RecruitmentsItem";
+import RecruitmentsItem from "./_components/recruitmentsItem/recruitmentsItem";
 
 import { FaSearch, FaHashtag } from "react-icons/fa";
 
