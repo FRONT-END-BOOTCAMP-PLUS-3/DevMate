@@ -1,11 +1,11 @@
 import styles from "./CommentContentList.module.scss";
 
-import type { Comment } from "@/domain/entities/comment";
+import type { CommentDto } from "@/application/usecases/projectDetail/dtos/projectDetailDto";
 
 import CommentContent from "./CommentContent";
 
 interface CommentContentProps {
-  comments: Comment[];
+  comments: CommentDto[];
 }
 
 const CommentContentList: React.FC<CommentContentProps> = ({ comments }) => {

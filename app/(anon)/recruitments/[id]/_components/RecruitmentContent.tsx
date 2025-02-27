@@ -6,12 +6,12 @@ import Button from "@/components/button/button";
 
 import styles from "./RecruitmentContent.module.scss";
 
-import type { Project } from "@/domain/entities/project";
+import type { ProjectDetailDto } from "@/application/usecases/projectDetail/dtos/projectDetailDto";
 
 import LikeButton from "./LikeButton";
 
 interface RecruitmentContentProps {
-  project: Project;
+  project: ProjectDetailDto;
 }
 
 const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
