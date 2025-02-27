@@ -1,8 +1,8 @@
 import styles from "./RecruitmentDetail.module.scss";
 
-import type { User } from "@/domain/entities/user";
 import type { Comment } from "@/domain/entities/comment";
 import type { Project } from "@/domain/entities/project";
+import type { UserDto } from "@/application/usecases/dtos/userDto";
 
 import CommentForm from "./_components/CommentForm";
 import CommentContentList from "./_components/CommentContentList";
@@ -22,7 +22,7 @@ const RecruitmentDetail = () => {
 
 export default RecruitmentDetail;
 
-const exampleUser: User = {
+const exampleUser: UserDto = {
   id: "user123",
   email: "user123@example.com",
   name: "홍길동",
