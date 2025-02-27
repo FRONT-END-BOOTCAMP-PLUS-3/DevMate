@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { Suspense } from "react";
 
-import styles from "./ProjectDetail.module.scss";
+import styles from "./projectDetail.module.scss";
 
 import projectData from "./_components/projectData";
 import NoticeSection from "./_components/noticeSection";

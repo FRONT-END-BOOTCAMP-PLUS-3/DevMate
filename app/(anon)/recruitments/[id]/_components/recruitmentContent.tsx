@@ -4,11 +4,11 @@ import React from "react";
 
 import Button from "@/components/button/button";
 
-import styles from "./RecruitmentContent.module.scss";
+import styles from "./recruitmentContent.module.scss";
 
 import type { RecruitmentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
 
-import LikeButton from "./LikeButton";
+import LikeButton from "./likeButton";
 
 interface RecruitmentContentProps {
   project: RecruitmentDetailDto;

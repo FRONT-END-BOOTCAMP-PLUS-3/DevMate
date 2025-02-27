@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import Button from "@/components/button/button";
 
-import styles from "./CommentForm.module.scss";
+import styles from "./commentForm.module.scss";
 
 interface CommentFormProps {
   projectId: number;

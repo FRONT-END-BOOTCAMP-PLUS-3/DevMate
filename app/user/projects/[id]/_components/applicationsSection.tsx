@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 import Table from "@/components/table/table";
-import Modal from "@/components/modal/Modal";
+import Modal from "@/components/modal/modal";
 import Button from "@/components/button/button";
 
-import styles from "../ProjectDetail.module.scss";
+import styles from "../projectDetail.module.scss";
 
 import type { Applicant } from "./projectData";
 

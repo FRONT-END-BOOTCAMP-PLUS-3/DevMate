@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import styles from "./Modal.module.scss";
+import styles from "./modal.module.scss";
 
 import { IoClose } from "react-icons/io5";
 

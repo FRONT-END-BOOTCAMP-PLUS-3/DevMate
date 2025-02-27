@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import Button from "@/components/button/button";
-import InputField from "@/components/inputField/InputField";
+import InputField from "@/components/inputField/inputField";
 
 import styles from "./login.module.scss";
 

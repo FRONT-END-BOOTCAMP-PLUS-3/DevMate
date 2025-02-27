@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import styles from "./Footer.module.scss";
+import styles from "./footer.module.scss";
 
 import { FaGithub } from "react-icons/fa";
 

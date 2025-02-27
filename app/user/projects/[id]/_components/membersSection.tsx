@@ -2,7 +2,7 @@
 
 import Table from "@/components/table/table";
 
-import styles from "../ProjectDetail.module.scss";
+import styles from "../projectDetail.module.scss";
 
 import { useApplicationsStore } from "@/stores/useApplicationsStore";
 

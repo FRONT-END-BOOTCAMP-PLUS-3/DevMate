@@ -4,11 +4,11 @@ import Image from "next/image";
 
 import { useMemo, useState } from "react";
 
-import styles from "./CommentContent.module.scss";
+import styles from "./commentContent.module.scss";
 
 import type { CommentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
 
-import CommentForm from "./CommentForm";
+import CommentForm from "./commentForm";
 
 interface CommentProps {
   comment: CommentDetailDto;

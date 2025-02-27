@@ -1,7 +1,7 @@
 // 마이페이지 - 작성한 모집글
 import styles from "./myCreate.module.scss";
 
-import MyRecruitmentItem from "../_components/myRecruitmentItem/MyRecruitmentItem";
+import MyRecruitmentItem from "../_components/myRecruitmentItem/myRecruitmentItem";
 
 export default function Page() {
   return (
