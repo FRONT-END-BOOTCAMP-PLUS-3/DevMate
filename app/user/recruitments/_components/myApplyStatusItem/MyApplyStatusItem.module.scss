@@ -1,4 +1,4 @@
-.myrecruitmentitem {
+.myapplystatusitem {
   &__post-item {
     width: 850px;
     border: 1px solid rgb(233, 236, 239);
@@ -11,18 +11,44 @@
     &:hover {
       cursor: pointer;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transform: translateY(-3px); // 위로 살짝 이동
+      transform: translateY(-3px);
       transition:
         transform 0.3s ease-in-out,
         box-shadow 0.3s ease-in-out;
     }
 
     &:not(:hover) {
-      transform: translateY(0); // 원래 위치로 부드럽게 복귀
+      transform: translateY(0);
       transition:
         transform 0.3s ease-in-out,
         box-shadow 0.3s ease-in-out;
     }
+  }
+
+  &__apply-button {
+    width: fit-content;
+    height: 40px;
+    padding: 8px 14px;
+    border: 1px solid $color-main;
+    background-color: white;
+    color: black;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease-in-out,
+      border-color 0.2s ease-in-out;
+  }
+
+  &__apply-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__post-header-description{
+    width: 700px;
   }
 
   &__post-header {
@@ -42,8 +68,11 @@
     height: 24px;
   }
 
-  &__post-content {
-    flex-grow: 1;
+  &__post-header-button {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
   }
 
   &__post-title {
@@ -55,14 +84,14 @@
     display: -webkit-box;
     -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical;
-    display: box;
     line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 816px;
     color: #495057;
     font-size: 14px;
     margin-bottom: 20px;
+    white-space: normal; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: auto; 
   }
 
   &__post-meta {
@@ -112,6 +141,5 @@
   &__separator {
     border-bottom: 1px solid $color-solid-line;
     margin-bottom: 16px;
-    background-color: aqua;
   }
 }
