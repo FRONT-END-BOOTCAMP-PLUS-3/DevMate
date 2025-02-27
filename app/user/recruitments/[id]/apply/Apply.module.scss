@@ -1,0 +1,75 @@
+.apply {
+  width: 768px;
+  padding: 20px;
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  &__projectInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    &__label {
+      font-weight: bold;
+      margin-right: 10px;
+      white-space: nowrap;
+    }
+
+    &__projectName {
+      font-size: 18px;
+      padding-left: 10px;
+      width: 100%;
+      border-radius: 10px;
+
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    &__inputBox {
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+
+    &__buttonBox {
+      margin-top: 15px;
+      justify-content: end;
+      display: flex;
+      gap: 10px;
+    }
+  }
+
+  .fileInput {
+    width: 100%;
+    padding: 8px;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 0 12px;
+    margin-top: 5px;
+    line-height: 3;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    resize: none;
+
+    &:focus {
+      outline: none;
+      border-color: #0070f3;
+    }
+  }
+
+  .label {
+    font-size: 16px;
+  }
+}
