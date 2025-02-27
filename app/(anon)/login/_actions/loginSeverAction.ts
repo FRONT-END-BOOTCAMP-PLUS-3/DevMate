@@ -44,7 +44,7 @@ export async function loginSeverAction(state: { message: string }, formData: For
       httpOnly: true,
       secure: process.env.NODE_ENV === "development",
       path: "/",
-      maxAge: 60 * 60 * 6, // 예: 1시간 동안 유효
+      maxAge: 60 * 60,
     });
 
     // 쿠키에 returnUrl 이 있는지 확인
