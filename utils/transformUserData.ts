@@ -1,4 +1,4 @@
-import type { UserDto } from "@/application/usecases/user/dtos/userDto";
+import type { UserDto } from "@/application/usecases/dtos/userDto";
 import type { SignupState } from "@/app/(anon)/signup/_hooks/use-signupReducer";
 
 function transformCareer(careerValue: string): number {

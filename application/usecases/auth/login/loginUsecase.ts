@@ -1,24 +1,18 @@
 import type { UserRepository } from "@/domain/repositories/userRepository";
 
-import type { UserLoginDto } from "./dtos/userPostDto";
+import type { UserLoginDto } from "./dtos/loginDto";
 
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export class UserAuthUsecase {
+export class LoginUsecase {
   private userRepository: UserRepository;
 
   constructor(userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
-  private async findByEmail(inputEmail: string): Promise<UserLoginDto | null> {
-    const userData = await this.userRepository.findByEmail(inputEmail);
-    if (!userData) return null;
-    const { email, password } = userData;
-    return { email, password };
-  }
 
-  public async login(email: string, password: string): Promise<string | null> {
+  public async execute({ email, password }: UserLoginDto): Promise<string | null> {
     const userData = await this.userRepository.findByEmail(email);
     if (!userData) {
       throw new Error("Invalid email or password");

@@ -2,20 +2,20 @@ import { NextResponse } from "next/server";
 
 import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository";
 
-import { UserAuthUsecase } from "@/application/usecases/user/userLoginUsecase";
+import { LoginUsecase } from "@/application/usecases/auth/login/loginUsecase";
 
 const userRepository = new PsUserRepository();
-const userAuthUsecase = new UserAuthUsecase(userRepository);
+const loginUsecase = new LoginUsecase(userRepository);
 
 export async function POST(request: Request) {
   try {
-    const { userId, password } = await request.json();
+    const { email, password } = await request.json();
 
-    if (!userId || !password) {
+    if (!email || !password) {
       return NextResponse.json({ message: "아이디와 비밀번호를 입력해주세요." }, { status: 400 });
     }
 
-    const token = await userAuthUsecase.login(userId, password);
+    const token = await loginUsecase.execute({ email, password });
 
     console.log("====로그인 성공 요청====");
     console.log("로그인 성공:", token);

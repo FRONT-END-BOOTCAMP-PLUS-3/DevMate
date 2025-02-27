@@ -2,7 +2,7 @@ import styles from "./RecruitmentDetail.module.scss";
 
 import type { Comment } from "@/domain/entities/comment";
 import type { Project } from "@/domain/entities/project";
-import type { UserDto } from "@/application/usecases/user/dtos/userDto";
+import type { UserDto } from "@/application/usecases/dtos/userDto";
 
 import CommentForm from "./_components/CommentForm";
 import CommentContentList from "./_components/CommentContentList";

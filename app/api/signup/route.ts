@@ -2,18 +2,16 @@ import { NextResponse } from "next/server";
 
 import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository";
 
-import type { UserSignUpDto } from "@/application/usecases/user/dtos/userPostDto";
+import type { SignUpDto } from "@/application/usecases/auth/signup/dtos/signupDto";
 
-import { UserAuthUsecase } from "@/application/usecases/user/userLoginUsecase";
-import { UserSignupUsecase } from "@/application/usecases/signup/userSignupUsecase";
+import { SignupUsecase } from "@/application/usecases/auth/signup/signupUsecase";
 
-// 🔹 UserAuthUsecase 초기화
 const userRepository = new PsUserRepository();
-const userSignupUsecase = new UserSignupUsecase(userRepository);
+const signupUsecase = new SignupUsecase(userRepository);
 
 export async function POST(req: Request) {
   try {
-    const body: Partial<UserSignUpDto> = await req.json();
+    const body: Partial<SignUpDto> = await req.json();
     if (
       !body.name ||
       !body.email ||
@@ -29,10 +27,10 @@ export async function POST(req: Request) {
     }
 
     const profileImg = body.profileImg ?? "/defaultProfile.svg";
-    const createdUser = await userSignupUsecase.execute({
+    const createdUser = await signupUsecase.execute({
       ...body,
       profileImg,
-    } as UserSignUpDto);
+    } as SignUpDto);
 
     return NextResponse.json({ message: "회원가입 성공", data: createdUser }, { status: 201 });
   } catch (error) {

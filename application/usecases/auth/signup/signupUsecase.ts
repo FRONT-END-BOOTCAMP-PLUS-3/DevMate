@@ -1,13 +1,12 @@
 import { getEncryptionKey } from "@/utils/security";
 
 import type { UserRepository } from "@/domain/repositories/userRepository";
-
-import type { UserSignUpDto } from "../user/dtos/userPostDto";
+import type { SignUpDto } from "@/application/usecases/auth/signup/dtos/signupDto";
 
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 
-export class UserSignupUsecase {
+export class SignupUsecase {
   private userRepository: UserRepository;
   private encryptionKey: Buffer;
   private algorithm = "aes-256-cbc";
@@ -35,7 +34,7 @@ export class UserSignupUsecase {
     return decrypted;
   }
 
-  public async execute(user: Omit<UserSignUpDto, "id" | "createdAt">): Promise<UserSignUpDto> {
+  public async execute(user: Omit<SignUpDto, "id" | "createdAt">): Promise<SignUpDto> {
     const { password, address, ...rest } = user;
     const hashedPassword = await bcrypt.hash(password, 10);
     const encryptedAddress = this.encryptAddress(address);
