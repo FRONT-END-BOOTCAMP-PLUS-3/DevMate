@@ -26,13 +26,12 @@ model User {
   profileImg String?  // 프로필 이미지 URL
   createdAt  DateTime @default(now()) // 생성일
 
-  techStack  TechStackTag[] // 사용자의 기술 스택
+  techStackTags  TechStackTag[] // 사용자의 기술 스택
   comments   Comment[]      // 사용자가 작성한 댓글
-  notices    Notice[]       // 사용자가 작성한 공지사항
   applications Apply[]      // 사용자가 지원한 프로젝트 목록
-  member     Member[]       // 사용자가 속한 프로젝트 멤버 정보
-  projects   Project[]      // 사용자가 만든 프로젝트
-  like       Like[]         // 사용자가 누른 좋아요 목록
+  members     Member[]       // 사용자가 속한 프로젝트 멤버 정보
+  projects    Project[]      // 사용자가 만든 프로젝트
+  likes       Like[]         // 사용자가 누른 좋아요 목록
 
   @@index([email])
   @@index([nickname])
@@ -44,22 +43,22 @@ model Project {
   leaderId           String     // 프로젝트 리더 ID
   recruitmentTitle   String     // 모집글 제목
   projectTitle       String     // 프로젝트명
-  goal               String?    // 프로젝트 목표
+  goal               String     // 프로젝트 목표
   description        String     // 프로젝트 설명
   projectPeriodStart DateTime   // 프로젝트 시작 기간
   projectPeriodEnd   DateTime   // 프로젝트 종료 기간
   recruitmentStart   DateTime   // 모집 시작일
   recruitmentEnd     DateTime   // 모집 마감일
-  like               Int        @default(0)        // 좋아요
   hits               Int        @default(0)        // 조회수
-  createdAt          DateTime   @default(now()) // 생성일
+  createdAt          DateTime   @default(now())    // 생성일
+  notice             String     @default("")       // 공지사항 
 
   leader            User       @relation(fields: [leaderId], references: [id], onDelete: Cascade) // 프로젝트 리더
+  
   comments          Comment[]  // 프로젝트 관련 댓글
-  notices           Notice[]   // 프로젝트 공지사항
-  tags              ProjectTag[] // 프로젝트 관련 태그
+  projectTags       ProjectTag[] // 프로젝트 관련 태그
   applications      Apply[]    // 프로젝트 지원자 목록
-  member            Member[]   // 프로젝트 멤버 목록
+  members           Member[]   // 프로젝트 멤버 목록
   likes             Like[]     // 프로젝트가 받은 좋아요 목록
 
   @@index([leaderId])
@@ -109,28 +108,16 @@ model Apply {
   @@index([userId])
 }
 
-// 공지사항
-model Notice {
-  id         Int      @id @default(autoincrement()) // 공지 ID
-  projectId  Int      // 공지가 속한 프로젝트 ID
-  userId     String   // 작성자 ID
-  content    String   // 공지 내용
-  createdAt  DateTime @default(now()) // 작성일
-
-  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
 // 댓글
 model Comment {
   id             Int      @id @default(autoincrement()) // 댓글 ID
-  userId         String   // 작성자 ID
+  userId         String? @default("deleted_user") // 기본값을 지정해서 사용자가 삭제 되더라도 댓글은 남아있도록
   projectId      Int      // 프로젝트 ID
   parentCommentId Int?  // 부모 댓글 ID (대댓글)
   content        String   // 댓글 내용
   createdAt      DateTime @default(now()) // 작성일
 
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
   project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   parentComment  Comment? @relation("CommentToParent", fields: [parentCommentId], references: [id], onDelete: Cascade) // 부모 댓글
   replies        Comment[] @relation("CommentToParent") // 대댓글 목록
@@ -144,8 +131,8 @@ model Tag {
   id           Int    @id @default(autoincrement()) // 태그 ID
   tagName      String @unique // 태그명
 
-  projects     ProjectTag[] // 프로젝트 태그 관계
-  techStackTag TechStackTag[] // 기술 스택 태그 관계
+  projectTags     ProjectTag[] // 프로젝트 태그 관계
+  techStackTags TechStackTag[] // 기술 스택 태그 관계
 }
 
 // 프로젝트 태그 (다대다 관계)
