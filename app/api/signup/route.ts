@@ -4,11 +4,12 @@ import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository
 
 import type { UserSignUpDto } from "@/application/usecases/user/dtos/userPostDto";
 
-import { UserAuthUsecase } from "@/application/usecases/user/userAuthUsecase";
+import { UserAuthUsecase } from "@/application/usecases/user/userLoginUsecase";
+import { UserSignupUsecase } from "@/application/usecases/signup/userSignupUsecase";
 
 // 🔹 UserAuthUsecase 초기화
 const userRepository = new PsUserRepository();
-const userAuthUsecase = new UserAuthUsecase(userRepository);
+const userSignupUsecase = new UserSignupUsecase(userRepository);
 
 export async function POST(req: Request) {
   try {
@@ -28,8 +29,7 @@ export async function POST(req: Request) {
     }
 
     const profileImg = body.profileImg ?? "/defaultProfile.svg";
-
-    const createdUser = await userAuthUsecase.createUser({
+    const createdUser = await userSignupUsecase.execute({
       ...body,
       profileImg,
     } as UserSignUpDto);

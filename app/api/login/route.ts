@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository";
 
-import { UserAuthUsecase } from "@/application/usecases/user/userAuthUsecase";
+import { UserAuthUsecase } from "@/application/usecases/user/userLoginUsecase";
 
 const userRepository = new PsUserRepository();
 const userAuthUsecase = new UserAuthUsecase(userRepository);

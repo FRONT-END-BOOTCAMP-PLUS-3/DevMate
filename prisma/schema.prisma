@@ -174,3 +174,5 @@ model TechStackTag {
 
 // npx prisma migrate dev --name init
 // npx prisma migrate dev --name update
+// npx prisma db push 현재 스키마를 데이터베이스에 적용
+// npx prisma db pull 데이터베이스 스키마를 현재 스키마로 가져오기
