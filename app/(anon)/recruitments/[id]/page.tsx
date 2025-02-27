@@ -1,7 +1,6 @@
 import styles from "./RecruitmentDetail.module.scss";
 
-import type { UserDto } from "@/application/usecases/user/dtos/userDto";
-import type { CommentDto, ProjectDetailDto } from "@/application/usecases/projectDetail/dtos/projectDetailDto";
+import type { RecruitmentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
 
 import CommentForm from "./_components/CommentForm";
 import CommentContentList from "./_components/CommentContentList";
@@ -10,72 +9,76 @@ import RecruitmentContent from "./_components/RecruitmentContent";
 const RecruitmentDetail = () => {
   return (
     <div className={styles.container}>
-      <RecruitmentContent project={exampleProject} />
+      <RecruitmentContent project={exampleRecruitmentDetail} />
 
-      <CommentContentList comments={exampleProject.comments} />
+      <CommentContentList comments={exampleRecruitmentDetail.comments} />
 
-      <CommentForm projectId={exampleProject.id} />
+      <CommentForm projectId={exampleRecruitmentDetail.id} />
     </div>
   );
 };
 
 export default RecruitmentDetail;
 
-const exampleUser: UserDto = {
-  id: "user789",
-  nickname: "춘향이",
-  address: "Jeonju, Korea",
-  name: "Sung Chun-hyang",
-  email: "chun@example.com",
-  password: "password123",
-  birthDate: new Date("1992-02-02"),
-  gender: "female",
-  profileImg: "profile2.jpg",
-  career: 5,
-  createdAt: new Date(),
-  position: "백엔드",
-};
-
-const exampleComments: CommentDto[] = [
-  {
-    id: 1,
-    projectId: 1,
-    content: "정말 좋은 프로젝트네요! 같이 하고 싶어요!",
-    createdAt: new Date(),
-    user: exampleUser,
-    replies: [
-      {
-        id: 2,
-        projectId: 1,
-        parentCommentId: 1,
-        content: "저도 관심 있습니다!",
-        createdAt: new Date(),
-        user: exampleUser,
-      },
-      {
-        id: 3,
-        projectId: 1,
-        parentCommentId: 1,
-        content: "저도 관심 있습니다!",
-        createdAt: new Date(),
-        user: exampleUser,
-      },
-    ],
-  },
-];
-
-const exampleProject: ProjectDetailDto = {
+const exampleRecruitmentDetail: RecruitmentDetailDto = {
   id: 1,
-  recruitmentTitle: "함께 성장할 프론트엔드 개발자를 모집합니다!",
-  projectTitle: "스터디 관리 플랫폼",
-  goal: "개발자들을 위한 효율적인 스터디 관리 시스템 구축",
-  description: "이 프로젝트는 스터디 그룹을 쉽게 만들고 관리할 수 있도록 돕는 웹 애플리케이션입니다.",
-  projectPeriodStart: new Date("2025-03-01"),
-  projectPeriodEnd: new Date("2025-06-30"),
-  recruitmentStart: new Date("2025-02-20"),
-  recruitmentEnd: new Date("2025-02-29"),
-  hits: 150,
-  createdAt: new Date(),
-  leader: exampleUser,
-  comments: exampleComments,
+  leaderId: "leader123",
+  recruitmentTitle: "프론트엔드 개발자 모집",
+  projectTitle: "웹 서비스 개발 프로젝트",
+  goal: "React 기반 웹 서비스 개발",
+  description: "팀원들과 협업하여 프로젝트를 진행합니다.",
+  projectPeriodStart: new Date("2024-10-01"),
+  projectPeriodEnd: new Date("2025-03-31"),
+  recruitmentStart: new Date("2024-09-15"),
+  recruitmentEnd: new Date("2024-09-30"),
+  hits: 100,
+  createdAt: new Date("2024-09-15"),
+  notice: "매주 회의 진행 예정",
+
+  leader: {
+    id: "leader123",
+    nickname: "팀장",
+    profileImg: "https://example.com/profile/leader123.jpg",
+  },
+
+  comments: [
+    {
+      id: 1,
+      userId: "user456",
+      projectId: 1,
+      parentCommentId: null,
+      content: "이 프로젝트에 참여하고 싶습니다!",
+      createdAt: new Date("2024-09-16"),
+      user: {
+        id: "user456",
+        nickname: "개발자1",
+        profileImg: "https://example.com/profile/user456.jpg",
+      },
+      replies: [
+        {
+          id: 2,
+          userId: "leader123",
+          projectId: 1,
+          parentCommentId: 1,
+          content: "지원해 주셔서 감사합니다! DM 주세요.",
+          createdAt: new Date("2024-09-17"),
+          user: {
+            id: "leader123",
+            nickname: "팀장",
+            profileImg: "https://example.com/profile/leader123.jpg",
+          },
+          replies: [],
+        },
+      ],
+    },
+  ],
+
+  likes: [
+    {
+      id: 1,
+      userId: "user789",
+      projectId: 1,
+      createdAt: new Date("2024-09-18"),
+    },
+  ],
 };
