@@ -12,7 +12,7 @@ export default function MypageLayout({ children }: { children: ReactNode }) {
       <section className={styles.layout__sidebar}>
         <Sidebar />
       </section>
-      <main className={styles.layout__content}>{children}</main>
+      <div className={styles.layout__content}>{children}</div>
     </div>
   );
 }
