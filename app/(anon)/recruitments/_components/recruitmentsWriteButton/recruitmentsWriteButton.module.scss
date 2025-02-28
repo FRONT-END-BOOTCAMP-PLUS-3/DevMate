@@ -1,0 +1,11 @@
+.main{
+  &__write-button {
+    background: #333b3d;
+    color: white;
+    border: none;
+    padding: 15px 22px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+}

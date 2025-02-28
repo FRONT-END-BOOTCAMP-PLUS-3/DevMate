@@ -17,12 +17,11 @@
     margin-bottom: 32px;
     position: relative;
 
-    &-container{
+    &-container {
       width: 1080px;
       position: absolute;
       left: 17%;
-      top:25% ;
-      
+      top: 25%;
     }
 
     &-title {
@@ -32,33 +31,6 @@
 
     &-subtitle {
       font-size: 16px;
-
-    }
-  }
-
-  // 필터 (전체/모집중/모집완료)
-  &__filter {
-    font-weight: 500;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    height: 38px;
-
-    &-item {
-      width: 65px;
-      height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    color: #adb5bd;
-
-
-      &--active {
-        font-weight: bold;
-        height: 38px;
-        border-bottom: 2px solid #333b3d;
-        color: #333b3d;
-      }
     }
   }
 
@@ -67,96 +39,14 @@
     margin-bottom: 16px;
   }
 
-  &__search,
-  &__tag-search {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 12px;
-  }
-
-  &__search-input,
-  &__tag-input {
-    display: flex;
-    align-items: center;
-    border: 1px solid $color-solid-line;
-    padding: 15px;
-    flex-grow: 1;
-    border-radius: 4px;
-  }
-
-  &__search-input input,
-  &__tag-input input {
-    all: unset;
-    flex-grow: 1;
-    font-size: 14px;
-    width: 100%;
-  }
-
-  &__search-input input::placeholder,
-  &__tag-input input::placeholder {
-    color: $color-light-gray;
-    font-size: 14px;
-  }
-
-  &__search-icon,
-  &__tag-icon {
-    margin-right: 8px;
-    font-size: 15px;
-  }
-
-  &__search-button {
-    background: $color-main;
-    color: white;
-    border: none;
-    padding: 0px 28px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-
-  &__tag-reset {
-    background: white;
-    color: black;
-    border: 1px solid $color-light-gray;
-    padding: 0px 22px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-
   &__sort {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
-
-    &-options {
-      display: flex;
-      gap: 16px;
-      font-size: 14px;
-    }
-
-    &-item {
-      color: #adb5bd;
-      &--active {
-        color: black;
-        font-weight: bold;
-      }
-    }
-  }
-
-  &__write-button {
-    background: #333b3d;
-    color: white;
-    border: none;
-    padding: 15px 22px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 4px;
   }
 
   &__post-separator {
     border-bottom: 1px solid $color-solid-line;
   }
-
 }
