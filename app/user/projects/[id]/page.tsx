@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
 
@@ -18,6 +18,7 @@ import ApplicationsSection from "./_components/applicationsSection";
 import ClipLoader from "react-spinners/ClipLoader";
 
 export default function ProjectDetail() {
+  const router = useRouter();
   const projectId = Number(useParams().id);
   const [project, setProject] = useState<ProjectDetailDto | null>(null);
   const [loading, setLoading] = useState(true);
@@ -83,6 +84,12 @@ export default function ProjectDetail() {
     }
   };
 
+  const handleEdit = () => {
+    const edit = confirm("수정 페이지로 이동하시겠습니까?");
+    if (!edit) return;
+    router.push(`/user/projects/${projectId}/edit`);
+  };
+
   // 프로젝트 정보를 가져옴
   useEffect(() => {
     const fetchProjectDetail = async () => {
@@ -116,7 +123,18 @@ export default function ProjectDetail() {
   } else
     return (
       <div className={styles.container}>
-        <h1 className={styles.container__title}>{project.projectTitle}</h1>
+        <div className={styles.container__title}>
+          <h1>{project.projectTitle}</h1>
+          <div className={styles.container__title___buttons}>
+            <button type="button" onClick={handleEdit}>
+              수정
+            </button>
+            |
+            <button type="button" onClick={() => console.log("삭제")}>
+              삭제
+            </button>
+          </div>
+        </div>
 
         <div className={styles.container__content} style={{ width: "100%" }}>
           <h2>🎯 프로젝트 목표</h2>

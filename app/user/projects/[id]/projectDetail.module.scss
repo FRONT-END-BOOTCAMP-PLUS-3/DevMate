@@ -1,18 +1,33 @@
 .container {
   max-width: 768px;
   min-width: 768px;
-  padding: 40px 20px;
+  padding: 40px 20px 20px 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   word-break: keep-all;
   white-space: pre-line;
   line-height: 1.6;
+
+  > *:not(:first-child) {
+    margin-bottom: 20px;
+  }
 }
 
 .container__title {
-  font-size: 24px;
-  font-weight: bold;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  &__buttons {
+    font-size: 12px;
+  }
 }
 
 .container__content {
