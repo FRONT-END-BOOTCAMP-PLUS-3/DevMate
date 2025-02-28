@@ -6,9 +6,9 @@ import InputField from "@/components/inputField/inputField";
 
 import styles from "../projectDetail.module.scss";
 
-export default function NoticeSection({ notices }: { notices: { content: string }[] }) {
+export default function NoticeSection({ notice }: { notice: string }) {
   const [isNoticeEdit, setIsNoticeEdit] = useState(false);
-  const [noticeContent, setNoticeContent] = useState(notices[0]?.content || "");
+  const [noticeContent, setNoticeContent] = useState(notice || "");
 
   const handleNoticeClick = () => setIsNoticeEdit(!isNoticeEdit);
 
