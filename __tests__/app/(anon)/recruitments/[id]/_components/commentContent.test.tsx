@@ -1,29 +1,23 @@
 import CommentContent from "@/app/(anon)/recruitments/[id]/_components/commentContent";
 
-import type { Comment } from "@/domain/entities/comment";
+import type { CommentDetailDto } from "@/application/usecases/recruitment/dtos/recruitmentDetailDto";
 
 import { describe, it, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 
-const mockComment: Comment = {
+const mockComment: CommentDetailDto = {
   id: 1,
+  userId: "1",
   user: {
     id: "1",
-    email: "test@example.com",
-    password: "password",
-    name: "길동이",
     nickname: "길동이",
-    profileImg: "",
-    address: "Seoul",
-    birthDate: new Date(),
-    gender: "male",
-    position: "Developer",
-    career: 5,
-    createdAt: new Date(),
+    profileImg: "https://example.com/profile.jpg",
   },
+  projectId: 1,
+  parentCommentId: null,
   content: "테스트 댓글",
   createdAt: new Date(),
-  projectId: 1,
+  replies: [], // 대댓글 없음
 };
 
 describe("CommentContent", () => {
