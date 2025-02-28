@@ -6,11 +6,22 @@ import InputField from "@/components/inputField/inputField";
 
 import styles from "../projectDetail.module.scss";
 
-export default function NoticeSection({ notice }: { notice: string }) {
+interface NoticeSectionProps {
+  notice: string;
+  updateNotice: (newNotice: string) => void;
+}
+
+export default function NoticeSection({ notice, updateNotice }: NoticeSectionProps) {
   const [isNoticeEdit, setIsNoticeEdit] = useState(false);
   const [noticeContent, setNoticeContent] = useState(notice || "");
 
-  const handleNoticeClick = () => setIsNoticeEdit(!isNoticeEdit);
+  const handleNoticeClick = async () => {
+    if (!isNoticeEdit) {
+      setIsNoticeEdit(!isNoticeEdit);
+    } else {
+      updateNotice(noticeContent);
+    }
+  };
 
   return (
     <div className={styles.container__content}>
