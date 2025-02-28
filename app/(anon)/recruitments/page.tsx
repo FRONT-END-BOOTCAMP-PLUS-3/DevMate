@@ -1,5 +1,3 @@
-"use client";
-
 import styles from "./recruitments.module.scss";
 
 import RecruitmentsItem from "./_components/recruitmentsItem/recruitmentsItem";
