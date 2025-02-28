@@ -13,11 +13,12 @@ import type { ProjectDetailApplyDto } from "@/application/usecases/project/dtos/
 import { RejectApplicantUsecase } from "@/application/usecases/project/rejectApplicantUsecase";
 import { GetProjectDetailUsecase } from "@/application/usecases/project/getProjectDetailUsecase";
 
-export async function GET(req: Request, { params }: { params: { id: number } }) {
+export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const projectRepository: ProjectRepository = new PsProjectRepository();
   const getProjectDetailUsecase: GetProjectDetailUsecase = new GetProjectDetailUsecase(projectRepository);
 
-  const projectId = params.id;
+  const projectId = parseInt(params.id, 10);
   if (isNaN(projectId)) {
     return NextResponse.json({ error: "Invalid project ID" }, { status: 400 });
   }
@@ -30,12 +31,13 @@ export async function GET(req: Request, { params }: { params: { id: number } }) 
   return NextResponse.json(projectDetailDto);
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: number } }) {
+export async function PATCH(req: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const applyRepository: ApplyRepository = new PsApplyRepository();
   const userRepository: UserRepository = new PsUserRepository();
   const rejectApplicantUsecase: RejectApplicantUsecase = new RejectApplicantUsecase(applyRepository, userRepository);
 
-  const applyId = params.id;
+  const applyId = parseInt(params.id, 10);
   if (isNaN(applyId)) {
     return NextResponse.json({ error: "Invalid Apply Id" }, { status: 400 });
   }

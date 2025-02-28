@@ -6,7 +6,8 @@ import type { ProjectRepository } from "@/domain/repositories/projectRepository"
 
 import { UpdateNoticeUsecase } from "@/application/usecases/project/updateNoticeUsecase";
 
-export async function PATCH(req: Request, { params }: { params: { id: number } }) {
+export async function PATCH(req: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const projectRepository: ProjectRepository = new PsProjectRepository();
   const updateNoticeUsecase = new UpdateNoticeUsecase(projectRepository);
 
@@ -17,7 +18,7 @@ export async function PATCH(req: Request, { params }: { params: { id: number } }
     return NextResponse.json({ error: "Invalid or missing 'notice' value" }, { status: 400 });
   }
 
-  const projectId = params.id;
+  const projectId = parseInt(params.id, 10);
   if (isNaN(projectId)) {
     return NextResponse.json({ error: "Invalid project ID" }, { status: 400 });
   }
