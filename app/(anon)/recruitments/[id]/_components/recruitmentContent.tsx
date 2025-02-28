@@ -4,6 +4,9 @@ import React from "react";
 
 import Button from "@/components/button/button";
 
+import { formatDateTime } from "@/utils/formatDateTime";
+import { formatDateToString } from "@/utils/formatDateToString";
+
 import styles from "./recruitmentContent.module.scss";
 
 import type { RecruitmentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
@@ -37,7 +40,7 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
         <div className={styles["recruitmentContent__author"]}>{leader.nickname}</div>
         <div className={styles["recruitmentContent__meta"]}>
           <span className={styles["recruitmentContent__date"]}>
-            작성일 {createdAt.toLocaleString()} | 조회수 {hits}
+            작성일 {formatDateTime(createdAt)} | 조회수 {hits}
           </span>
           <span className={styles["recruitmentContent__actions"]}>
             <button className={styles["recruitmentContent__actions__button"]}>수정</button>|
@@ -58,13 +61,13 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
           <p className={styles["recruitmentContent__subtitle"]}>
             📆 진행 기간
             <span>
-              {projectPeriodStart.toLocaleDateString()} ~ {projectPeriodEnd.toLocaleDateString()}
+              {formatDateToString(projectPeriodStart)} ~ {formatDateToString(projectPeriodEnd)}
             </span>
           </p>
           <p className={styles["recruitmentContent__subtitle"]}>
             📆 모집 기간
             <span>
-              {recruitmentStart.toLocaleDateString()} ~ {recruitmentEnd.toLocaleDateString()}
+              {formatDateToString(recruitmentStart)} ~ {formatDateToString(recruitmentEnd)}
             </span>
           </p>
         </div>
