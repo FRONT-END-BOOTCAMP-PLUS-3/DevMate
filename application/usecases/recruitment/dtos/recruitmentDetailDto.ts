@@ -1,5 +1,5 @@
 import type { LikeDto } from "../../dtos/LikeDto";
-import type { UserDto } from "../../user/dtos/userDto";
+import type { UserDto } from "../../dtos/userDto";
 import type { ProjectDto } from "../../dtos/projectDto";
 import type { CommentDto } from "../../dtos/commentDto";
 

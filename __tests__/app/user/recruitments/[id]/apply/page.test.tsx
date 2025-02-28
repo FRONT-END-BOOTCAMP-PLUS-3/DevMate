@@ -8,7 +8,7 @@ describe("Apply Component", () => {
 
     expect(screen.getByText("프로젝트 지원서 작성")).toBeInTheDocument();
     expect(screen.getByText("희망하는 직무")).toBeInTheDocument();
-    expect(screen.getByText("자기소개 (개발 역량 등)")).toBeInTheDocument();
+    expect(screen.getByText("자기소개")).toBeInTheDocument();
     expect(screen.getByText("포트폴리오 (선택 사항)")).toBeInTheDocument();
     expect(screen.getByText("취소")).toBeInTheDocument();
     expect(screen.getByText("제출")).toBeInTheDocument();
