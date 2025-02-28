@@ -25,7 +25,7 @@ const ApplicantDetails = ({ applicant }: ApplicantDetailsProps) => {
       }).map(([label, value]) => (
         <li key={label} className={styles.modal__list_item}>
           <span>{label}</span>{" "}
-          {value === undefined ? "값 없음" : value instanceof Date ? formatDateToString(value) : String(value)}
+          {value === undefined ? "값 없음" : label === "생년월일" ? formatDateToString(new Date(value)) : String(value)}
         </li>
       ))}
       <li className={styles.modal__list_item}>
