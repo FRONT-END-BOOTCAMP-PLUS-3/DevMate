@@ -2,10 +2,10 @@ import { type Dispatch, type ChangeEvent, type FocusEvent, useCallback } from "r
 
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
 
-import type { SelectOption } from "@/types";
+import type { AddressCode, SelectOption } from "@/types";
 import type { MultiValue, SingleValue } from "react-select";
 
-import type { postCode, SignupState, SignupAction } from "./use-signupReducer";
+import type { SignupState, SignupAction } from "./use-signupReducer";
 
 import { checkEmailDup } from "../apis/checkEmailDup";
 
@@ -51,7 +51,7 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
   };
 
   //  주소 변경 핸들러
-  const addressChangeHandler = (address: postCode) => {
+  const addressChangeHandler = (address: AddressCode) => {
     dispatch({ type: "SET_ADDRESS", address });
   };
 

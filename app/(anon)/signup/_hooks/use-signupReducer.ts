@@ -1,12 +1,7 @@
 import { useReducer } from "react";
 
-import type { SelectOption } from "@/types";
+import type { AddressCode, SelectOption } from "@/types";
 import type { MultiValue, SingleValue } from "react-select";
-
-export interface postCode {
-  address: string;
-  zonecode: number | string;
-}
 
 export interface SignupState {
   email: string;
@@ -20,7 +15,7 @@ export interface SignupState {
     day: number;
   };
   position: SelectOption | null;
-  address: postCode;
+  address: AddressCode;
   career: SelectOption | null;
   profileImg?: string;
   stack?: readonly SelectOption[];
@@ -36,7 +31,7 @@ export type SignupAction =
   | { type: "SET_POSITION"; value: SingleValue<SelectOption> | null }
   | { type: "SET_CAREER"; value: SingleValue<SelectOption> | null }
   | { type: "SET_TECH_STACK"; value: MultiValue<SelectOption> }
-  | { type: "SET_ADDRESS"; address: postCode }
+  | { type: "SET_ADDRESS"; address: AddressCode }
   | { type: "SET_GENDER"; gender: string }
   | { type: "SET_ERRORS"; errors: SignupState["errors"] }
   | { type: "SET_SUCCESS_MESSAGES"; successMessages: SignupState["successMessages"] } // ✅ 성공 메시지 추가
