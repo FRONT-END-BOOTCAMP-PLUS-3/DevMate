@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 
 import styles from "./commentContent.module.scss";
 
-import type { CommentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
+import type { CommentDetailDto } from "@/application/usecases/recruitment/dtos/recruitmentDetailDto";
 
 import CommentForm from "./commentForm";
 
