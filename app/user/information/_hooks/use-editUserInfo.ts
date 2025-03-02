@@ -6,7 +6,6 @@ import type { MultiValue, SingleValue } from "react-select";
 export interface editUserInfoState {
   profileImg?: string;
   nickname: string;
-  bio?: string; // ✅ 자기소개 추가
   career: SelectOption | null;
   stack?: readonly SelectOption[];
   position: SelectOption | null;
@@ -43,7 +42,6 @@ const editUserInfoReducer = (state: editUserInfoState, action: editUserInfoActio
 export const initialState: editUserInfoState = {
   profileImg: "",
   nickname: "",
-  bio: "",
   career: {
     value: "",
     label: "",
