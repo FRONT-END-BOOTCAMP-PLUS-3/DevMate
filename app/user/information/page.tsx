@@ -1,13 +1,14 @@
-// 마이페이지 - 계정 정보
 "use client";
 import Image from "next/image";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "@/components/button/button";
 import Selector from "@/components/selector/selector";
 import InputField from "@/components/inputField/inputField";
 import AddressSearch from "@/app/(anon)/signup/_components/addressSearch";
+
+import { decodeToken } from "@/utils/cookie";
 
 import styles from "./information.module.scss";
 
@@ -21,7 +22,7 @@ import { useEditUserInfo } from "./_hooks/use-editUserInfo";
 
 import { FaSearch } from "react-icons/fa";
 
-export default function Page() {
+export default function Information() {
   const {
     red,
     button__icon,
@@ -37,6 +38,8 @@ export default function Page() {
   const { state, dispatch } = useEditUserInfo();
   const [edit, setEdit] = useState<boolean>(false);
   const [isAddrSearchOpen, setIsAddrSearchOpen] = useState(false);
+  const [userId, setUserId] = useState<string>("");
+  const [userInfo, setUserInfo] = useState<any>(null);
   const editClickHandler = () => setEdit(!edit);
 
   const selectChangeHandler = (
@@ -51,7 +54,33 @@ export default function Page() {
       dispatch({ type: "SET_CAREER", value: selected as SingleValue<SelectOption> | null });
     }
   };
+  console.log(userId, "//", userInfo);
+  useEffect(() => {
+    const getTokenAndUserInfo = async () => {
+      try {
+        const id = await decodeToken("id");
 
+        setUserId(id as string); // 디코딩된 ID로 상태 업데이트
+        const response = await fetch("/api/information", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: id }),
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch user information.");
+        }
+        const data = await response.json();
+        setUserInfo(data); // 사용자 정보 상태 업데이트
+      } catch (error) {
+        setUserInfo(null); // 오류 발생 시 사용자 정보 초기화
+      }
+    };
+
+    getTokenAndUserInfo();
+  }, []); // 컴포넌트가 처음 렌더링될 때만 실행
+  // axios로 변경
   return (
     <div className={container}>
       <div className={container__title}>
@@ -67,14 +96,6 @@ export default function Page() {
           <InfoUserRow title="닉네임" edit={edit}>
             <InputField name="nickname" type="text" placeholder="닉네임" value={state.nickname} />
           </InfoUserRow>
-          <InfoUserRow title="자기소개" edit={edit}>
-            <InputField
-              name="bio"
-              type="text"
-              placeholder="나만의 스킬, 깃허브 링크 등으로 소개글을 채워보세요."
-              value={state.bio}
-            />
-          </InfoUserRow>
           <InfoUserRow title="경력유무" edit={edit}>
             <Selector
               name="career"
@@ -85,16 +106,6 @@ export default function Page() {
               onChange={(selected) => selectChangeHandler(selected, "career")}
             />
           </InfoUserRow>
-          <InfoUserRow title="기술스택" edit={edit}>
-            <Selector
-              name="stack"
-              placeholder="# 태그"
-              isMulti={true}
-              options={TECH_STACK_OPTIONS}
-              selectedValue={state.stack ?? []}
-              onChange={(selected) => selectChangeHandler(selected, "stack")}
-            />
-          </InfoUserRow>
           <InfoUserRow title="직무" edit={edit}>
             <Selector
               name="position"
@@ -103,6 +114,16 @@ export default function Page() {
               options={POSITION_OPTIONS}
               selectedValue={state.position ?? []}
               onChange={(selected) => selectChangeHandler(selected, "position")}
+            />
+          </InfoUserRow>
+          <InfoUserRow title="기술스택" edit={edit}>
+            <Selector
+              name="stack"
+              placeholder="# 태그"
+              isMulti={true}
+              options={TECH_STACK_OPTIONS}
+              selectedValue={state.stack ?? []}
+              onChange={(selected) => selectChangeHandler(selected, "stack")}
             />
           </InfoUserRow>
           <InfoUserRow title="거주지" edit={edit}>
