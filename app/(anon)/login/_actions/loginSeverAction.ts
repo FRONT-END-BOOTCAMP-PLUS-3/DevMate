@@ -36,9 +36,7 @@ export async function loginSeverAction(state: { message: string } | { redirectUr
   const cookieStore = await cookies();
 
   // action 함수가 아닌 route에서 쿠키를 다루는 방법은 : https://nextjs.org/docs/pages/building-your-application/authentication#stateless-sessions
-  cookieStore.set({
-    name: "token",
-    value: token,
+  cookieStore.set("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "development",
     path: "/",
