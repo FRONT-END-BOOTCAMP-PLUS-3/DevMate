@@ -1,24 +1,81 @@
-.information {
-  &__title-container {
-    display: flex;
-    align-items: end;
-    gap: 13px;
-    margin-bottom: 10px;
-  }
+.container {
+  display: flex;
+  flex-direction: column;
 
   &__title {
-    color: $color-main;
-    font-size: 25px;
+    display: flex;
+    align-items: flex-end;
+    gap: 13px;
+    margin-bottom: 10px;
+    h1 {
+      color: $color-main;
+      font-size: 25px;
+    }
   }
-
   &__subtitle {
     font-size: 16px;
     font-weight: 500;
     padding-bottom: 3px;
   }
-
   &__separator {
     border-bottom: 1px solid $color-solid-line;
     margin-bottom: 16px;
   }
+  &__section {
+    display: flex;
+    margin-top: 30px;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-radius: 10px;
+    border: 1px solid $color-solid-line;
+    padding: 36px 30px;
+    gap: 70px;
+    &__content {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      gap: 15px;
+    }
+    &__button {
+      height: 36px;
+    }
+  }
+  &__img {
+    display: flex;
+    padding: 12px 10px;
+    gap: 10px;
+    height: 100%;
+    &__title {
+      display: flex;
+      font-size: 16px;
+      min-width: 100px;
+    }
+  }
+}
+.userInfoRow {
+  display: flex;
+  align-items: center;
+  padding: 12px 10px;
+  gap: 10px;
+  height: 48px;
+  &__title {
+    display: flex;
+    font-size: 16px;
+    min-width: 100px;
+  }
+  &__input {
+    width: 100%;
+  }
+  &__info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 36px;
+    font-size: 16px;
+  }
+}
+.red {
+  border: none;
+  color: $color-white;
+  background-color: $color-red;
 }
