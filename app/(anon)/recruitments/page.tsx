@@ -1,5 +1,6 @@
 import styles from "./recruitments.module.scss";
 
+import { mockData } from "./mockData";
 import RecruitmentsItem from "./_components/recruitmentsItem/recruitmentsItem";
 import RecruitmentsSearch from "./_components/recruitmentsSearch/recruitmentsSearch";
 import RecruitmentsFilters from "./_components/recruitmentsFilters/recruitmentsFilters";
@@ -39,7 +40,9 @@ export default function Recruitments() {
 
         {/* 글 리스트 */}
         <div className={styles["main__post-list"]}>
-          <RecruitmentsItem />
+          {mockData.map((item) => (
+            <RecruitmentsItem key={item.id} recruitmentData={item} />
+          ))}
         </div>
       </div>
     </div>
