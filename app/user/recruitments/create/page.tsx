@@ -4,11 +4,12 @@ import { useState } from "react";
 
 import { DateRange } from "react-date-range";
 
-import styles from "./Create.module.scss";
+import styles from "./create.module.scss";
 
 import type { SelectionRange } from "react-date-range";
 
 import Toolbar from "../_components/Toolbar/toolbar";
+import CreateTags from "./_components/createTags/createTags";
 
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -81,7 +82,7 @@ export default function Create() {
       {/* 📌 Tiptap 에디터 */}
       <label className={styles["create__label"]}>✏️ 모집내용</label>
       <div className={styles["create__editor"]}>
-        <Toolbar editor={editor} /> {/* 툴바 추가 */}
+        <Toolbar editor={editor} />
         <EditorContent className={styles["create__editor-content"]} editor={editor} />
       </div>
 
@@ -109,7 +110,7 @@ export default function Create() {
 
       {/* 태그 입력 */}
       <label className={styles["create__label"]}>📎 태그</label>
-      <input className={styles["create__input"]} placeholder="태그를 설정하세요 (최대 10개)" />
+      <CreateTags />
 
       {/* 버튼 */}
       <div className={styles["create__buttons"]}>
