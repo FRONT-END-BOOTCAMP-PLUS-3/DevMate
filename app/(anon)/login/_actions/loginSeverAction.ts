@@ -1,9 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
-export async function loginSeverAction(state: { message: string }, formData: FormData) {
+export async function loginSeverAction(state: { message: string } | { redirectUrl: string }, formData: FormData) {
   console.log(formData);
   // 폼 데이터에서 username과 password 추출
   const email = formData.get("email");
@@ -55,5 +54,5 @@ export async function loginSeverAction(state: { message: string }, formData: For
   const redirectUrl = returnUrl ? decodeURIComponent(returnUrl) : "/recruitments";
 
   // 로그인 성공 시 메인 페이지로 리다이렉트
-  redirect(redirectUrl);
+  return { redirectUrl };
 }

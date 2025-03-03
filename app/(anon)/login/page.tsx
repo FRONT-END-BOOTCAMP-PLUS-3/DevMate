@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 
 import Button from "@/components/button/button";
 import InputField from "@/components/inputField/inputField";
@@ -20,6 +21,12 @@ const initialState = {
 export default function Login() {
   const { container, container__links, container__social, container__social__icon, container__social__text } = styles;
   const [state, formAction, pending] = useActionState(loginSeverAction, initialState);
+  const router = useRouter();
+  useEffect(() => {
+    if (state.redirectUrl) {
+      router.push(state.redirectUrl); // 렌더링 후에 리디렉션을 처리
+    }
+  }, [state.redirectUrl, router]);
 
   return (
     <div className={container}>
