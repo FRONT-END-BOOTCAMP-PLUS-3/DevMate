@@ -15,9 +15,9 @@ export default function RecruitmentsItem() {
             <Badge color="primary" fontColor="white" width={60} height={24} borderRadius={16} fontSize={12}>
               모집중
             </Badge>
-            <h2 className={styles["main__post-title"]}>프로젝트 제목</h2>
+            <h2 className={styles["main__post-title"]}>모집글 제목</h2>
           </div>
-          <p className={styles["main__post-description"]}>프로젝트 설명이 여기에 들어갑니다.</p>
+          <p className={styles["main__post-description"]}>모집글 설명이 여기에 들어갑니다.</p>
           <RecruitmentsTag tags={["Next.js", "React"]} />
           <div className={styles["main__post-meta"]}>
             <div>

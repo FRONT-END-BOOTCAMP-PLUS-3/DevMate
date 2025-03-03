@@ -43,10 +43,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-top: 25px;
   }
 
   &__post-separator {
     border-bottom: 1px solid $color-solid-line;
+    margin-top: 27px;
   }
 }
