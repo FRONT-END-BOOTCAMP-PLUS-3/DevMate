@@ -42,7 +42,11 @@ export default function AuthSection({ isLogIn }: AuthSectionProps) {
       document.removeEventListener("mousedown", handleClickOutsideHandler);
     };
   }, []);
-
+  /*
+  useEffect(() => {
+    setIsLoggedIn(isLogIn);
+  }, [isLogIn]);
+*/
   return isLoggedIn ? (
     <div className={styles.header__profile} ref={dropdownRef}>
       <button onClick={handleProfileClickHandler} className={styles.header__profileButton}>
