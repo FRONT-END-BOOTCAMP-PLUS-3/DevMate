@@ -25,6 +25,7 @@ import type {
 
 import InfoUserRow from "./_components/infoUserRow";
 import { useEditUserInfo } from "./_hooks/use-editUserInfo";
+import { DeleteAccountModal } from "./_components/deleteAccountModal";
 
 import { FaSearch } from "react-icons/fa";
 
@@ -46,7 +47,7 @@ export default function Information() {
   const [userDetailInfo, setUserDetailInfo] = useState<UserEditInfoDto>();
   const [edit, setEdit] = useState<boolean>(false);
   const [isAddrSearchOpen, setIsAddrSearchOpen] = useState(false);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const selectChangeHandler = (
     selected: SingleValue<SelectOption> | MultiValue<SelectOption> | null,
     name?: string,
@@ -169,7 +170,12 @@ export default function Information() {
           <InfoUserRow title="성별" isDefault info={userBasicInfo?.gender} />
           <InfoUserRow title="생일" isDefault info={userBasicInfo?.birthDate} />
         </div>
-        <Button size="long" variant="sub" className={`${container__section__button} ${red}`}>
+        <Button
+          onClick={() => setIsModalOpen(true)}
+          size="long"
+          variant="sub"
+          className={`${container__section__button} ${red}`}
+        >
           게정탈퇴
         </Button>
       </section>
@@ -179,6 +185,7 @@ export default function Information() {
           handleComplete={() => setIsAddrSearchOpen(!isAddrSearchOpen)}
         />
       )}
+      {isModalOpen && <DeleteAccountModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} userId="" />}
     </div>
   );
 }
