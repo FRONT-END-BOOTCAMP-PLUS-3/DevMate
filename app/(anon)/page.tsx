@@ -1,8 +1,9 @@
-"use client";
-
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function HomePage() {
+  redirect("/recruitments");
+
   return (
     <div>
       <h1>Welcome to Our Service</h1>
