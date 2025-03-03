@@ -14,6 +14,7 @@ import { FaHeart, FaEye, FaComment } from "react-icons/fa";
 interface RecruitmentsItemProps {
   recruitmentData: {
     id: number; // 모집글 id
+    recruitmentEnd: Date; // 모집 종료일
     recruitmentTitle: string; // 모집글 제목
     description: string; // 모집글 설명
     createdAt: Date; // 업로드 날짜
@@ -33,13 +34,21 @@ export default function RecruitmentsItem({ recruitmentData }: RecruitmentsItemPr
   const goDetailHandler = () => {
     router.push(`/recruitments/${recruitmentData.id}`);
   };
+
+  // 모집 종료일이 현재 시간보다 이전이면 '모집완료', 아니면 '모집중'
+  const isRecruitmentActive = new Date() < recruitmentData.recruitmentEnd;
+  const badgeText = isRecruitmentActive ? "모집중" : "모집완료";
+
+  // 배지 색상 조건 설정
+  const badgeColor = isRecruitmentActive ? "primary" : "darkGray";
+
   return (
     <div onClick={goDetailHandler}>
       <div className={styles["main__post-item"]}>
         <div className={styles["main__post-content"]}>
           <div className={styles["main__post-header"]}>
-            <Badge color="primary" fontColor="white" width={60} height={24} borderRadius={16} fontSize={12}>
-              모집중
+            <Badge color={badgeColor} fontColor="white" width={60} height={24} borderRadius={16} fontSize={12}>
+              {badgeText}
             </Badge>
             <h2 className={styles["main__post-title"]}>{recruitmentData.recruitmentTitle}</h2>
           </div>

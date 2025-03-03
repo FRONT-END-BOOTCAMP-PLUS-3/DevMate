@@ -5,13 +5,13 @@ export const mockData = [
     recruitmentTitle: "프론트엔드 개발자 모집", // 모집글 제목
     description: "팀원들과 협업하여 프로젝트를 진행합니다.", // 모집글 설명
     hits: 100, // 조회수 개수
-    createdAt: new Date("2025-03-03 14:23:37"), // 업로드 날짜
+    createdAt: new Date("2025-03-01 14:23:37"), // 업로드 날짜
     leader: {
       id: "leader123", // 리더 id
       nickname: "hhi9037", // 리더 닉네임
     },
-    recruitmentStart: new Date("2024-09-15"),
-    recruitmentEnd: new Date("2024-09-30"),
+    recruitmentStart: new Date("2025-03-01 14:23:37"),
+    recruitmentEnd: new Date("2025-03-03 14:23:37"),
     projectTags: [
       { id: 1, projectTags: "프론트엔드" },
       { id: 2, projectTags: "포트폴리오" },
@@ -52,8 +52,8 @@ export const mockData = [
       id: "leader456",
       nickname: "코딩마스터",
     },
-    recruitmentStart: new Date("2024-09-20"),
-    recruitmentEnd: new Date("2024-10-05"),
+    recruitmentStart: new Date("2025-03-02 14:23:37"),
+    recruitmentEnd: new Date("2025-03-20 16:21:37"),
     projectTags: [
       { id: 3, projectTags: "백엔드" },
       { id: 4, projectTags: "Node.js" },
