@@ -1,3 +1,6 @@
+"use client";
+import { useRouter } from "next/navigation";
+
 import Badge from "@/components/badge/badge";
 
 import { elapsedText } from "@/utils/elapsedText";
@@ -25,10 +28,13 @@ interface RecruitmentsItemProps {
 }
 
 export default function RecruitmentsItem({ recruitmentData }: RecruitmentsItemProps) {
-  console.log(recruitmentData.createdAt);
-  console.log(elapsedText(recruitmentData.createdAt));
+  const router = useRouter();
+
+  const goDetailHandler = () => {
+    router.push(`/recruitments/${recruitmentData.id}`);
+  };
   return (
-    <div>
+    <div onClick={goDetailHandler}>
       <div className={styles["main__post-item"]}>
         <div className={styles["main__post-content"]}>
           <div className={styles["main__post-header"]}>
