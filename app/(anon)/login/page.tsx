@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
-import { useActionState, useEffect } from "react";
+import { useActionState } from "react";
 
 import Button from "@/components/button/button";
 import InputField from "@/components/inputField/inputField";
@@ -21,12 +20,6 @@ const initialState = {
 export default function Login() {
   const { container, container__links, container__social, container__social__icon, container__social__text } = styles;
   const [state, formAction, pending] = useActionState(loginSeverAction, initialState);
-  const router = useRouter();
-  useEffect(() => {
-    if (state.redirectUrl) {
-      router.push(state.redirectUrl); // 렌더링 후에 리디렉션을 처리
-    }
-  }, [state.redirectUrl, router]);
 
   return (
     <div className={container}>
@@ -38,9 +31,11 @@ export default function Login() {
         <InputField type="email" name="email" label="이메일" placeholder="이메일" />
         <InputField type="password" name="password" label="비밀번호" placeholder="비밀번호" />
         {state.message && <div>😒 오류 : {state.message}</div>}
+
         <Button type="submit" size="long" disabled={pending}>
           로그인
         </Button>
+
         <div className={container__links}>
           <Link href="/login/find/password">비밀번호 찾기</Link>|<Link href="/signup">회원가입</Link>|
           <Link href="/login/find/id">아이디 찾기</Link>
