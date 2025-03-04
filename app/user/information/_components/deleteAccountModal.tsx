@@ -18,12 +18,12 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({ isOpen, 
   const handleConfirmationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
     setConfirmationText(text);
-    setIsDisabled(text !== "정말 탈퇴하겠습니다");
+    setIsDisabled(text !== "탈퇴하겠습니다");
   };
 
   // 계정 탈퇴 API 호출 함수
   const handleDelete = async () => {
-    if (confirmationText !== "정말 탈퇴하겠습니다") return;
+    if (confirmationText !== "탈퇴하겠습니다") return;
 
     setIsLoading(true);
 
@@ -46,20 +46,18 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({ isOpen, 
       setIsLoading(false);
     }
   };
-  // 수정필요요
-  const inputClass = confirmationText === "정말로 탈퇴하겠습니다" ? styles.valid : styles.invalid;
+  const inputClass = confirmationText === "탈퇴하겠습니다" ? styles.valid : styles.invalid;
   return isOpen ? (
     <div className={styles.modal__overlay}>
       <div className={styles.modal__content}>
         <h2 className={styles.modal__title}>계정 탈퇴</h2>
         <p className={styles.modal__description}>정말로 계정을 탈퇴하시겠습니까?</p>
-        <p className={styles.modal__confirmation}>정말로 탈퇴하겠습니다</p>
         <input
           type="text"
           className={`${styles.modal__input} ${inputClass}`}
           value={confirmationText}
           onChange={handleConfirmationChange}
-          placeholder="정말 탈퇴하겠습니다"
+          placeholder="탈퇴하겠습니다"
         />
         {error && <p className={styles.modal__error}>{error}</p>}
         <div className={styles.modal__button__box}>
