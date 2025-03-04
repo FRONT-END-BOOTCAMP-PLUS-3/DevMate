@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { useMemo, useState } from "react";
 
 import styles from "./commentContent.module.scss";
