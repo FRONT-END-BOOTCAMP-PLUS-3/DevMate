@@ -1,6 +1,6 @@
 import styles from "./recruitmentDetail.module.scss";
 
-import type { RecruitmentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
+import type { RecruitmentDetailDto } from "@/application/usecases/recruitment/dtos/recruitmentDetailDto";
 
 import CommentForm from "./_components/commentForm";
 import CommentContentList from "./_components/commentContentList";

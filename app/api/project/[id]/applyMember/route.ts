@@ -6,7 +6,6 @@ import { PsMemberRepository } from "@/infrastructure/repositories/psMemberReposi
 
 import type { UserRepository } from "@/domain/repositories/userRepository";
 import type { ApplyRepository } from "@/domain/repositories/applyRepository";
-import type { MemberRepository } from "@/domain/repositories/memberRepository";
 import type { ProjectDetailApplyDto } from "@/application/usecases/project/dtos/projectDetailApplyDto";
 import type { ProjectDetailMemberDto } from "@/application/usecases/project/dtos/projectDetailMemberDto";
 
