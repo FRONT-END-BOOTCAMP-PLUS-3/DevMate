@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import styles from "./likeButton.module.scss";
 
@@ -16,6 +16,8 @@ interface LikeButtonProps {
 const LikeButton: React.FC<LikeButtonProps> = ({ projectId, likes }) => {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes.length);
+
+  console.log(projectId, "빌드에러때문에 잠시 적어둠");
 
   // ✅ 초기 마운트 시, 사용자가 좋아요를 눌렀는지 확인
   // useEffect(() => {
