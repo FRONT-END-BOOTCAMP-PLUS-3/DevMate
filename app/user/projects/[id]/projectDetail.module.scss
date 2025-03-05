@@ -1,15 +1,27 @@
 .container {
   max-width: 768px;
   min-width: 768px;
-  padding: 40px 20px 20px 20px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   word-break: keep-all;
   white-space: pre-line;
   line-height: 1.6;
 
-  > *:not(:first-child) {
+  > * {
     margin-bottom: 20px;
+  }
+
+  &__title_big {
+    font-size: 24px;
+    font-weight: bold;
+    color: $color-main;
+    margin-bottom: 10px;
+  }
+
+  &__divider {
+    border-bottom: 1px solid $color-solid-line;
+    margin-bottom: 30px;
   }
 
   &__button_exit {
@@ -31,7 +43,7 @@
   align-items: flex-end;
 
   h1 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
   }
 
@@ -50,8 +62,9 @@
   border-radius: 4px;
   min-height: 100%;
 
-  h2 {
+  label {
     font-size: 18px;
+    font-weight: bold;
   }
 
   p {
@@ -161,4 +174,17 @@
   justify-content: center;
   align-items: center;
   color: $color-red;
+}
+
+//edit 페이지
+.container {
+  &__calendar_project {
+    margin-bottom: 20px;
+  }
+
+  &__button_save {
+    align-self: flex-end;
+    display: flex;
+    gap: 10px;
+  }
 }
