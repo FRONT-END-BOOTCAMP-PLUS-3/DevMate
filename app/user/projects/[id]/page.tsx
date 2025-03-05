@@ -130,6 +130,28 @@ export default function ProjectDetail() {
     }
   };
 
+  const deleteProject = async () => {
+    const confirmDelete = confirm("정말 프로젝트를 삭제하시겠습니까? 프로젝트 관련 정보가 영구 삭제됩니다.");
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`/api/project/${projectId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("프로젝트 삭제 실패");
+      }
+
+      alert("프로젝트 삭제에 성공했습니다.");
+
+      setTimeout(() => router.push("/user/information"), 100);
+    } catch (error) {
+      console.error("❌ 프로젝트 삭제 실패.", error);
+      alert("프로젝트 삭제 중 오류가 발생했습니다.");
+    }
+  };
+
   const handleEdit = () => {
     const edit = confirm("수정 페이지로 이동하시겠습니까?");
     if (!edit) return;
@@ -176,7 +198,7 @@ export default function ProjectDetail() {
               수정
             </button>
             |
-            <button type="button" onClick={() => console.log("삭제")}>
+            <button type="button" onClick={deleteProject}>
               삭제
             </button>
           </div>
