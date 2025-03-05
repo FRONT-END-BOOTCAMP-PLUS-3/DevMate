@@ -5,7 +5,7 @@ import { PsProjectRepository } from "@/infrastructure/repositories/psProjectRepo
 import type { ProjectRepository } from "@/domain/repositories/projectRepository";
 import type { ProjectDetailDto } from "@/application/usecases/project/dtos/projectDetailDto";
 
-import { UpdateNoticeUsecase } from "@/application/usecases/project/updateNoticeUsecase";
+import { UpdateProjectUsecase } from "@/application/usecases/project/updateProjectUsecase";
 import { DeleteProjectUsecase } from "@/application/usecases/project/deleteProjectUsecase";
 import { GetProjectDetailUsecase } from "@/application/usecases/project/getProjectDetailUsecase";
 
@@ -28,29 +28,48 @@ export async function GET(req: Request, props: { params: Promise<{ id: string }>
 }
 
 export async function PATCH(req: Request, props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const projectRepository: ProjectRepository = new PsProjectRepository();
-  const updateNoticeUsecase = new UpdateNoticeUsecase(projectRepository);
+  try {
+    const params = await props.params;
+    const projectRepository: ProjectRepository = new PsProjectRepository();
+    const updateProjectUsecase = new UpdateProjectUsecase(projectRepository);
 
-  // 요청 바디에서 notice 값을 추출
-  const { notice } = await req.json();
+    const projectId = parseInt(params.id, 10);
+    if (isNaN(projectId)) {
+      return NextResponse.json({ error: "Invalid project ID" }, { status: 400 });
+    }
 
-  if (!notice || typeof notice !== "string") {
-    return NextResponse.json({ error: "Invalid or missing 'notice' value" }, { status: 400 });
+    // 요청 바디에서 업데이트할 데이터 추출
+    const { projectTitle, goal, projectPeriodStart, projectPeriodEnd, notice } = await req.json();
+
+    // 필수 값 체크 (최소한 하나의 값은 있어야 함)
+    if (
+      projectTitle === undefined &&
+      goal === undefined &&
+      projectPeriodStart === undefined &&
+      projectPeriodEnd === undefined &&
+      notice === undefined
+    ) {
+      return NextResponse.json({ error: "At least one field must be provided for update" }, { status: 400 });
+    }
+
+    // 업데이트 실행
+    const updatedProject = await updateProjectUsecase.execute(projectId, {
+      projectTitle,
+      goal,
+      projectPeriodStart: projectPeriodStart ? new Date(projectPeriodStart) : undefined,
+      projectPeriodEnd: projectPeriodEnd ? new Date(projectPeriodEnd) : undefined,
+      notice,
+    });
+
+    if (!updatedProject) {
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(updatedProject);
+  } catch (error) {
+    console.error("❌ 프로젝트 업데이트 오류:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
-
-  const projectId = parseInt(params.id, 10);
-  if (isNaN(projectId)) {
-    return NextResponse.json({ error: "Invalid project ID" }, { status: 400 });
-  }
-
-  // 프로젝트 notice 업데이트 실행
-  const updatedProject = await updateNoticeUsecase.execute(projectId, notice);
-  if (!updatedProject) {
-    return NextResponse.json({ error: "Project not found" }, { status: 404 });
-  }
-
-  return NextResponse.json(updatedProject);
 }
 
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
