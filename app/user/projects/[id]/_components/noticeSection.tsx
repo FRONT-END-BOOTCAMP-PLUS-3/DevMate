@@ -9,9 +9,10 @@ import styles from "../projectDetail.module.scss";
 interface NoticeSectionProps {
   notice: string;
   updateNotice: (newNotice: string) => void;
+  userRole: string;
 }
 
-export default function NoticeSection({ notice, updateNotice }: NoticeSectionProps) {
+export default function NoticeSection({ notice, updateNotice, userRole }: NoticeSectionProps) {
   const [isNoticeEdit, setIsNoticeEdit] = useState(false);
   const [noticeContent, setNoticeContent] = useState(notice || "");
 
@@ -27,9 +28,11 @@ export default function NoticeSection({ notice, updateNotice }: NoticeSectionPro
     <div className={styles.container__content}>
       <div className={styles.container__notice__header}>
         <h2>📌 공지사항</h2>
-        <button type="button" onClick={handleNoticeClick} className={isNoticeEdit ? styles.edit : styles.complete}>
-          {isNoticeEdit ? "완료" : "수정"}
-        </button>
+        {userRole === "leader" && (
+          <button type="button" onClick={handleNoticeClick} className={isNoticeEdit ? styles.edit : styles.complete}>
+            {isNoticeEdit ? "완료" : "수정"}
+          </button>
+        )}
       </div>
 
       {isNoticeEdit ? (

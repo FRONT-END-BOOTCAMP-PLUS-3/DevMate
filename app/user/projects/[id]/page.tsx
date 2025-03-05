@@ -28,6 +28,7 @@ export default function ProjectDetail() {
   const [error, setError] = useState<string | null>(null);
   const [refresh, setRefresh] = useState<boolean>(false);
   const [decodedId, setdecodedId] = useState<string | null>(null);
+  const [userRole, setUserRole] = useState<"leader" | "member" | "guest">("guest");
 
   /* ---------------------------------- api call function --------------------------------- */
   const updateNotice = async (newNotice: string) => {
@@ -173,6 +174,17 @@ export default function ProjectDetail() {
           throw new Error(`Error: ${response.status}`);
         }
         const data: ProjectDetailDto = await response.json();
+
+        if (!decodedId) {
+          setUserRole("guest");
+        } else if (data.leaderId === decodedId) {
+          setUserRole("leader");
+        } else if (data.members?.some((member) => member.user?.id === decodedId)) {
+          setUserRole("member");
+        } else {
+          setUserRole("guest");
+        }
+
         setProject(data);
       } catch (err) {
         setError((err as Error).message);
@@ -181,8 +193,10 @@ export default function ProjectDetail() {
       }
     };
 
-    fetchProjectDetail();
-  }, [projectId, refresh]);
+    if (decodedId) {
+      fetchProjectDetail();
+    }
+  }, [projectId, refresh, decodedId]);
 
   /* ---------------------------------- return --------------------------------- */
   if (loading) {
@@ -191,13 +205,25 @@ export default function ProjectDetail() {
         <ClipLoader color="#868e96" loading={loading} size={100} aria-label="Loading Spinner" />
       </div>
     );
-  } else if (error || !project) {
+  }
+
+  if (error) {
     return <div className={styles.error}>오류가 발생했습니다: {error}</div>;
-  } else
-    return (
-      <div className={styles.container}>
-        <div className={styles.container__title}>
-          <h1>{project.projectTitle}</h1>
+  }
+
+  if (userRole === "guest") {
+    return <div className={styles.error}>❌ 접근 권한이 없습니다.</div>;
+  }
+
+  if (!project) {
+    return <div className={styles.error}>프로젝트 정보를 불러올 수 없습니다.</div>;
+  }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.container__title}>
+        <h1>{project.projectTitle}</h1>
+        {userRole === "leader" && (
           <div className={styles.container__title___buttons}>
             <button type="button" onClick={handleEdit}>
               수정
@@ -207,39 +233,44 @@ export default function ProjectDetail() {
               삭제
             </button>
           </div>
+        )}
+      </div>
+
+      <div className={styles.container__content} style={{ width: "100%" }}>
+        <h2>🎯 프로젝트 목표</h2>
+        <p>{project.goal}</p>
+      </div>
+
+      <div className={styles.container__row_2}>
+        <div className={styles.container__content}>
+          <h2>🗓️ 진행 기간</h2>
+          <p>
+            {formatDateToString(project.projectPeriodStart)}
+            <br />~ {formatDateToString(project.projectPeriodEnd)}
+          </p>
         </div>
 
-        <div className={styles.container__content} style={{ width: "100%" }}>
-          <h2>🎯 프로젝트 목표</h2>
-          <p>{project.goal}</p>
-        </div>
+        {/* 공지사항 */}
+        <NoticeSection notice={project.notice} updateNotice={updateNotice} userRole={userRole} />
+      </div>
 
-        <div className={styles.container__row_2}>
-          <div className={styles.container__content}>
-            <h2>🗓️ 진행 기간</h2>
-            <p>
-              {formatDateToString(project.projectPeriodStart)}
-              <br />~ {formatDateToString(project.projectPeriodEnd)}
-            </p>
-          </div>
-
-          {/* 공지사항 */}
-          <NoticeSection notice={project.notice} updateNotice={updateNotice} />
-        </div>
-
-        {/* 신청 현황 */}
+      {/* 신청 현황 */}
+      {userRole === "leader" && (
         <ApplicationsSection
           applications={project.applications || null}
           acceptApplicant={acceptApplicant}
           rejectApplicant={rejectApplicant}
         />
+      )}
 
-        {/* 참여 멤버 */}
-        <MembersSection members={project.members || null} />
+      {/* 참여 멤버 */}
+      <MembersSection members={project.members || null} />
 
+      {userRole === "member" && (
         <button className={styles.container__button_exit} type="button" onClick={() => deleteMember(decodedId)}>
           프로젝트 나가기
         </button>
-      </div>
-    );
+      )}
+    </div>
+  );
 }
