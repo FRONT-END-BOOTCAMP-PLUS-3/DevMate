@@ -27,7 +27,7 @@ export default function NoticeSection({ notice, updateNotice, userRole }: Notice
   return (
     <div className={styles.container__content}>
       <div className={styles.container__notice__header}>
-        <h2>📌 공지사항</h2>
+        <label>📌 공지사항</label>
         {userRole === "leader" && (
           <button type="button" onClick={handleNoticeClick} className={isNoticeEdit ? styles.edit : styles.complete}>
             {isNoticeEdit ? "완료" : "수정"}

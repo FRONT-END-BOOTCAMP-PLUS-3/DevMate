@@ -221,6 +221,9 @@ export default function ProjectDetail() {
 
   return (
     <div className={styles.container}>
+      <h1 className={styles.container__title_big}>프로젝트 상세</h1>
+      <div className={styles.container__divider} />
+
       <div className={styles.container__title}>
         <h1>{project.projectTitle}</h1>
         {userRole === "leader" && (
@@ -237,13 +240,13 @@ export default function ProjectDetail() {
       </div>
 
       <div className={styles.container__content} style={{ width: "100%" }}>
-        <h2>🎯 프로젝트 목표</h2>
+        <label>🎯 프로젝트 목표</label>
         <p>{project.goal}</p>
       </div>
 
       <div className={styles.container__row_2}>
         <div className={styles.container__content}>
-          <h2>🗓️ 진행 기간</h2>
+          <label>🗓️ 진행 기간</label>
           <p>
             {formatDateToString(project.projectPeriodStart)}
             <br />~ {formatDateToString(project.projectPeriodEnd)}

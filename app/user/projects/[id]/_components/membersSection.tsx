@@ -19,7 +19,7 @@ export default function MembersSection({ members }: MembersSectionProps) {
 
   return (
     <div className={styles.container__content} style={{ width: "50%" }}>
-      <h2>✨ 참여 멤버</h2>
+      <label>✨ 참여 멤버</label>
       <Table
         headers={[
           { key: "user", label: "이름" },

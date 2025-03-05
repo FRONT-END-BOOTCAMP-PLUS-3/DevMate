@@ -61,7 +61,7 @@ export default function ApplicationsSection({
 
   return (
     <div className={styles.container__content}>
-      <h2>🙆‍♀️ 신청 현황</h2>
+      <label>🙆‍♀️ 신청 현황</label>
       <Table
         headers={[
           { key: "user", label: "이름" },
