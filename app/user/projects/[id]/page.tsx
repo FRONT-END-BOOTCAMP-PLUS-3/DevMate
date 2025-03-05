@@ -18,7 +18,9 @@ import ApplicationsSection from "./_components/applicationsSection";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
+/* ---------------------------------- component --------------------------------- */
 export default function ProjectDetail() {
+  /* ---------------------------------- state --------------------------------- */
   const router = useRouter();
   const projectId = Number(useParams().id);
   const [project, setProject] = useState<ProjectDetailDto | null>(null);
@@ -27,21 +29,7 @@ export default function ProjectDetail() {
   const [refresh, setRefresh] = useState<boolean>(false);
   const [decodedId, setdecodedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchDecodedToken = async () => {
-      try {
-        const id = await decodeToken("id");
-        if (typeof id === "string") {
-          setdecodedId(id);
-        }
-      } catch (error) {
-        console.error("토큰 디코딩 실패:", error);
-      }
-    };
-
-    fetchDecodedToken();
-  }, []);
-
+  /* ---------------------------------- api call function --------------------------------- */
   const updateNotice = async (newNotice: string) => {
     try {
       const response = await fetch(`/api/project/${projectId}`, {
@@ -152,13 +140,29 @@ export default function ProjectDetail() {
     }
   };
 
+  /* ---------------------------------- event handler --------------------------------- */
   const handleEdit = () => {
     const edit = confirm("수정 페이지로 이동하시겠습니까?");
     if (!edit) return;
     router.push(`/user/projects/${projectId}/edit`);
   };
 
-  // 프로젝트 정보를 가져옴
+  /* ---------------------------------- useEffect --------------------------------- */
+  useEffect(() => {
+    const fetchDecodedToken = async () => {
+      try {
+        const id = await decodeToken("id");
+        if (typeof id === "string") {
+          setdecodedId(id);
+        }
+      } catch (error) {
+        console.error("토큰 디코딩 실패:", error);
+      }
+    };
+
+    fetchDecodedToken();
+  }, []);
+
   useEffect(() => {
     const fetchProjectDetail = async () => {
       setLoading(true);
@@ -180,6 +184,7 @@ export default function ProjectDetail() {
     fetchProjectDetail();
   }, [projectId, refresh]);
 
+  /* ---------------------------------- return --------------------------------- */
   if (loading) {
     return (
       <div className={styles.loading}>
