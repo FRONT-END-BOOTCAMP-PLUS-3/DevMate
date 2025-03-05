@@ -15,6 +15,7 @@ import AddressSearch from "./addressSearch";
 import BirthSelector from "./birthSelector";
 import GenderSelector from "./genderSelector";
 
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { useSignupHandlers } from "@/app/(anon)/signup/_hooks/use-signupHandlers";
 
 interface SignUpFormProps {
@@ -38,7 +39,7 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
   const [isAddrSearchOpen, setIsAddrSearchOpen] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState<string | null>(null); // 🔹 비밀번호 확인 에러 상태 추가
-
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <form className={container}>
       <div className={container__inputblock}>
@@ -67,12 +68,14 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
       />
       <InputField
         name="passwordConfirm"
-        type="password"
+        type={showPassword ? "text" : "password"}
         label="비밀번호 확인"
         value={passwordConfirm}
         onChange={(e) => setPasswordConfirm(e.target.value)}
         onBlur={() => onBlurPwdConfHandler(passwordConfirm, setPasswordConfirmError)}
         error={passwordConfirmError}
+        icon={showPassword ? FaRegEye : FaRegEyeSlash}
+        onIconClick={() => setShowPassword((prev) => !prev)}
       />
 
       <div className={container__inputblock}>
