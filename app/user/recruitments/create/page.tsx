@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { DateRange } from "react-date-range";
 
-import styles from "./Create.module.scss";
+import styles from "./create.module.scss";
 
 import type { SelectionRange } from "react-date-range";
 
@@ -35,9 +35,11 @@ export default function Create() {
       key: "selection",
     },
   ]);
+  /*
   const [content, setContent] = useState(
     `🗺️ 프로젝트를 진행할 지역 : \n🌱 모집 요건(인원수, 기술스택 등) : \n📞 지원 방법 (이메일, 카카오 오픈채팅방, 구글폼 등) : \n😆 팀원은 이런 사람이였으면 좋겠어요 : \n📢 사전 공지사항 :`,
   );
+  */
 
   const editor = useEditor({
     extensions: [

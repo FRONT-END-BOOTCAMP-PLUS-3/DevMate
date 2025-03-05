@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export async function loginSeverAction(state: { message: string }, formData: FormData) {
+export async function loginSeverAction(state: { message: string } | { redirectUrl: string }, formData: FormData) {
   console.log(formData);
   // 폼 데이터에서 username과 password 추출
   const email = formData.get("email");
@@ -37,9 +37,7 @@ export async function loginSeverAction(state: { message: string }, formData: For
   const cookieStore = await cookies();
 
   // action 함수가 아닌 route에서 쿠키를 다루는 방법은 : https://nextjs.org/docs/pages/building-your-application/authentication#stateless-sessions
-  cookieStore.set({
-    name: "token",
-    value: token,
+  cookieStore.set("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "development",
     path: "/",
@@ -54,6 +52,8 @@ export async function loginSeverAction(state: { message: string }, formData: For
   // returnUrl이 있는 경우 디코딩 후 리다이렉트
   const redirectUrl = returnUrl ? decodeURIComponent(returnUrl) : "/recruitments";
 
+  console.log("==== actions/login 로그인 성공 요청====");
+  console.log("로그인 성공, redirectUrl:", redirectUrl);
   // 로그인 성공 시 메인 페이지로 리다이렉트
   redirect(redirectUrl);
 }

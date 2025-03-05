@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Button from "@/components/button/button";
 import InputField from "@/components/inputField/inputField";
 
 import styles from "./apply.module.scss";
 
-import type { Project } from "@/domain/entities/project";
+import type { ProjectDto } from "@/application/usecases/dtos/projectDto";
 
 const Apply: React.FC = () => {
-  const [project, setProject] = useState<Project>();
+  const [project, setProject] = useState<ProjectDto>();
 
   const [form, setForm] = useState({
     job: "",

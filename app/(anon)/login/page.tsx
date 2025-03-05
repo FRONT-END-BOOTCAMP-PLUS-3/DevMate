@@ -31,9 +31,11 @@ export default function Login() {
         <InputField type="email" name="email" label="이메일" placeholder="이메일" />
         <InputField type="password" name="password" label="비밀번호" placeholder="비밀번호" />
         {state.message && <div>😒 오류 : {state.message}</div>}
+
         <Button type="submit" size="long" disabled={pending}>
           로그인
         </Button>
+
         <div className={container__links}>
           <Link href="/login/find/password">비밀번호 찾기</Link>|<Link href="/signup">회원가입</Link>|
           <Link href="/login/find/id">아이디 찾기</Link>

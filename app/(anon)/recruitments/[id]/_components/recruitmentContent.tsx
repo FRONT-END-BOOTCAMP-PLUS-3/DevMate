@@ -6,7 +6,7 @@ import Button from "@/components/button/button";
 
 import styles from "./recruitmentContent.module.scss";
 
-import type { RecruitmentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
+import type { RecruitmentDetailDto } from "@/application/usecases/recruitment/dtos/recruitmentDetailDto";
 
 import LikeButton from "./likeButton";
 
