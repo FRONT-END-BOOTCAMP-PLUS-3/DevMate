@@ -1,6 +1,7 @@
 import type { UserDto } from "@/application/usecases/dtos/userDto";
 import type { SignupState } from "@/app/(anon)/signup/_hooks/use-signupReducer";
-import { UserEditInfoDto } from "@/application/usecases/information/dtos/infoUserDto";
+import type { editUserInfoState } from "@/app/user/information/_hooks/use-editUserInfo";
+import type { UserEditInfoDto } from "@/application/usecases/information/dtos/infoUserDto";
 
 function transformCareer(careerValue: string): number {
   return careerValue === "student" || careerValue === "job-seeker" ? 0 : Number(careerValue);
@@ -20,13 +21,14 @@ export function transformUserData(data: SignupState): Omit<UserDto, "id" | "crea
     profileImg: data.profileImg || null, // 빈 문자열이면 null 처리
   };
 }
-function transformUserInfoDto(data: ): UserEditInfoDto {
+
+export function transformUserInfo(data: editUserInfoState): UserEditInfoDto {
   return {
     profileImg: data.profileImg,
     nickname: data.nickname,
-    career: careerMapping[data.career.value] ?? undefined,
-    position: data.position?.value,
-    techStackTags: data.stack?.map((item: any) => item.value),
+    career: transformCareer(String(data.career ? data.career.value : 0)),
+    position: data.position ? String(data.position.value) : "",
+    //techStackTags: data.stack?.map((item: any) => item.value),
     address: data.address?.address,
   };
 }

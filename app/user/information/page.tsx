@@ -10,6 +10,7 @@ import InputField from "@/components/inputField/inputField";
 import AddressSearch from "@/app/(anon)/signup/_components/addressSearch";
 
 import { decodeToken } from "@/utils/cookie";
+import { transformUserInfo } from "@/utils/transformData";
 
 import styles from "./information.module.scss";
 
@@ -43,6 +44,7 @@ export default function Information() {
     container__img__title,
   } = styles;
   const { state, dispatch } = useEditUserInfo();
+  const [userId, setUserId] = useState<string>();
   const [userBasicInfo, setUserBasicInfo] = useState<UserNonEditInfoDto>();
   const [userDetailInfo, setUserDetailInfo] = useState<UserEditInfoDto>();
   const [edit, setEdit] = useState<boolean>(false);
@@ -67,21 +69,51 @@ export default function Information() {
       value: e.target.value,
     });
   };
-  const editClickHandler = () => {
-    setEdit(!edit);
-    console.log(state);
+  const editClickHandler = async () => {
+    if (!state) {
+      console.error("유저 정보가 없습니다.");
+    }
+    const userDetailInfoApiData = transformUserInfo(state);
+    try {
+      if (!userId) {
+        throw new Error("사용자 ID를 가져올 수 없습니다.");
+      }
+
+      const response = await fetch("/api/information", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, ...userDetailInfoApiData }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch user information.");
+      }
+      setEdit((prev) => !prev);
+    } catch (error) {
+      console.error(error);
+    }
   };
+  useEffect(() => {
+    const fetchUserId = async () => {
+      const id = await decodeToken("id");
+      setUserId(id as string);
+    };
+    fetchUserId();
+  }, []);
 
   useEffect(() => {
     const getTokenAndUserInfo = async () => {
       try {
-        const id = await decodeToken("id");
+        if (!userId) {
+          throw new Error("사용자 ID를 가져올 수 없습니다.");
+        }
         const response = await fetch("/api/information", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userId: id }),
+          body: JSON.stringify({ userId }),
         });
         if (!response.ok) {
           throw new Error("Failed to fetch user information.");
@@ -93,8 +125,10 @@ export default function Information() {
         console.error(error);
       }
     };
-    getTokenAndUserInfo();
-  }, []);
+    if (userId) {
+      getTokenAndUserInfo();
+    }
+  }, [edit, userId]);
   // axios로 변경
   return (
     <div className={container}>
@@ -185,7 +219,7 @@ export default function Information() {
           handleComplete={() => setIsAddrSearchOpen(!isAddrSearchOpen)}
         />
       )}
-      {isModalOpen && <DeleteAccountModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} userId="" />}
+      {isModalOpen && <DeleteAccountModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} userId={userId} />}
     </div>
   );
 }
