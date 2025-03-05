@@ -11,6 +11,16 @@
   > *:not(:first-child) {
     margin-bottom: 20px;
   }
+
+  &__button_exit {
+    align-self: center;
+    width: fit-content;
+    padding: 5px 20px;
+    color: $color-white;
+    font-weight: bold;
+    background-color: $color-red;
+    border-radius: 4px;
+  }
 }
 
 .container__title {

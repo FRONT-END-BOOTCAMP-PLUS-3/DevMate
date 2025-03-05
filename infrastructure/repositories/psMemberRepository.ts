@@ -15,6 +15,10 @@ export class PsMemberRepository implements MemberRepository {
     });
     return createdMember;
   }
+  async findByUserProject(userId: string, projectId: number): Promise<Member | null> {
+    const memberData = await prisma.member.findFirst({ where: { userId, projectId } });
+    return memberData;
+  }
   async delete(id: number): Promise<void> {
     await prisma.member.delete({ where: { id } });
   }

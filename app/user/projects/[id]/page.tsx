@@ -25,14 +25,14 @@ export default function ProjectDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refresh, setRefresh] = useState<boolean>(false);
-  const [decodeId, setDecodeId] = useState<string | null>(null);
+  const [decodedId, setdecodedId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDecodedToken = async () => {
       try {
         const id = await decodeToken("id");
         if (typeof id === "string") {
-          setDecodeId(id);
+          setdecodedId(id);
         }
       } catch (error) {
         console.error("토큰 디코딩 실패:", error);
@@ -98,6 +98,35 @@ export default function ProjectDetail() {
     } finally {
       setLoading(false);
       setRefresh((prev) => !prev);
+    }
+  };
+
+  const deleteMember = async (userId: string | null) => {
+    if (!userId) {
+      alert("유효하지 않은 사용자입니다.");
+      return;
+    }
+
+    const confirmDelete = confirm("정말 프로젝트를 나가시겠습니까? 지원 정보가 영구 삭제됩니다.");
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`/api/project/${projectId}/applyMember`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("멤버 삭제 실패");
+      }
+
+      alert("프로젝트 나가기에 성공했습니다.");
+
+      setTimeout(() => setRefresh((prev) => !prev), 100);
+    } catch (error) {
+      console.error("❌ 프로젝트 나가기 실패.", error);
+      alert("프로젝트 나가기 중 오류가 발생했습니다.");
     }
   };
 
@@ -180,6 +209,10 @@ export default function ProjectDetail() {
 
         {/* 참여 멤버 */}
         <MembersSection members={project.members || null} />
+
+        <button className={styles.container__button_exit} type="button" onClick={() => deleteMember(decodedId)}>
+          프로젝트 나가기
+        </button>
       </div>
     );
 }

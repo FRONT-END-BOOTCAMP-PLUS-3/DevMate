@@ -7,12 +7,17 @@ const prisma = new PrismaClient();
 
 export class PsApplyRepository implements ApplyRepository {
   async findById(id: number): Promise<Apply | null> {
-    const applyData = prisma.apply.findUnique({ where: { id } });
+    const applyData = await prisma.apply.findUnique({ where: { id } });
+    return applyData;
+  }
+
+  async findByUserProject(userId: string, projectId: number): Promise<Apply | null> {
+    const applyData = await prisma.apply.findFirst({ where: { userId, projectId } });
     return applyData;
   }
 
   async updateStatus(id: number, status: string): Promise<Apply> {
-    const applyUpdateData = prisma.apply.update({
+    const applyUpdateData = await prisma.apply.update({
       where: { id },
       data: { status },
     });
