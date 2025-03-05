@@ -4,6 +4,7 @@ import { useRouter, useParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
 
+import { decodeToken } from "@/utils/cookie";
 import { formatDateToString } from "@/utils/formatDateToString";
 
 import styles from "./projectDetail.module.scss";
@@ -24,6 +25,22 @@ export default function ProjectDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refresh, setRefresh] = useState<boolean>(false);
+  const [decodeId, setDecodeId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDecodedToken = async () => {
+      try {
+        const id = await decodeToken("id");
+        if (typeof id === "string") {
+          setDecodeId(id);
+        }
+      } catch (error) {
+        console.error("토큰 디코딩 실패:", error);
+      }
+    };
+
+    fetchDecodedToken();
+  }, []);
 
   const updateNotice = async (newNotice: string) => {
     try {
