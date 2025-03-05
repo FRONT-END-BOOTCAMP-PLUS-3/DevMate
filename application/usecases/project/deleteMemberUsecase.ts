@@ -12,21 +12,26 @@ export class DeleteMemberUsecase {
   ) { }
 
   async execute(userId: string, projectId: number): Promise<void> {
-    const [applyData, memberData]: [ProjectDetailApplyDto | null, ProjectDetailMemberDto | null] = await Promise.all([
-      this.applyRepository.findByUserProject(userId, projectId),
-      this.memberRepository.findByUserProject(userId, projectId),
-    ]);
+    try {
+      const [applyData, memberData]: [ProjectDetailApplyDto | null, ProjectDetailMemberDto | null] = await Promise.all([
+        this.applyRepository.findByUserProject(userId, projectId),
+        this.memberRepository.findByUserProject(userId, projectId),
+      ]);
 
-    const deletePromises: Promise<void>[] = [];
+      const deletePromises: Promise<void>[] = [];
 
-    if (applyData) {
-      deletePromises.push(this.applyRepository.delete(applyData.id));
+      if (applyData) {
+        deletePromises.push(this.applyRepository.delete(applyData.id));
+      }
+
+      if (memberData) {
+        deletePromises.push(this.memberRepository.delete(memberData.id));
+      }
+
+      await Promise.all(deletePromises);
+    } catch (error) {
+      console.error("Error executing DeleteMemberUsecase:", error);
+      throw new Error("멤버 삭제에 실패했습니다.");
     }
-
-    if (memberData) {
-      deletePromises.push(this.memberRepository.delete(memberData.id));
-    }
-
-    await Promise.all(deletePromises);
   }
 }

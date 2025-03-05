@@ -16,7 +16,6 @@ export class DeleteProjectUsecase {
       console.log(`프로젝트 삭제 완료 (ID: ${id})`);
     } catch (error) {
       console.error(`프로젝트 삭제 중 오류 발생 (ID: ${id}):`, error);
-      throw new Error("프로젝트 삭제에 실패했습니다.");
     }
   }
 }
