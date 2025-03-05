@@ -17,6 +17,7 @@ interface AuthSectionProps {
 export default function AuthSection({ isLogIn }: AuthSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(isLogIn);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutsideHandler = (event: MouseEvent) => {

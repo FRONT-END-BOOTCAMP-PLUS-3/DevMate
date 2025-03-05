@@ -48,3 +48,17 @@ export async function decodeToken(value?: DecodedInfo): Promise<DecodedToken | s
     }
   }
 }
+export async function getAuthStatus(): Promise<boolean> {
+  const cookieStore = await cookies();
+  return cookieStore.has("token");
+}
+export async function removeAuthToken() {
+  try {
+    const cookieStore = await cookies();
+    // 'token' 쿠키를 삭제
+    cookieStore.delete("token");
+  } catch (error) {
+    console.error("쿠키 삭제 중 오류 발생:", error);
+    throw new Error("쿠키 삭제에 실패했습니다.");
+  }
+}

@@ -1,4 +1,4 @@
-import { type Dispatch, type ChangeEvent, type FocusEvent, useCallback } from "react";
+import { type Dispatch, type ChangeEvent, type FocusEvent } from "react";
 
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
 
@@ -72,7 +72,7 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
       nickname: (val) => (/[^a-zA-Z0-9가-힣]/.test(val) ? ERROR_MESSAGES.NICKNAME_INVALID_CHARACTERS : null),
     };
 
-    const errorMessage = validationRules[name]?.(value) || null;
+    const errorMessage = Object.hasOwn(validationRules, name) ? validationRules[name]?.(value) || null : null;
 
     dispatch({
       type: "SET_ERRORS",
