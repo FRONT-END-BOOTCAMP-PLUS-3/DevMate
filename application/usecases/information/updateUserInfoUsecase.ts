@@ -40,7 +40,7 @@ export class UpdateUserInfoUsecase {
         position: userInfo.position,
         address: userInfo.address ? this.encryptAddress(userInfo.address) : "",
       };
-      console.log("user야", userInfo.techStackTags);
+
       const tagId = userInfo.techStackTags ? await this.tagRepository.getTagIds(userInfo.techStackTags) : [];
 
       await this.techStackTagRepository.createMultiple(userId, tagId);
