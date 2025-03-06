@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import styles from "./commentContent.module.scss";
 
@@ -15,17 +15,25 @@ interface CommentProps {
   replies?: CommentDetailDto[];
 }
 
-const CommentContent: React.FC<CommentProps> = ({ comment, replies: comments }) => {
+const CommentContent: React.FC<CommentProps> = ({ comment, replies }) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
 
   const handleDelete = async () => {
-    await fetch(`/api/comments?id=${comment.id}`, { method: "DELETE" });
-  };
+    try {
+      const response = await fetch(`/api/recruitments/${comment.projectId}/comment?id=${comment.id}`, {
+        method: "DELETE",
+      });
 
-  const replies = useMemo(
-    () => comments?.filter((c) => c.parentCommentId === comment.id) || [],
-    [comments, comment.id],
-  );
+      if (!response.ok) {
+        throw new Error("댓글 생성에 실패했습니다.");
+      }
+
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
 
   return (
     <div className={styles["commentContent"]} style={{ marginLeft: comment.parentCommentId ? "20px" : "0px" }}>
@@ -39,7 +47,9 @@ const CommentContent: React.FC<CommentProps> = ({ comment, replies: comments }) 
           className={styles["commentContent__avatar"]}
         />
         <div>
-          <p className={styles["commentContent__nickname"]}>{comment.user.nickname}</p>
+          <p className={styles["commentContent__nickname"]}>
+            {comment.user.nickname ? comment.user.nickname : "탈퇴한 사용자"}
+          </p>
           <p className={styles["commentContent__date"]}>{new Date(comment.createdAt).toLocaleDateString()}</p>
         </div>
       </div>
@@ -52,14 +62,12 @@ const CommentContent: React.FC<CommentProps> = ({ comment, replies: comments }) 
       {showReplyForm && (
         <CommentForm
           projectId={comment.projectId}
-          parentId={comment.id}
+          parentId={comment.parentCommentId ? comment.parentCommentId : comment.id}
           onClickCloseReplyForm={() => setShowReplyForm(!showReplyForm)}
         />
       )}
 
-      {replies.map((reply) => (
-        <CommentContent key={reply.id} comment={reply} replies={comments} />
-      ))}
+      {replies && replies.map((reply) => <CommentContent key={reply.id} comment={reply} />)}
     </div>
   );
 };
