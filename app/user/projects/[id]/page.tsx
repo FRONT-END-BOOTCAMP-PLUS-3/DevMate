@@ -267,7 +267,7 @@ export default function ProjectDetail() {
       )}
 
       {/* 참여 멤버 */}
-      <MembersSection members={project.members || null} />
+      <MembersSection members={project.members || null} leaderId={project.leaderId} />
 
       {userRole === "member" && (
         <button className={styles.container__button_exit} type="button" onClick={() => deleteMember(decodedId)}>

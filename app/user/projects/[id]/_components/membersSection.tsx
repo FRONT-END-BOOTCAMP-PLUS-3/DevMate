@@ -8,14 +8,19 @@ import type { ProjectDetailMemberDto } from "@/application/usecases/project/dtos
 
 interface MembersSectionProps {
   members: ProjectDetailMemberDto[] | null;
+  leaderId: string;
 }
 
-export default function MembersSection({ members }: MembersSectionProps) {
-  const transformedMembers = members?.map((mem) => ({
-    ...mem,
-    position: typeof mem.user === "object" ? mem.user.position : mem.user,
-    user: typeof mem.user === "object" ? mem.user.name : mem.user,
-  }));
+export default function MembersSection({ members, leaderId }: MembersSectionProps) {
+  const transformedMembers = members?.map((mem) => {
+    const isLeader = mem.user?.id === leaderId;
+
+    return {
+      ...mem,
+      position: typeof mem.user === "object" ? mem.user.position : mem.user,
+      user: typeof mem.user === "object" ? `${mem.user.name}${isLeader ? " 👑" : ""}` : mem.user,
+    };
+  });
 
   return (
     <div className={styles.container__content} style={{ width: "50%" }}>
