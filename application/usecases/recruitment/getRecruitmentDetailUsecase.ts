@@ -2,7 +2,7 @@ import type { ProjectRepository } from "@/domain/repositories/projectRepository"
 
 import type { CommentDetailDto, RecruitmentDetailDto } from "./dtos/recruitmentDetailDto";
 
-export class DfGetProjectDetailUsecase {
+export class GetProjectDetailUsecase {
   constructor(private repository: ProjectRepository) {}
 
   async execute(id: number): Promise<RecruitmentDetailDto | null> {
