@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { decodeToken } from "@/utils/cookie";
 
 import styles from "./commentContent.module.scss";
 
@@ -16,9 +18,16 @@ interface CommentProps {
 }
 
 const CommentContent: React.FC<CommentProps> = ({ comment, replies }) => {
+  const [userId, setUserId] = useState<string | null>(null);
   const [showReplyForm, setShowReplyForm] = useState(false);
 
-  const handleDelete = async () => {
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  const deleteComment = async () => {
+    if (!validation()) return;
+
     try {
       const response = await fetch(`/api/recruitments/${comment.projectId}/comment?id=${comment.id}`, {
         method: "DELETE",
@@ -32,6 +41,30 @@ const CommentContent: React.FC<CommentProps> = ({ comment, replies }) => {
     } catch (error) {
       console.error(error);
       return null;
+    }
+  };
+
+  const validation = () => {
+    if (!confirm("해당 댓글을 삭제하시겠습니까?")) {
+      return false;
+    }
+
+    if (userId !== comment.userId) {
+      alert("권한이 없습니다.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const fetchUserId = async () => {
+    try {
+      const decoded = await decodeToken("id");
+      if (typeof decoded === "string") {
+        setUserId(decoded);
+      }
+    } catch {
+      setUserId(null);
     }
   };
 
@@ -56,7 +89,7 @@ const CommentContent: React.FC<CommentProps> = ({ comment, replies }) => {
       <div className={styles["commentContent__body"]}>{comment.content}</div>
       <div className={styles["commentContent__actions"]}>
         <button onClick={() => setShowReplyForm(!showReplyForm)}>대댓글</button>
-        <button onClick={handleDelete}>삭제</button>
+        {userId && userId === comment.userId && <button onClick={deleteComment}>삭제</button>}
       </div>
 
       {showReplyForm && (

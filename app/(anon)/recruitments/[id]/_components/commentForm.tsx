@@ -56,8 +56,6 @@ const CommentForm: React.FC<CommentFormProps> = ({ projectId, parentId, onClickC
       }
     } catch {
       setUserId(null);
-    } finally {
-      console.log(userId);
     }
   };
 
