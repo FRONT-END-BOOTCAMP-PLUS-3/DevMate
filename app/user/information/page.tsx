@@ -74,7 +74,6 @@ export default function Information() {
       console.error("유저 정보가 없습니다.");
     }
     const userDetailInfoApiData = transformUserInfo(state);
-    console.log("userDetailInfoApiData", userDetailInfoApiData);
     try {
       if (!userId) {
         throw new Error("사용자 ID를 가져올 수 없습니다.");
@@ -130,7 +129,7 @@ export default function Information() {
       getTokenAndUserInfo();
     }
   }, [edit, userId]);
-  // axios로 변경
+
   return (
     <div className={container}>
       <div className={container__title}>

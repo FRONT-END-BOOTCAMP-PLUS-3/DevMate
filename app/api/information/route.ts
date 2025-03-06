@@ -38,7 +38,7 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: "유효한 사용자 ID가 필요합니다." }, { status: 400 });
     }
 
-    const updatedUser = await updateUserInfoUsecase.execute(userId, userInfo);
+    const updatedUser = await updateUserInfoUsecase.execute(String(userId), userInfo);
     return NextResponse.json(updatedUser, { status: 200 }); // 업데이트 성공 응답
   } catch (error) {
     console.error("사용자 정보 업데이트 중 오류 발생:", error);
