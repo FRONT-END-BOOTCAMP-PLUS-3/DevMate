@@ -9,10 +9,16 @@ interface CommentContentProps {
 }
 
 const CommentContentList: React.FC<CommentContentProps> = ({ comments }) => {
+  const countTotalComments = (comments: CommentDetailDto[]): number => {
+    return comments.reduce((count, comment) => {
+      return count + 1 + countTotalComments(comment.replies);
+    }, 0);
+  };
+
   return (
     <div className={styles.commentContentList}>
       <p>
-        댓글 <span>{comments.length}</span>
+        댓글 <span>{countTotalComments(comments)}</span>
       </p>
       {comments.map((comment) => (
         <CommentContent key={comment.id} comment={comment} replies={comment.replies} />
