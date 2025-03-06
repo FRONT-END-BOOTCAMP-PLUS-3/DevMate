@@ -16,8 +16,6 @@ interface LikeButtonProps {
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({ projectId, likes }) => {
-  const basicUrl = process.env.NEXT_PUBLIC_API_BASE;
-
   const [userId, setUserId] = useState<string | null>(null);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes.length);
