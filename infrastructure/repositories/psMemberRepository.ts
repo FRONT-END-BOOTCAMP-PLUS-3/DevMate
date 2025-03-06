@@ -7,15 +7,36 @@ const prisma = new PrismaClient();
 
 export class PsMemberRepository implements MemberRepository {
   async create({ projectId, userId }: { projectId: number; userId: string }): Promise<Member> {
-    const createdMember = await prisma.member.create({
-      data: {
-        project: { connect: { id: projectId } },
-        user: { connect: { id: userId } },
-      },
-    });
-    return createdMember;
+    try {
+      const createdMember = await prisma.member.create({
+        data: {
+          project: { connect: { id: projectId } },
+          user: { connect: { id: userId } },
+        },
+      });
+      return createdMember;
+    } catch (error) {
+      console.error("Error creating member:", error);
+      throw new Error("멤버 생성에 실패했습니다.");
+    }
   }
+
+  async findByUserProject(userId: string, projectId: number): Promise<Member | null> {
+    try {
+      const memberData = await prisma.member.findFirst({ where: { userId, projectId } });
+      return memberData;
+    } catch (error) {
+      console.error("Error finding member by user and project:", error);
+      return null;
+    }
+  }
+
   async delete(id: number): Promise<void> {
-    await prisma.member.delete({ where: { id } });
+    try {
+      await prisma.member.delete({ where: { id } });
+    } catch (error) {
+      console.error("Error deleting member:", error);
+      throw new Error("멤버 삭제에 실패했습니다.");
+    }
   }
 }
