@@ -54,7 +54,7 @@ export default function Information() {
     selected: SingleValue<SelectOption> | MultiValue<SelectOption> | null,
     name?: string,
   ) => {
-    if (name === "stack") {
+    if (name === "techStackTags") {
       dispatch({ type: "SET_TECH_STACK", value: selected as MultiValue<SelectOption> });
     } else if (name === "position") {
       dispatch({ type: "SET_POSITION", value: selected as SingleValue<SelectOption> | null });
@@ -74,6 +74,7 @@ export default function Information() {
       console.error("유저 정보가 없습니다.");
     }
     const userDetailInfoApiData = transformUserInfo(state);
+    console.log("userDetailInfoApiData", userDetailInfoApiData);
     try {
       if (!userId) {
         throw new Error("사용자 ID를 가져올 수 없습니다.");
@@ -171,14 +172,14 @@ export default function Information() {
               onChange={(selected) => selectChangeHandler(selected, "position")}
             />
           </InfoUserRow>
-          <InfoUserRow title="기술스택" edit={edit} info={userDetailInfo?.techStackTags?.map((tag) => tag).join(", ")}>
+          <InfoUserRow title="기술스택" edit={edit} info={userDetailInfo?.techStackTags}>
             <Selector
-              name="stack"
+              name="techStackTags"
               placeholder="# 태그"
               isMulti={true}
               options={TECH_STACK_OPTIONS}
-              selectedValue={state.stack ?? []}
-              onChange={(selected) => selectChangeHandler(selected, "stack")}
+              selectedValue={state.techStackTags ?? []}
+              onChange={(selected) => selectChangeHandler(selected, "techStackTags")}
             />
           </InfoUserRow>
           <InfoUserRow title="거주지" edit={edit} info={userDetailInfo?.address}>

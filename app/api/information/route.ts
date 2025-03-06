@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
+import { PsTagRepository } from "@/infrastructure/repositories/psTagRepository";
 import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository";
+import { PsTechStackTagRepository } from "@/infrastructure/repositories/psTechStackTagRepository";
 
 import type { NextRequest } from "next/server";
 
@@ -8,8 +10,10 @@ import { UserInfoUsecase } from "@/application/usecases/information/userInfoUsec
 import { UpdateUserInfoUsecase } from "@/application/usecases/information/updateUserInfoUsecase";
 
 const userRepository = new PsUserRepository();
-const userInfoUsecase = new UserInfoUsecase(userRepository);
-const updateUserInfoUsecase = new UpdateUserInfoUsecase(userRepository);
+const tagRepository = new PsTagRepository();
+const techStackTagRepository = new PsTechStackTagRepository();
+const userInfoUsecase = new UserInfoUsecase(userRepository, tagRepository);
+const updateUserInfoUsecase = new UpdateUserInfoUsecase(userRepository, tagRepository, techStackTagRepository);
 
 export async function POST(request: NextRequest) {
   try {

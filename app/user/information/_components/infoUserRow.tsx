@@ -1,12 +1,14 @@
 import type { ReactNode } from "react";
 
+import Badge from "@/components/badge/badge";
+
 import styles from "./infoUserRow.module.scss";
 
 interface InfoInputProps {
   title: string;
   isDefault?: boolean;
   edit?: boolean;
-  info?: string;
+  info?: string | string[];
   children?: ReactNode;
 }
 
@@ -25,6 +27,13 @@ export default function InfoUserRow({
         <span className={userInfoRow__info}>{info}</span>
       ) : edit ? (
         children
+      ) : Array.isArray(info) ? (
+        info.map((item) => (
+          <Badge color="lightGray" key={item}>
+            {item}
+          </Badge>
+          // 스타일 변경 필요
+        ))
       ) : (
         <span className={userInfoRow__info}>{info}</span>
       )}

@@ -24,7 +24,7 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
     selected: SingleValue<SelectOption> | MultiValue<SelectOption> | null,
     name?: string,
   ) => {
-    if (name === "stack") {
+    if (name === "tagNames") {
       dispatch({ type: "SET_TECH_STACK", value: selected as MultiValue<SelectOption> });
     } else if (name === "position") {
       dispatch({ type: "SET_POSITION", value: selected as SingleValue<SelectOption> | null });
@@ -142,7 +142,7 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
         state.birthDate.year && state.birthDate.month && state.birthDate.day ? "" : ERROR_MESSAGES.BIRTH_REQUIRED,
       address: state.address.address ? "" : ERROR_MESSAGES.ADDRESS_REQUIRED,
       position: state.position?.value ? "" : ERROR_MESSAGES.POSITION_REQUIRED,
-      stack: state.stack?.length ? "" : ERROR_MESSAGES.TECH_STACK_REQUIRED,
+      tagNames: state.tagNames?.length ? "" : ERROR_MESSAGES.TECH_STACK_REQUIRED,
       career: state.career?.value ? "" : ERROR_MESSAGES.CAREER_REQUIRED,
     };
 

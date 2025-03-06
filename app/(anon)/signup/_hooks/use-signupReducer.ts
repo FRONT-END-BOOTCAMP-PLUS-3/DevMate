@@ -18,7 +18,7 @@ export interface SignupState {
   address: AddressCode;
   career: SelectOption | null;
   profileImg?: string;
-  stack?: readonly SelectOption[];
+  tagNames?: readonly SelectOption[];
 
   successMessages: Partial<Record<keyof SignupState, string>>;
   errors: Partial<Record<keyof SignupState, string>>;
@@ -58,7 +58,7 @@ const signupReducer = (state: SignupState, action: SignupAction): SignupState =>
     case "SET_CAREER":
       return { ...state, career: action.value };
     case "SET_TECH_STACK":
-      return { ...state, stack: action.value };
+      return { ...state, tagNames: action.value };
     case "SET_ADDRESS":
       return { ...state, address: action.address };
     case "SET_GENDER":
@@ -104,7 +104,7 @@ export const initialState: SignupState = {
     label: "",
   },
   profileImg: "",
-  stack: [],
+  tagNames: [],
   errors: {},
   isEmailChecked: false,
   successMessages: {},

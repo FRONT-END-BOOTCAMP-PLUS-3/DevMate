@@ -7,7 +7,7 @@ export interface editUserInfoState {
   profileImg?: string;
   nickname: string;
   career: SelectOption | null;
-  stack?: readonly SelectOption[];
+  techStackTags?: readonly SelectOption[];
   position: SelectOption | null;
   address: AddressCode;
 }
@@ -29,7 +29,7 @@ const editUserInfoReducer = (state: editUserInfoState, action: editUserInfoActio
     case "SET_CAREER":
       return { ...state, career: action.value };
     case "SET_TECH_STACK":
-      return { ...state, stack: action.value };
+      return { ...state, techStackTags: action.value };
     case "SET_ADDRESS":
       return { ...state, address: action.address };
     case "RESET":
@@ -46,7 +46,7 @@ export const initialState: editUserInfoState = {
     value: "",
     label: "",
   },
-  stack: [],
+  techStackTags: [],
   position: {
     value: "",
     label: "",

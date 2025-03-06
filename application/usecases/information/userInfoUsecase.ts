@@ -1,16 +1,20 @@
 import { getEncryptionKey } from "@/utils/security";
 
+import type { TagRepository } from "@/domain/repositories/tagRepository";
 import type { UserRepository } from "@/domain/repositories/userRepository";
 
 import type { InfoUserDto } from "./dtos/infoUserDto";
+import type { UserWithTechStackDto } from "./dtos/userWithTechStackDto";
 
 import crypto from "crypto";
 export class UserInfoUsecase {
   private userRepository: UserRepository;
+  private tagRepository: TagRepository;
   private encryptionKey: Buffer;
   private algorithm = "aes-256-cbc";
-  constructor(userRepository: UserRepository) {
+  constructor(userRepository: UserRepository, tagRepository: TagRepository) {
     this.userRepository = userRepository;
+    this.tagRepository = tagRepository;
     this.encryptionKey = getEncryptionKey();
   }
 
@@ -25,12 +29,12 @@ export class UserInfoUsecase {
   }
   async execute(userId: string): Promise<InfoUserDto> {
     try {
-      const userData = await this.userRepository.findById(userId);
-
+      const userData: UserWithTechStackDto | null = await this.userRepository.findByIdWithTechStack(userId);
       if (!userData) {
         throw new Error("사용자를 찾을 수 없습니다.");
       }
-
+      const tagId = userData.techStackTags ? userData.techStackTags.map((tag) => Number(tag.tagId)) : [];
+      const techStackTags = await this.tagRepository.findTagNamesByIds(tagId);
       const userInfo = {
         nonEditInfo: {
           name: userData.name || "",
@@ -51,7 +55,7 @@ export class UserInfoUsecase {
           nickname: userData.nickname,
           career: userData.career,
           position: userData.position,
-          techStackTags: [],
+          techStackTags: techStackTags,
           address: userData.address ? this.decryptAddress(userData.address) : "",
         },
       };

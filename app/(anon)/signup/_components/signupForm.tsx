@@ -116,13 +116,13 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
       />
 
       <Selector
-        name="stack"
+        name="tagNames"
         isMulti={true}
         title="기술 스택"
         options={TECH_STACK_OPTIONS}
-        selectedValue={state.stack ?? []}
-        onChange={(selected) => selectChangeHandler(selected, "stack")}
-        error={state.errors.stack}
+        selectedValue={state.tagNames ?? []}
+        onChange={(selected) => selectChangeHandler(selected, "tagNames")}
+        error={state.errors.tagNames}
         width="373px"
       />
 
