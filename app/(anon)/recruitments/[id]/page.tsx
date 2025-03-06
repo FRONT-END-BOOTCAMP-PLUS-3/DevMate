@@ -9,13 +9,14 @@ import CommentContentList from "./_components/commentContentList";
 import RecruitmentContent from "./_components/recruitmentContent";
 
 const RecruitmentDetail = async ({ params }: { params: { id: string } }) => {
-  const basicUrl = process.env.BASE_URL;
-  const id = Number(params.id);
+  const basicUrl = process.env.NEXT_PUBLIC_API_BASE;
 
-  if (isNaN(id)) {
-    console.log("잘못된 접근입니다.");
+  if (!params?.id || isNaN(Number(params.id))) {
+    console.error("잘못된 접근입니다.");
     redirect("/");
   }
+
+  const id = Number(params.id);
 
   // 프로젝트 상세 정보 가져오기 (SSR)
   const res = await fetch(`${basicUrl}api/recruitments/${id}`);
