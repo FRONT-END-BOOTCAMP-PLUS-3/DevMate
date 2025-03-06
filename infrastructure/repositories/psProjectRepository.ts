@@ -22,7 +22,13 @@ export class PsProjectRepository implements ProjectRepository {
               user: true, // 멤버의 User 정보 포함
             },
           },
-          comments: true, // 프로젝트 관련 댓글 포함
+          comments: {
+            // 댓글 포함
+            include: {
+              user: true,
+              replies: true, // 대댓글 포함
+            },
+          }, // 프로젝트 관련 댓글 포함
           projectTags: {
             include: {
               tag: true, // 프로젝트 태그 포함
