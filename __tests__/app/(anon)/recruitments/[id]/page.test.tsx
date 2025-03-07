@@ -1,16 +1,11 @@
-import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import RecruitmentDetail from "@/app/(anon)/recruitments/[id]/page";
+import { test, expect } from "@playwright/test";
 
-describe("RecruitmentDetail", () => {
-  it("모집글 컴포넌트가 정상적으로 렌더링 되는지", () => {
-    render(<RecruitmentDetail />);
-    expect(screen.getByText("작성일", { exact: false })).toBeInTheDocument();
-  });
+test("SSR 페이지가 정상적으로 렌더링 되는지", async ({ page }) => {
+  await page.goto("http://localhost:3000/recruitments/1"); // SSR 페이지 URL
 
-  it("댓글 리스트가 정상적으로 렌더링 되는지", () => {
-    render(<RecruitmentDetail />);
-    const commentElements = screen.getAllByText("댓글", { exact: false });
-    expect(commentElements.length).toBeGreaterThan(0);
-  });
+  // 모집글 제목이 정상적으로 표시되는지 확인
+  await expect(page.getByText("작성일")).toBeVisible();
+
+  // 댓글이 정상적으로 표시되는지 확인
+  await expect(page.getByText("댓글")).toBeVisible();
 });

@@ -1,6 +1,6 @@
 import styles from "./commentContentList.module.scss";
 
-import type { CommentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
+import type { CommentDetailDto } from "@/application/usecases/recruitment/dtos/recruitmentDetailDto";
 
 import CommentContent from "./commentContent";
 

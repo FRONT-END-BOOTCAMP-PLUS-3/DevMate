@@ -7,19 +7,44 @@ const prisma = new PrismaClient();
 
 export class PsApplyRepository implements ApplyRepository {
   async findById(id: number): Promise<Apply | null> {
-    const applyData = prisma.apply.findUnique({ where: { id } });
-    return applyData;
+    try {
+      const applyData = await prisma.apply.findUnique({ where: { id } });
+      return applyData;
+    } catch (error) {
+      console.error("Error finding apply by ID:", error);
+      return null;
+    }
+  }
+
+  async findByUserProject(userId: string, projectId: number): Promise<Apply | null> {
+    try {
+      const applyData = await prisma.apply.findFirst({ where: { userId, projectId } });
+      return applyData;
+    } catch (error) {
+      console.error("Error finding apply by user and project:", error);
+      return null;
+    }
   }
 
   async updateStatus(id: number, status: string): Promise<Apply> {
-    const applyUpdateData = prisma.apply.update({
-      where: { id },
-      data: { status },
-    });
-    return applyUpdateData;
+    try {
+      const applyUpdateData = await prisma.apply.update({
+        where: { id },
+        data: { status },
+      });
+      return applyUpdateData;
+    } catch (error) {
+      console.error("Error updating apply status:", error);
+      throw new Error("지원 상태 업데이트에 실패했습니다.");
+    }
   }
 
   async delete(id: number): Promise<void> {
-    await prisma.apply.delete({ where: { id } });
+    try {
+      await prisma.apply.delete({ where: { id } });
+    } catch (error) {
+      console.error("Error deleting apply:", error);
+      throw new Error("지원 삭제에 실패했습니다.");
+    }
   }
 }

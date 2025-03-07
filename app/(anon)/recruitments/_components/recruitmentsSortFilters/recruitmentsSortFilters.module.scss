@@ -1,0 +1,18 @@
+.main {
+  &__sort {
+    &-options {
+      display: flex;
+      gap: 13px;
+      font-size: 14px;
+    }
+
+    &-item {
+      color: #adb5bd;
+
+      &--active {
+        font-weight: bold;
+        color: #333b3d;
+      }
+    }
+  }
+}

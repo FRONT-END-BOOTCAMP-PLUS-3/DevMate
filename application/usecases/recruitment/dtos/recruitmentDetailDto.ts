@@ -12,4 +12,9 @@ export interface RecruitmentDetailDto extends ProjectDto {
   leader: Pick<UserDto, "id" | "nickname" | "profileImg">;
   comments: CommentDetailDto[];
   likes: LikeDto[];
+  projectPeriodStart: Date;
+  projectPeriodEnd: Date;
+  recruitmentStart: Date;
+  recruitmentEnd: Date;
+  createdAt: Date;
 }

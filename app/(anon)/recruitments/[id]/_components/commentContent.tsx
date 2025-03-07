@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 
 import styles from "./commentContent.module.scss";
 
-import type { CommentDetailDto } from "@/application/usecases/projectDetail/dtos/recruitmentDetailDto";
+import type { CommentDetailDto } from "@/application/usecases/recruitment/dtos/recruitmentDetailDto";
 
 import CommentForm from "./commentForm";
 
@@ -30,13 +30,14 @@ const CommentContent: React.FC<CommentProps> = ({ comment, replies: comments }) 
   return (
     <div className={styles["commentContent"]} style={{ marginLeft: comment.parentCommentId ? "20px" : "0px" }}>
       <div className={styles["commentContent__header"]}>
-        {/* <Image
-          src={comment.user.profileImg || "/defaultProfile.svg"}
+        <Image
+          // src={comment.user.profileImg || "/defaultProfile.svg"}
+          src={"/defaultProfile.svg"}
           alt="profile"
           width={40}
           height={40}
           className={styles["commentContent__avatar"]}
-        /> */}
+        />
         <div>
           <p className={styles["commentContent__nickname"]}>{comment.user.nickname}</p>
           <p className={styles["commentContent__date"]}>{new Date(comment.createdAt).toLocaleDateString()}</p>
