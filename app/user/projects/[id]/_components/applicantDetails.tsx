@@ -1,9 +1,11 @@
+import { formatDateToString } from "@/utils/formatDateToString";
+
 import styles from "../projectDetail.module.scss";
 
-import type { Applicant } from "./projectData";
+import type { ProjectDetailApplyDto } from "@/application/usecases/project/dtos/projectDetailApplyDto";
 
 interface ApplicantDetailsProps {
-  applicant: Applicant;
+  applicant: ProjectDetailApplyDto;
 }
 
 const ApplicantDetails = ({ applicant }: ApplicantDetailsProps) => {
@@ -12,17 +14,18 @@ const ApplicantDetails = ({ applicant }: ApplicantDetailsProps) => {
   return (
     <ul className={styles.modal__list}>
       {Object.entries({
-        이름: applicant.user.name,
-        생년월일: applicant.user.birthDate,
-        직무: applicant.user.position,
-        성별: applicant.user.gender,
-        거주지: applicant.user.address,
-        경력: `${applicant.user.career}년`,
+        이름: applicant.user?.name,
+        생년월일: applicant.user?.birthDate,
+        직무: applicant.user?.position,
+        성별: applicant.user?.gender,
+        거주지: applicant.user?.address,
+        경력: `${applicant.user?.career}년`,
         "희망 직무": applicant.position,
         자기소개: applicant.introduction,
       }).map(([label, value]) => (
         <li key={label} className={styles.modal__list_item}>
-          <span>{label}</span> {value}
+          <span>{label}</span>{" "}
+          {value === undefined ? "값 없음" : label === "생년월일" ? formatDateToString(new Date(value)) : String(value)}
         </li>
       ))}
       <li className={styles.modal__list_item}>

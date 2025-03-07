@@ -6,10 +6,12 @@ import { PsMemberRepository } from "@/infrastructure/repositories/psMemberReposi
 
 import type { UserRepository } from "@/domain/repositories/userRepository";
 import type { ApplyRepository } from "@/domain/repositories/applyRepository";
+import type { MemberRepository } from "@/domain/repositories/memberRepository";
 import type { ProjectDetailApplyDto } from "@/application/usecases/project/dtos/projectDetailApplyDto";
 import type { ProjectDetailMemberDto } from "@/application/usecases/project/dtos/projectDetailMemberDto";
 
 import { CreateMemberUsecase } from "@/application/usecases/project/createMemberUsecase";
+import { DeleteMemberUsecase } from "@/application/usecases/project/deleteMemberUsecase";
 import { RejectApplicantUsecase } from "@/application/usecases/project/rejectApplicantUsecase";
 
 export async function POST(req: Request) {
@@ -53,4 +55,27 @@ export async function PATCH(req: Request, props: { params: Promise<{ id: string 
   }
 
   return NextResponse.json(projectDetailApplyDto);
+}
+
+export async function DELETE(req: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  try {
+    const applyRepository: ApplyRepository = new PsApplyRepository();
+    const memberRepository: MemberRepository = new PsMemberRepository();
+    const deleteMemberUsecase = new DeleteMemberUsecase(applyRepository, memberRepository);
+
+    const { userId } = await req.json();
+    const projectId = parseInt(params.id, 10);
+
+    if (!userId || isNaN(projectId)) {
+      return NextResponse.json({ error: "Invalid User Id or Project Id" }, { status: 400 });
+    }
+
+    await deleteMemberUsecase.execute(userId, projectId);
+
+    return NextResponse.json({ message: "Member and application successfully deleted" }, { status: 200 });
+  } catch (error) {
+    console.error("❌ Error deleting member:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
 }
