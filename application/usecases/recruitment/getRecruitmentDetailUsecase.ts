@@ -3,12 +3,15 @@ import type { ProjectRepository } from "@/domain/repositories/projectRepository"
 import type { CommentDetailDto, RecruitmentDetailDto } from "./dtos/recruitmentDetailDto";
 
 export class GetProjectDetailUsecase {
-  constructor(private repository: ProjectRepository) {}
+  constructor(private projectRepository: ProjectRepository) {}
 
   async execute(id: number): Promise<RecruitmentDetailDto | null> {
-    const project = (await this.repository.findById(id)) as RecruitmentDetailDto | null;
+    const project = (await this.projectRepository.findById(id)) as RecruitmentDetailDto | null;
 
     if (!project) return null;
+
+    // 조회수 증가 처리
+    await this.projectRepository.incrementHits(id);
 
     return {
       id: project.id,
@@ -35,9 +38,7 @@ export class GetProjectDetailUsecase {
   }
 }
 
-/**
- * 댓글을 계층 구조로 변환하는 함수
- */
+// 댓글을 계층 구조로 변환하는 함수
 function mapCommentsWithReplies(comments: any[]): CommentDetailDto[] {
   const commentMap = new Map<number, CommentDetailDto>();
 

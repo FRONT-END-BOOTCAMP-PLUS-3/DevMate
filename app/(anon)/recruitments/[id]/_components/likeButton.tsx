@@ -24,7 +24,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ projectId, likes = [] }) => {
     fetchUserId();
   }, []);
 
-  // ✅ 초기 마운트 시, 사용자가 좋아요를 눌렀는지 확인
+  // 초기 마운트 시, 사용자가 좋아요를 눌렀는지 확인
   useEffect(() => {
     if (userId) {
       isLike();

@@ -72,4 +72,16 @@ export class PsProjectRepository implements ProjectRepository {
       throw new Error("프로젝트 삭제에 실패했습니다.");
     }
   }
+
+  async incrementHits(id: number): Promise<void> {
+    try {
+      await prisma.project.update({
+        where: { id },
+        data: { hits: { increment: 1 } },
+      });
+    } catch (error) {
+      console.error("Error incrementing hits:", error);
+      throw new Error("조회수 증가에 실패했습니다.");
+    }
+  }
 }
