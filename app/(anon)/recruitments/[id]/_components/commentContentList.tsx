@@ -9,7 +9,10 @@ interface CommentContentProps {
 }
 
 const CommentContentList: React.FC<CommentContentProps> = ({ comments }) => {
-  const countTotalComments = (comments: CommentDetailDto[]): number => {
+  // 댓글 수 세기
+  const countTotalComments = (comments?: CommentDetailDto[]): number => {
+    if (!comments || comments.length === 0) return 0;
+
     return comments.reduce((count, comment) => {
       return count + 1 + countTotalComments(comment.replies);
     }, 0);
