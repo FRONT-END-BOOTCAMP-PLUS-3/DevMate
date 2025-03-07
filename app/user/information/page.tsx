@@ -293,5 +293,6 @@ export default function Information() {
       )}
       {isModalOpen && <DeleteAccountModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} userId={userId} />}
     </div>
+    // 왜 안바뀌지?
   );
 }
