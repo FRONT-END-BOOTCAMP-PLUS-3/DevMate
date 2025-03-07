@@ -1,5 +1,7 @@
 import styles from "./recruitments.module.scss";
 
+import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/rectuitmentsDto";
+
 import { mockData } from "./mockData";
 import RecruitmentsItem from "./_components/recruitmentsItem/recruitmentsItem";
 import RecruitmentsSearch from "./_components/recruitmentsSearch/recruitmentsSearch";
@@ -8,7 +10,19 @@ import RecruitmentsTagSearch from "./_components/recruitmentsTagSearch/recruitme
 import RecruitmentsSortFilters from "./_components/recruitmentsSortFilters/recruitmentsSortFilters";
 import RecruitmentsWriteButton from "./_components/recruitmentsWriteButton/recruitmentsWriteButton";
 
-export default function Recruitments() {
+const Recruitments = async () => {
+  const basicUrl = process.env.NEXT_PUBLIC_API_BASE;
+
+  const res = await fetch(`${basicUrl}api/recruitments`);
+
+  if (!res.ok) {
+    console.log("프로젝트 정보를 불러오는 중 오류가 발생했습니다");
+  }
+
+  const recruitments: RecruitmentsDto = await res.json();
+
+  console.log("프로젝트 정보:", recruitments);
+
   return (
     <div className={styles["main"]}>
       {/* 비주얼 영역 */}
@@ -47,4 +61,6 @@ export default function Recruitments() {
       </div>
     </div>
   );
-}
+};
+
+export default Recruitments;
