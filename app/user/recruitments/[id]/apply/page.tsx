@@ -1,16 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import { useParams } from "next/navigation";
+
+import React, { useEffect, useState } from "react";
 
 import Button from "@/components/button/button";
 import InputField from "@/components/inputField/inputField";
 
 import styles from "./apply.module.scss";
 
-import type { ProjectDto } from "@/application/usecases/dtos/projectDto";
-
 const Apply: React.FC = () => {
-  const [project, setProject] = useState<ProjectDto>();
+  const params = useParams();
+  const id = params.id;
+
+  const [projectName, setProjectName] = useState<string>("");
 
   const [form, setForm] = useState({
     job: "",
@@ -41,19 +44,27 @@ const Apply: React.FC = () => {
     console.log(form);
   };
 
-  // TODO: 프로젝트 정보 가져오는 통신 만들기
-  // // 프로젝트 정보 가져오기
-  // const getProject = async () => {
-  //   try {
+  // 프로젝트 정보 가져오기
+  const getProjectTitle = async () => {
+    try {
+      const response = await fetch(`/api/recruitments/${id}/apply`);
 
-  //   } catch {
+      if (!response.ok) {
+        throw new Error("프로젝트 정보를 불러오는데 실패했습니다.");
+      }
 
-  //   }
-  // }
+      const data = await response.json();
 
-  // useEffect(() => {
-  //    getProject();
-  // }, []);
+      setProjectName(data.title);
+    } catch (error) {
+      console.log("Error fetching project:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    getProjectTitle();
+  }, []);
 
   return (
     <div className={styles.apply}>
@@ -62,7 +73,7 @@ const Apply: React.FC = () => {
       {/* 프로젝트명 표시 */}
       <section className={styles.apply__projectInfo}>
         <span className={styles.apply__projectInfo__label}>프로젝트명</span>
-        <span className={styles.apply__projectInfo__projectName}>{project?.projectTitle}</span>
+        <span className={styles.apply__projectInfo__projectName}>{projectName}</span>
       </section>
 
       {/* 지원서 폼 */}

@@ -51,6 +51,19 @@ export class PsProjectRepository implements ProjectRepository {
     }
   }
 
+  async findProjectTitleById(id: number): Promise<string | null> {
+    try {
+      const project = await prisma.project.findUnique({
+        where: { id },
+        select: { projectTitle: true },
+      });
+      return project ? project.projectTitle : null;
+    } catch (error) {
+      console.error("Error finding project name by ID:", error);
+      return null;
+    }
+  }
+
   async update(id: number, project: Partial<Omit<Project, "id" | "createdAt">>): Promise<Project> {
     try {
       const updateProject = await prisma.project.update({
