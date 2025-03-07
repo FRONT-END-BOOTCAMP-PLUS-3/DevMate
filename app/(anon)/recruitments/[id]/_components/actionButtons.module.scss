@@ -1,0 +1,10 @@
+.actionButtons {
+  &__button {
+    padding: 0 5px;
+    color: #555;
+
+    &:hover {
+      color: $color-main;
+    }
+  }
+}

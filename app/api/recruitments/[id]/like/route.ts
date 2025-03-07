@@ -1,23 +1,44 @@
+import { NextResponse } from "next/server";
+
 import { PsLikeRepository } from "@/infrastructure/repositories/PsLikeRepository";
 
-import type { NextApiRequest, NextApiResponse } from "next";
+import { CreateToggleLikeUsecase } from "@/application/usecases/recruitment/createToggleLikeUsecase";
 
-import { ToggleLikeUsecase } from "@/application/usecases/ToggleLikeUsecase";
+export async function POST(req: Request) {
+  try {
+    const { userId, projectId } = await req.json();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method Not Allowed" });
+    if (!userId || !projectId) {
+      return NextResponse.json({ message: "userId and projectId are required" }, { status: 400 });
+    }
+
+    const likeRepository = new PsLikeRepository();
+    const toggleLikeUsecase = new CreateToggleLikeUsecase(likeRepository);
+
+    const result = await toggleLikeUsecase.execute(userId, Number(projectId));
+    return NextResponse.json(result, { status: 200 });
+  } catch (error) {
+    console.error("Error toggling like:", error);
+    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
+}
 
-  const { userId, projectId } = req.body;
-  if (!userId || !projectId) {
-    return res.status(400).json({ message: "userId and projectId are required" });
+export async function DELETE(req: Request) {
+  try {
+    const { userId, projectId } = await req.json();
+
+    if (!userId || !projectId) {
+      return NextResponse.json({ message: "userId and projectId are required" }, { status: 400 });
+    }
+
+    const likeRepository = new PsLikeRepository();
+    const toggleLikeUsecase = new CreateToggleLikeUsecase(likeRepository);
+
+    const result = await toggleLikeUsecase.execute(userId, Number(projectId));
+
+    return NextResponse.json(result, { status: 200 });
+  } catch (error) {
+    console.error("Error removing like:", error);
+    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
-
-  const likeRepository = new PsLikeRepository();
-  const toggleLikeUsecase = new ToggleLikeUsecase(likeRepository);
-
-  const result = await toggleLikeUsecase.execute(userId, Number(projectId));
-
-  return res.status(200).json(result);
 }

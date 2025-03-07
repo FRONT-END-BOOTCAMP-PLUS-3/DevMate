@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { decodeToken } from "@/utils/cookie";
 
 import styles from "./likeButton.module.scss";
 
@@ -13,37 +15,61 @@ interface LikeButtonProps {
   likes: LikeDto[];
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({ projectId, likes }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({ projectId, likes = [] }) => {
+  const [userId, setUserId] = useState<string | null>(null);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes.length);
 
-  console.log(projectId, "빌드에러때문에 잠시 적어둠");
+  useEffect(() => {
+    fetchUserId();
+  }, []);
 
-  // ✅ 초기 마운트 시, 사용자가 좋아요를 눌렀는지 확인
-  // useEffect(() => {
-  //   fetch(`/api/likes?userId=${userId}&projectId=${projectId}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setLiked(data.liked))
-  //     .catch((err) => console.error("Failed to fetch like status", err));
-  // }, [userId, projectId]);
+  // 초기 마운트 시, 사용자가 좋아요를 눌렀는지 확인
+  useEffect(() => {
+    if (userId) {
+      isLike();
+    }
+  }, [userId, projectId]);
+
+  const fetchUserId = async () => {
+    try {
+      const decoded = await decodeToken("id");
+      if (typeof decoded === "string") {
+        setUserId(decoded);
+      }
+    } catch {
+      setUserId(null);
+    }
+  };
+
+  const isLike = () => {
+    likes.forEach((like) => {
+      if (like.userId === userId) setLiked(true);
+    });
+  };
 
   const handleLike = async () => {
+    if (!userId) {
+      alert("로그인 후 이용해주세요.");
+      return;
+    }
+
     const newLikedState = !liked;
     setLiked(newLikedState);
     setLikeCount(newLikedState ? likeCount + 1 : likeCount - 1);
 
-    // try {
-    //   await fetch("/api/likes", {
-    //     method: newLikedState ? "POST" : "DELETE",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ userId, projectId }),
-    //   });
-    // } catch (error) {
-    //   console.error("Failed to update like", error);
-    //   // 롤백 처리 (API 요청 실패 시 상태 되돌리기)
-    //   setLiked(!newLikedState);
-    //   setLikeCount(newLikedState ? likeCount - 1 : likeCount + 1);
-    // }
+    try {
+      await fetch(`/api/recruitments/${projectId}/like`, {
+        method: newLikedState ? "POST" : "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, projectId }),
+      });
+    } catch (error) {
+      console.error("Failed to update like", error);
+      // 롤백 처리 (API 요청 실패 시 상태 되돌리기)
+      setLiked(!newLikedState);
+      setLikeCount(newLikedState ? likeCount - 1 : likeCount + 1);
+    }
   };
 
   return (
