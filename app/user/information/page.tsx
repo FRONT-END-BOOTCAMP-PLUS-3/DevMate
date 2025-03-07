@@ -140,7 +140,16 @@ export default function Information() {
         <div className={container__section__content}>
           <div className={container__img}>
             <span className={container__img__title}>이미지</span>
-            <Image src={userDetailInfo?.profileImg ?? "/test.jpg"} alt="유저 프로필" width={100} height={100} />
+            {edit ? (
+              <div>프로필 수정</div>
+            ) : (
+              <Image
+                src={userDetailInfo?.profileImg ?? "/defaultProfile.svg"}
+                alt="유저 프로필"
+                width={100}
+                height={100}
+              />
+            )}
           </div>
           <InfoUserRow title="닉네임" edit={edit} info={userDetailInfo?.nickname}>
             <InputField
