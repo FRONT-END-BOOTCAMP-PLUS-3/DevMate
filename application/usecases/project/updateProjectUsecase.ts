@@ -14,7 +14,7 @@ export class UpdateProjectUsecase {
     // eslint-disable-next-line prettier/prettier
   ) { }
 
-  async execute(id: number, updateData: UpdateProjectDto): Promise<ProjectDetailDto | null> {
+  async execute(id: number, updateData: Partial<UpdateProjectDto>): Promise<ProjectDetailDto | null> {
     try {
       const projectData: ProjectDto | null = await this.projectRepository.findById(id);
       if (!projectData) {
