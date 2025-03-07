@@ -47,4 +47,17 @@ export class PsApplyRepository implements ApplyRepository {
       throw new Error("지원 삭제에 실패했습니다.");
     }
   }
+
+  async create(applyData: Omit<Apply, "id" | "status">): Promise<Apply> {
+    try {
+      console.log("applyData 받은 값:", applyData);
+      const apply = await prisma.apply.create({
+        data: applyData,
+      });
+      return apply;
+    } catch (error) {
+      console.error("Error creating apply:", error);
+      throw new Error("지원서 저장에 실패했습니다.");
+    }
+  }
 }

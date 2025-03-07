@@ -7,12 +7,15 @@ import React, { useEffect, useState } from "react";
 import Button from "@/components/button/button";
 import InputField from "@/components/inputField/inputField";
 
+import { decodeToken } from "@/utils/cookie";
+
 import styles from "./apply.module.scss";
 
 const Apply: React.FC = () => {
   const params = useParams();
   const id = params.id;
 
+  const [userId, setUserId] = useState<string | null>(null);
   const [projectName, setProjectName] = useState<string>("");
 
   const [form, setForm] = useState({
@@ -21,17 +24,30 @@ const Apply: React.FC = () => {
     portfolio: null as File | null,
   });
 
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  const fetchUserId = async () => {
+    try {
+      const decoded = await decodeToken("id");
+      if (typeof decoded === "string") {
+        setUserId(decoded);
+      }
+    } catch {
+      setUserId(null);
+    }
+  };
+
   const ChangeHandle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    console.log(form);
   };
 
   const FileChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setForm((prev) => ({ ...prev, portfolio: e.target.files![0] }));
     }
-    console.log(form);
   };
 
   const cancelHandle = () => {
@@ -41,7 +57,32 @@ const Apply: React.FC = () => {
   };
 
   const postApply = async () => {
-    console.log(form);
+    try {
+      const formData = new FormData();
+      formData.append("projectId", String(id));
+      formData.append("userId", String(userId));
+      formData.append("position", form.job);
+      formData.append("introduction", form.introduction);
+      if (form.portfolio) {
+        formData.append("portfolio", form.portfolio);
+      } else {
+        formData.append("portfolio", "");
+      }
+
+      const response = await fetch(`/api/recruitments/${id}/apply`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("지원서 제출에 실패했습니다.");
+      }
+
+      alert("지원 완료!");
+      history.back();
+    } catch (error) {
+      console.log("Error submitting application:", error);
+    }
   };
 
   // 프로젝트 정보 가져오기
