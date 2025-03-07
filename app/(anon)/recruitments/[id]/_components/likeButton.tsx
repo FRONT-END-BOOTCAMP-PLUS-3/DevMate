@@ -15,7 +15,7 @@ interface LikeButtonProps {
   likes: LikeDto[];
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({ projectId, likes }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({ projectId, likes = [] }) => {
   const [userId, setUserId] = useState<string | null>(null);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes.length);
