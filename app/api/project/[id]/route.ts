@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
 
+import { PsTagRepository } from "@/infrastructure/repositories/psTagRepository";
 import { PsProjectRepository } from "@/infrastructure/repositories/psProjectRepository";
+import { PsProjectTagRepository } from "@/infrastructure/repositories/psProjectTagRepository";
 
 import type { ProjectRepository } from "@/domain/repositories/projectRepository";
 import type { ProjectDetailDto } from "@/application/usecases/project/dtos/projectDetailDto";
+import type { CreateProjectDto } from "@/application/usecases/project/dtos/createProjectDto";
 
 import { UpdateProjectUsecase } from "@/application/usecases/project/updateProjectUsecase";
 import { DeleteProjectUsecase } from "@/application/usecases/project/deleteProjectUsecase";
+import { CreateProjectUsecase } from "@/application/usecases/project/createProjectUsecase";
 import { GetProjectDetailUsecase } from "@/application/usecases/project/getProjectDetailUsecase";
 
 export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
@@ -25,6 +29,36 @@ export async function GET(req: Request, props: { params: Promise<{ id: string }>
   }
 
   return NextResponse.json(projectDetailDto);
+}
+
+export async function POST(req: Request) {
+  try {
+    const projectRepository: ProjectRepository = new PsProjectRepository();
+    const tagRepository = new PsTagRepository();
+    const projectTagRepository = new PsProjectTagRepository();
+    const createProjectUsecase = new CreateProjectUsecase(projectRepository, tagRepository, projectTagRepository);
+
+    const body: CreateProjectDto = await req.json();
+    if (
+      !body.leaderId ||
+      !body.recruitmentTitle ||
+      !body.projectTitle ||
+      !body.goal ||
+      !body.description ||
+      !body.projectPeriodStart ||
+      !body.projectPeriodEnd ||
+      !body.recruitmentStart ||
+      !body.recruitmentEnd
+    ) {
+      return NextResponse.json({ error: "필수 필드가 누락되었습니다." }, { status: 400 });
+    }
+    const createdProject = await createProjectUsecase.execute(body);
+
+    return NextResponse.json({ message: "프로젝트 생성 성공", data: createdProject }, { status: 201 });
+  } catch (error) {
+    console.error("❌ 프로젝트 생성 오류:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
 }
 
 export async function PATCH(req: Request, props: { params: Promise<{ id: string }> }) {
