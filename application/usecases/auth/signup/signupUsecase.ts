@@ -2,8 +2,6 @@ import { getEncryptionKey } from "@/utils/security";
 
 import type { UserRepository } from "@/domain/repositories/userRepository";
 import type { SignUpDto } from "@/application/usecases/auth/signup/dtos/signupDto";
-import type { PsTagRepository } from "@/infrastructure/repositories/psTagRepository";
-import type { PsTechStackTagRepository } from "@/infrastructure/repositories/psTechStackTagRepository";
 
 import fs from "fs";
 import path from "path";
@@ -12,19 +10,10 @@ import bcrypt from "bcryptjs";
 
 export class SignupUsecase {
   private userRepository: UserRepository;
-  private tagRepository: PsTagRepository;
-  private techStackTagRepository: PsTechStackTagRepository;
   private encryptionKey: Buffer;
   private algorithm = "aes-256-cbc";
-
-  constructor(
-    userRepository: UserRepository,
-    tagRepository: PsTagRepository,
-    techStackTagRepository: PsTechStackTagRepository,
-  ) {
+  constructor(userRepository: UserRepository) {
     this.userRepository = userRepository;
-    this.tagRepository = tagRepository;
-    this.techStackTagRepository = techStackTagRepository;
     this.encryptionKey = getEncryptionKey();
   }
 

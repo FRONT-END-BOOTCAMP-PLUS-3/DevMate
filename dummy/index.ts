@@ -22,7 +22,7 @@ const userData = {
     label: "학생",
   },
   profileImg: "",
-  techStackTags: [
+  stack: [
     {
       value: "javascript",
       label: "JavaScript",

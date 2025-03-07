@@ -1,7 +1,12 @@
 import { useReducer } from "react";
 
-import type { AddressCode, SelectOption } from "@/types";
+import type { SelectOption } from "@/types";
 import type { MultiValue, SingleValue } from "react-select";
+
+export interface postCode {
+  address: string;
+  zonecode: number | string;
+}
 
 export interface SignupState {
   email: string;
@@ -15,7 +20,7 @@ export interface SignupState {
     day: number;
   };
   position: SelectOption | null;
-  address: AddressCode;
+  address: postCode;
   career: SelectOption | null;
   profileImg?: string; // 프로필 이미지 URL
   tagNames?: readonly SelectOption[];
@@ -31,7 +36,7 @@ export type SignupAction =
   | { type: "SET_POSITION"; value: SingleValue<SelectOption> | null }
   | { type: "SET_CAREER"; value: SingleValue<SelectOption> | null }
   | { type: "SET_TECH_STACK"; value: MultiValue<SelectOption> }
-  | { type: "SET_ADDRESS"; address: AddressCode }
+  | { type: "SET_ADDRESS"; address: postCode }
   | { type: "SET_GENDER"; gender: string }
   | { type: "SET_ERRORS"; errors: SignupState["errors"] }
   | { type: "SET_SUCCESS_MESSAGES"; successMessages: SignupState["successMessages"] } // ✅ 성공 메시지 추가
@@ -59,7 +64,7 @@ const signupReducer = (state: SignupState, action: SignupAction): SignupState =>
     case "SET_CAREER":
       return { ...state, career: action.value };
     case "SET_TECH_STACK":
-      return { ...state, tagNames: action.value };
+      return { ...state, stack: action.value };
     case "SET_ADDRESS":
       return { ...state, address: action.address };
     case "SET_GENDER":

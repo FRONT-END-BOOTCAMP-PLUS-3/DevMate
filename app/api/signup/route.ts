@@ -1,17 +1,14 @@
 import { NextResponse } from "next/server";
 
-import { PsTagRepository } from "@/infrastructure/repositories/psTagRepository";
 import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository";
-import { PsTechStackTagRepository } from "@/infrastructure/repositories/psTechStackTagRepository";
 
 import type { SignUpDto } from "@/application/usecases/auth/signup/dtos/signupDto";
 
 import { SignupUsecase } from "@/application/usecases/auth/signup/signupUsecase";
 
 const userRepository = new PsUserRepository();
-const tagRepository = new PsTagRepository();
-const techStackTagRepository = new PsTechStackTagRepository();
-const signupUsecase = new SignupUsecase(userRepository, tagRepository, techStackTagRepository);
+const signupUsecase = new SignupUsecase(userRepository);
+
 export async function POST(req: Request) {
   try {
     const body: Partial<SignUpDto> = await req.json();
@@ -24,7 +21,6 @@ export async function POST(req: Request) {
       !body.birthDate ||
       !body.position ||
       !body.address ||
-      body.tagNames === undefined ||
       body.career === undefined
     ) {
       return NextResponse.json({ error: "필수 필드가 누락되었습니다." }, { status: 400 });

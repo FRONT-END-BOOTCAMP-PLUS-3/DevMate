@@ -8,12 +8,12 @@ import Button from "@/components/button/button";
 
 import styles from "../projectDetail.module.scss";
 
-import type { Applicant } from "./projectData";
+import type { ProjectDetailApplyDto } from "@/application/usecases/project/dtos/projectDetailApplyDto";
 
 import ApplicantDetails from "./applicantDetails";
 
 interface ApplicationsSectionProps {
-  applications: Applicant[];
+  applications: ProjectDetailApplyDto[] | null;
   acceptApplicant: (id: number) => void;
   rejectApplicant: (id: number) => void;
 }
@@ -24,10 +24,10 @@ export default function ApplicationsSection({
   rejectApplicant,
 }: ApplicationsSectionProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null);
+  const [selectedApplicant, setSelectedApplicant] = useState<ProjectDetailApplyDto | null>(null);
 
   const handleModal = (id: number) => {
-    const applicant = applications.find((app) => app.id === id);
+    const applicant = applications?.find((app) => app.id === id);
     setSelectedApplicant(applicant || null);
     setIsModalOpen(true);
   };
@@ -54,14 +54,14 @@ export default function ApplicationsSection({
     }
   };
 
-  const transformedApplications = applications.map((app) => ({
+  const transformedApplications = applications?.map((app) => ({
     ...app,
     user: typeof app.user === "object" ? app.user.name : app.user,
   }));
 
   return (
     <div className={styles.container__content}>
-      <h2>🙆‍♀️ 신청 현황</h2>
+      <label>🙆‍♀️ 신청 현황</label>
       <Table
         headers={[
           { key: "user", label: "이름" },
@@ -69,7 +69,7 @@ export default function ApplicationsSection({
           { key: "status", label: "상태" },
           { key: "id", label: "지원서 열람" },
         ]}
-        data={transformedApplications}
+        data={transformedApplications || []}
         fontSize="14px"
         onFormClick={handleModal}
       />

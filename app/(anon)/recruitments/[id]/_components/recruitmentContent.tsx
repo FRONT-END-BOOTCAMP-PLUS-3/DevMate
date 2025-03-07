@@ -4,6 +4,9 @@ import React from "react";
 
 import Button from "@/components/button/button";
 
+import { formatDateTime } from "@/utils/formatDateTime";
+import { formatDateToString } from "@/utils/formatDateToString";
+
 import styles from "./recruitmentContent.module.scss";
 
 import type { RecruitmentDetailDto } from "@/application/usecases/recruitment/dtos/recruitmentDetailDto";
@@ -28,6 +31,7 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
     projectPeriodEnd,
     recruitmentStart,
     recruitmentEnd,
+    likes,
   } = project;
 
   return (
@@ -37,37 +41,40 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
         <div className={styles["recruitmentContent__author"]}>{leader.nickname}</div>
         <div className={styles["recruitmentContent__meta"]}>
           <span className={styles["recruitmentContent__date"]}>
-            작성일 {createdAt.toLocaleString()} | 조회수 {hits}
+            작성일 {formatDateTime(createdAt)} | 조회수 {hits}
           </span>
-          <span className={styles["recruitmentContent__actions"]}>{"수정 삭제"}</span>
+          <span className={styles["recruitmentContent__actions"]}>
+            <button className={styles["recruitmentContent__actions__button"]}>수정</button>|
+            <button className={styles["recruitmentContent__actions__button"]}>삭제</button>
+          </span>
         </div>
       </section>
 
       <section className={styles["recruitmentContent__body"]}>
         <div className={styles["recruitmentContent__details"]}>
-          <h2 className={styles["recruitmentContent__subtitle"]}>
+          <p className={styles["recruitmentContent__subtitle"]}>
             🎯 프로젝트 제목 <span>{projectTitle}</span>
-          </h2>
-          <h2 className={styles["recruitmentContent__subtitle"]}>
+          </p>
+          <p className={styles["recruitmentContent__subtitle"]}>
             🚩 프로젝트 목표 <span>{goal}</span>
-          </h2>
+          </p>
 
-          <h2 className={styles["recruitmentContent__subtitle"]}>
+          <p className={styles["recruitmentContent__subtitle"]}>
             📆 진행 기간
             <span>
-              {projectPeriodStart.toLocaleDateString()} ~ {projectPeriodEnd.toLocaleDateString()}
+              {formatDateToString(projectPeriodStart)} ~ {formatDateToString(projectPeriodEnd)}
             </span>
-          </h2>
-          <h2 className={styles["recruitmentContent__subtitle"]}>
+          </p>
+          <p className={styles["recruitmentContent__subtitle"]}>
             📆 모집 기간
             <span>
-              {recruitmentStart.toLocaleDateString()} ~ {recruitmentEnd.toLocaleDateString()}
+              {formatDateToString(recruitmentStart)} ~ {formatDateToString(recruitmentEnd)}
             </span>
-          </h2>
+          </p>
         </div>
         <div className={styles["recruitmentContent__content"]}>{description}</div>
         <div className={styles["recruitmentContent__actions"]}>
-          <LikeButton projectId={id} likes={10} />
+          <LikeButton projectId={id} likes={likes} />
           <Button>
             <Link href={`/user/recruitments/${id}/apply`}>지원하기</Link>
           </Button>

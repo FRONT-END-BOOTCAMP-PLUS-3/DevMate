@@ -17,7 +17,6 @@ import AddressSearch from "./addressSearch";
 import BirthSelector from "./birthSelector";
 import GenderSelector from "./genderSelector";
 
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { useSignupHandlers } from "@/app/(anon)/signup/_hooks/use-signupHandlers";
 
 interface SignUpFormProps {
@@ -144,13 +143,13 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
       />
 
       <Selector
-        name="tagNames"
+        name="stack"
         isMulti={true}
         title="기술 스택"
         options={TECH_STACK_OPTIONS}
-        selectedValue={state.tagNames ?? []}
-        onChange={(selected) => selectChangeHandler(selected, "tagNames")}
-        error={state.errors.tagNames}
+        selectedValue={state.stack ?? []}
+        onChange={(selected) => selectChangeHandler(selected, "stack")}
+        error={state.errors.stack}
         width="373px"
       />
 
