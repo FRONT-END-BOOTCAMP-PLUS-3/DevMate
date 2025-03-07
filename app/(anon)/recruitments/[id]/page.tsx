@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import styles from "./recruitmentDetail.module.scss";
 
@@ -12,16 +12,18 @@ const RecruitmentDetail = async ({ params }: { params: { id: string } }) => {
   const basicUrl = process.env.NEXT_PUBLIC_API_BASE;
 
   if (!params?.id || isNaN(Number(params.id))) {
-    console.error("잘못된 접근입니다.");
-    redirect("/");
+    return notFound();
   }
 
   const id = Number(params.id);
 
-  // 프로젝트 상세 정보 가져오기 (SSR)
   const res = await fetch(`${basicUrl}api/recruitments/${id}`);
 
   if (!res.ok) {
+    if (res.status === 404) {
+      return notFound();
+    }
+
     console.log("프로젝트 정보를 불러오는 중 오류가 발생했습니다");
   }
 
@@ -30,7 +32,7 @@ const RecruitmentDetail = async ({ params }: { params: { id: string } }) => {
   return (
     <div className={styles.container}>
       <RecruitmentContent project={project} />
-      <CommentContentList comments={project.comments} />
+      <CommentContentList comments={project?.comments || []} />
       <CommentForm projectId={project.id} />
     </div>
   );
