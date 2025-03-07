@@ -50,44 +50,6 @@
       font-size: 16px;
       min-width: 100px;
     }
-    &__box {
-      display: flex;
-      gap: 10px;
-    }
-    &__button {
-      background-color: $color-main;
-      color: $color-white;
-      margin-top: auto;
-      height: 30%;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 10px;
-      cursor: pointer;
-      margin-left: 10px;
-      &:hover {
-        background-color: darken($color-main, 10%);
-      }
-    }
-    &__input {
-      display: none;
-    }
-    &__label {
-      background-color: $color-main;
-      color: $color-white;
-      margin-top: auto;
-      height: 30%;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 10px;
-      cursor: pointer;
-      margin-left: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      &:hover {
-        background-color: darken($color-main, 10%);
-      }
-    }
   }
 }
 .userInfoRow {
