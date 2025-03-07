@@ -50,6 +50,7 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState<string | null>(null); // 🔹 비밀번호 확인 에러 상태 추가
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false); // 패스워드 확인 필드의 아이콘 상태 추가
   const [profileImgFile, setProfileImgFile] = useState<File | null>(null); // 프로필 이미지 파일 상태 추가
 
   const handleProfileImgChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -84,23 +85,25 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
 
       <InputField
         name="password"
-        type="password"
+        type={showPassword ? "text" : "password"}
         label="비밀번호"
         value={state.password}
         onChange={changeHandler}
         onBlur={onBlurHandler}
         error={state.errors.password}
+        icon={showPassword ? FaRegEye : FaRegEyeSlash}
+        onIconClick={() => setShowPassword((prev) => !prev)}
       />
       <InputField
         name="passwordConfirm"
-        type={showPassword ? "text" : "password"}
+        type={showPasswordConfirm ? "text" : "password"}
         label="비밀번호 확인"
         value={passwordConfirm}
         onChange={(e) => setPasswordConfirm(e.target.value)}
         onBlur={() => onBlurPwdConfHandler(passwordConfirm, setPasswordConfirmError)}
         error={passwordConfirmError}
-        icon={showPassword ? FaRegEye : FaRegEyeSlash}
-        onIconClick={() => setShowPassword((prev) => !prev)}
+        icon={showPasswordConfirm ? FaRegEye : FaRegEyeSlash}
+        onIconClick={() => setShowPasswordConfirm((prev) => !prev)}
       />
 
       <div className={container__inputblock}>

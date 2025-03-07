@@ -18,6 +18,7 @@ export type editUserInfoAction =
   | { type: "SET_CAREER"; value: SingleValue<SelectOption> | null }
   | { type: "SET_TECH_STACK"; value: MultiValue<SelectOption> }
   | { type: "SET_ADDRESS"; address: AddressCode }
+  | { type: "SET_PROFILE_IMG"; payload: string } // 프로필 이미지 액션 추가
   | { type: "RESET" };
 
 const editUserInfoReducer = (state: editUserInfoState, action: editUserInfoAction): editUserInfoState => {
@@ -32,6 +33,8 @@ const editUserInfoReducer = (state: editUserInfoState, action: editUserInfoActio
       return { ...state, techStackTags: action.value };
     case "SET_ADDRESS":
       return { ...state, address: action.address };
+    case "SET_PROFILE_IMG":
+      return { ...state, profileImg: action.payload };
     case "RESET":
       return initialState;
     default:
@@ -57,7 +60,6 @@ export const initialState: editUserInfoState = {
   },
 };
 
-// ✅ 커스텀 훅 생성
 export function useEditUserInfo() {
   const [state, dispatch] = useReducer(editUserInfoReducer, initialState);
   return { state, dispatch };
