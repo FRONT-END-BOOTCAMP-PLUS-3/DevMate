@@ -6,4 +6,5 @@ export interface UserRepository {
   findByEmail(email: string): Promise<User | null>;
   update(id: string, user: Partial<Omit<User, "id" | "createdAt">>): Promise<User>;
   delete(id: string): Promise<void>;
+  findByIdWithTechStack(id: string): Promise<User | null>;
 }
