@@ -18,7 +18,7 @@ interface RecruitmentContentProps {
   project: RecruitmentDetailDto;
 }
 
-const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
+const RecruitmentContent: React.FC<RecruitmentContentProps> = async ({ project }) => {
   const {
     id,
     recruitmentTitle,
@@ -47,7 +47,7 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
             작성일 {formatDateTime(createdAt)} | 조회수 {hits}
           </span>
           <span className={styles["recruitmentContent__actions"]}>
-            <ActionButtons />
+            <ActionButtons leaderId={leader?.id} />
           </span>
         </div>
       </section>
