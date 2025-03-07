@@ -4,7 +4,9 @@ import { PsTagRepository } from "@/infrastructure/repositories/psTagRepository";
 import { PsProjectRepository } from "@/infrastructure/repositories/psProjectRepository";
 import { PsProjectTagRepository } from "@/infrastructure/repositories/psProjectTagRepository";
 
+import type { TagRepository } from "@/domain/repositories/tagRepository";
 import type { ProjectRepository } from "@/domain/repositories/projectRepository";
+import type { ProjectTagRepository } from "@/domain/repositories/projectTagRepository";
 import type { ProjectDetailDto } from "@/application/usecases/project/dtos/projectDetailDto";
 import type { CreateProjectDto } from "@/application/usecases/project/dtos/createProjectDto";
 
@@ -16,7 +18,13 @@ import { GetProjectDetailUsecase } from "@/application/usecases/project/getProje
 export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const projectRepository: ProjectRepository = new PsProjectRepository();
-  const getProjectDetailUsecase: GetProjectDetailUsecase = new GetProjectDetailUsecase(projectRepository);
+  const tagRepository: TagRepository = new PsTagRepository();
+  const projectTagRepository: ProjectTagRepository = new PsProjectTagRepository();
+  const getProjectDetailUsecase: GetProjectDetailUsecase = new GetProjectDetailUsecase(
+    projectRepository,
+    tagRepository,
+    projectTagRepository,
+  );
 
   const projectId = parseInt(params.id, 10);
   if (isNaN(projectId)) {
@@ -65,7 +73,9 @@ export async function PATCH(req: Request, props: { params: Promise<{ id: string 
   try {
     const params = await props.params;
     const projectRepository: ProjectRepository = new PsProjectRepository();
-    const updateProjectUsecase = new UpdateProjectUsecase(projectRepository);
+    const tagRepository: TagRepository = new PsTagRepository();
+    const projectTagRepository: ProjectTagRepository = new PsProjectTagRepository();
+    const updateProjectUsecase = new UpdateProjectUsecase(projectRepository, tagRepository, projectTagRepository);
 
     const projectId = parseInt(params.id, 10);
     if (isNaN(projectId)) {
@@ -73,14 +83,29 @@ export async function PATCH(req: Request, props: { params: Promise<{ id: string 
     }
 
     // 요청 바디에서 업데이트할 데이터 추출
-    const { projectTitle, goal, projectPeriodStart, projectPeriodEnd, notice } = await req.json();
+    const {
+      recruitmentTitle,
+      projectTitle,
+      goal,
+      description,
+      projectPeriodStart,
+      projectPeriodEnd,
+      recruitmentStart,
+      recruitmentEnd,
+      notice,
+      projectTags,
+    } = await req.json();
 
-    // 필수 값 체크 (최소한 하나의 값은 있어야 함)
+    // 필수 값 체크
     if (
+      recruitmentTitle === undefined &&
       projectTitle === undefined &&
       goal === undefined &&
+      description === undefined &&
       projectPeriodStart === undefined &&
       projectPeriodEnd === undefined &&
+      recruitmentStart === undefined &&
+      recruitmentEnd === undefined &&
       notice === undefined
     ) {
       return NextResponse.json({ error: "At least one field must be provided for update" }, { status: 400 });
@@ -88,11 +113,16 @@ export async function PATCH(req: Request, props: { params: Promise<{ id: string 
 
     // 업데이트 실행
     const updatedProject = await updateProjectUsecase.execute(projectId, {
+      recruitmentTitle,
       projectTitle,
       goal,
-      projectPeriodStart: projectPeriodStart ? new Date(projectPeriodStart) : undefined,
-      projectPeriodEnd: projectPeriodEnd ? new Date(projectPeriodEnd) : undefined,
+      description,
+      projectPeriodStart: new Date(projectPeriodStart),
+      projectPeriodEnd: new Date(projectPeriodEnd),
+      recruitmentStart: new Date(recruitmentStart),
+      recruitmentEnd: new Date(recruitmentEnd),
       notice,
+      projectTags,
     });
 
     if (!updatedProject) {
