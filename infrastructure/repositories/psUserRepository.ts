@@ -36,23 +36,6 @@ export class PsUserRepository implements UserRepository {
     }
   }
 
-  async findByIdWithTechStack(id: string): Promise<User | null> {
-    try {
-      const user = await prisma.user.findUnique({
-        where: { id },
-        include: { techStackTags: true },
-      });
-      return user || null;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      } else {
-        console.error("An unknown error occurred");
-      }
-      return null;
-    }
-  }
-
   async findByEmail(email: string): Promise<User | null> {
     try {
       const user = await prisma.user.findUnique({ where: { email } });
