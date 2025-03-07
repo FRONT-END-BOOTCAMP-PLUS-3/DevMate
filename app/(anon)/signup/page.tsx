@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { transformUserData } from "@/utils/transformData";
+import { transformUserData } from "@/utils/transformUserData";
 
 import styles from "./signup.module.scss";
 

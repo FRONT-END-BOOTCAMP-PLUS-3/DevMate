@@ -2,10 +2,10 @@ import { type Dispatch, type ChangeEvent, type FocusEvent } from "react";
 
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
 
-import type { AddressCode, SelectOption } from "@/types";
+import type { SelectOption } from "@/types";
 import type { MultiValue, SingleValue } from "react-select";
 
-import type { SignupState, SignupAction } from "./use-signupReducer";
+import type { postCode, SignupState, SignupAction } from "./use-signupReducer";
 
 import { checkEmailDup } from "../apis/checkEmailDup";
 
@@ -24,7 +24,7 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
     selected: SingleValue<SelectOption> | MultiValue<SelectOption> | null,
     name?: string,
   ) => {
-    if (name === "tagNames") {
+    if (name === "stack") {
       dispatch({ type: "SET_TECH_STACK", value: selected as MultiValue<SelectOption> });
     } else if (name === "position") {
       dispatch({ type: "SET_POSITION", value: selected as SingleValue<SelectOption> | null });
@@ -51,7 +51,7 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
   };
 
   //  주소 변경 핸들러
-  const addressChangeHandler = (address: AddressCode) => {
+  const addressChangeHandler = (address: postCode) => {
     dispatch({ type: "SET_ADDRESS", address });
   };
 
@@ -142,7 +142,7 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
         state.birthDate.year && state.birthDate.month && state.birthDate.day ? "" : ERROR_MESSAGES.BIRTH_REQUIRED,
       address: state.address.address ? "" : ERROR_MESSAGES.ADDRESS_REQUIRED,
       position: state.position?.value ? "" : ERROR_MESSAGES.POSITION_REQUIRED,
-      tagNames: state.tagNames?.length ? "" : ERROR_MESSAGES.TECH_STACK_REQUIRED,
+      stack: state.stack?.length ? "" : ERROR_MESSAGES.TECH_STACK_REQUIRED,
       career: state.career?.value ? "" : ERROR_MESSAGES.CAREER_REQUIRED,
     };
 

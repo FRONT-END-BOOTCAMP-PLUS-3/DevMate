@@ -2,27 +2,16 @@ import { getEncryptionKey } from "@/utils/security";
 
 import type { UserRepository } from "@/domain/repositories/userRepository";
 import type { SignUpDto } from "@/application/usecases/auth/signup/dtos/signupDto";
-import type { PsTagRepository } from "@/infrastructure/repositories/psTagRepository";
-import type { PsTechStackTagRepository } from "@/infrastructure/repositories/psTechStackTagRepository";
 
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 
 export class SignupUsecase {
   private userRepository: UserRepository;
-  private tagRepository: PsTagRepository;
-  private techStackTagRepository: PsTechStackTagRepository;
   private encryptionKey: Buffer;
   private algorithm = "aes-256-cbc";
-
-  constructor(
-    userRepository: UserRepository,
-    tagRepository: PsTagRepository,
-    techStackTagRepository: PsTechStackTagRepository,
-  ) {
+  constructor(userRepository: UserRepository) {
     this.userRepository = userRepository;
-    this.tagRepository = tagRepository;
-    this.techStackTagRepository = techStackTagRepository;
     this.encryptionKey = getEncryptionKey();
   }
 
@@ -35,18 +24,24 @@ export class SignupUsecase {
     return iv.toString("hex") + encrypted;
   }
 
+  private decryptAddress(encryptedAddress: string): string {
+    const iv = Buffer.from(encryptedAddress.slice(0, 32), "hex");
+    const encryptedData = encryptedAddress.slice(32);
+    const decipher = crypto.createDecipheriv(this.algorithm, this.encryptionKey, iv);
+
+    const decrypted = decipher.update(encryptedData, "hex", "utf8") + decipher.final("utf8"); // 🔹 const 사용
+
+    return decrypted;
+  }
+
   public async execute(user: Omit<SignUpDto, "id" | "createdAt">): Promise<SignUpDto> {
     try {
-      const { password, address, tagNames, ...rest } = user;
+      const { password, address, ...rest } = user;
       const hashedPassword = await bcrypt.hash(password, 10);
       const encryptedAddress = this.encryptAddress(address);
       const userData = { ...rest, password: hashedPassword, address: encryptedAddress };
-      const newUser = await this.userRepository.create(userData);
-      const tagIds = await this.tagRepository.getTagIds(tagNames);
-      await this.techStackTagRepository.createMultiple(newUser.id, tagIds);
-      const createdUser = { ...newUser, tagNames: user.tagNames };
-      console.log("회원가입 성공:", createdUser);
-      return createdUser;
+
+      return await this.userRepository.create(userData);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);

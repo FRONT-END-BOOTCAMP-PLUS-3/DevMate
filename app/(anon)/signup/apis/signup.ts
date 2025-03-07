@@ -1,6 +1,6 @@
-import type { SignUpDto } from "@/application/usecases/auth/signup/dtos/signupDto"; // 타입이 있으면 적용
+import type { UserDto } from "@/application/usecases/dtos/userDto"; // 타입이 있으면 적용
 
-export const signUp = async (userData: SignUpDto) => {
+export const signUp = async (userData: Omit<UserDto, "id" | "createdAt">) => {
   try {
     const response = await fetch("/api/signup", {
       method: "POST",
