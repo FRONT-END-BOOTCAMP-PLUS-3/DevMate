@@ -18,12 +18,14 @@
   }
 
   &__nickname {
-    font-size: 12px !important;
+    font-size: 15px !important;
+    font-weight: 500;
   }
 
   &__date {
-    font-size: 10px !important;
-    color: #888;
+    font-size: 13px !important;
+    font-weight: 400;
+    color: #abb0b5;
   }
 
   &__body {

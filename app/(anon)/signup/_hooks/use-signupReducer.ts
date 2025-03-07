@@ -17,7 +17,7 @@ export interface SignupState {
   position: SelectOption | null;
   address: AddressCode;
   career: SelectOption | null;
-  profileImg?: string; // 프로필 이미지 URL
+  profileImg?: string;
   tagNames?: readonly SelectOption[];
 
   successMessages: Partial<Record<keyof SignupState, string>>;
@@ -36,7 +36,6 @@ export type SignupAction =
   | { type: "SET_ERRORS"; errors: SignupState["errors"] }
   | { type: "SET_SUCCESS_MESSAGES"; successMessages: SignupState["successMessages"] } // ✅ 성공 메시지 추가
   | { type: "SET_EMAIL_CHECKED"; value: boolean }
-  | { type: "SET_PROFILE_IMG"; payload: string } // 프로필 이미지 URL 액션 추가
   | { type: "RESET_ERRORS" }
   | { type: "RESET_SUCCESS_MESSAGES" }
   | { type: "RESET" };
@@ -70,8 +69,6 @@ const signupReducer = (state: SignupState, action: SignupAction): SignupState =>
       return { ...state, successMessages: action.successMessages };
     case "SET_EMAIL_CHECKED":
       return { ...state, isEmailChecked: action.value };
-    case "SET_PROFILE_IMG":
-      return { ...state, profileImg: action.payload };
     case "RESET_SUCCESS_MESSAGES":
       return { ...state, successMessages: {} };
     case "RESET_ERRORS":
@@ -106,7 +103,7 @@ export const initialState: SignupState = {
     value: "",
     label: "",
   },
-  profileImg: "", // 초기값 설정
+  profileImg: "",
   tagNames: [],
   errors: {},
   isEmailChecked: false,

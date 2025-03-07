@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "@/components/button/button";
+
+import { decodeToken } from "@/utils/cookie";
 
 import styles from "./commentForm.module.scss";
 
@@ -13,17 +15,60 @@ interface CommentFormProps {
 }
 
 const CommentForm: React.FC<CommentFormProps> = ({ projectId, parentId, onClickCloseReplyForm }) => {
-  const [text, setText] = useState("");
+  const [userId, setUserId] = useState<string | null>(null);
+  const [content, setContent] = useState("");
 
-  const handleSubmit = async () => {
-    console.log("댓글 달기", projectId, parentId);
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  const postComment = async () => {
+    if (!userId) {
+      alert("로그인 후 작성해주세요.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/recruitments/${projectId}/comment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, projectId, content, parentCommentId: parentId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("댓글 생성에 실패했습니다.");
+      }
+
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
+  const fetchUserId = async () => {
+    try {
+      const decoded = await decodeToken("id");
+      if (typeof decoded === "string") {
+        setUserId(decoded);
+      }
+    } catch {
+      setUserId(null);
+    }
   };
 
   return (
     <form className={styles.commentForm}>
-      <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="댓글을 작성해보세요." rows={4} />
+      <textarea
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder={userId ? "댓글을 작성해보세요." : "로그인 후 작성해주세요."}
+        rows={4}
+      />
       <div className={styles.commentForm__buttonWrapper}>
-        <Button onClick={handleSubmit}>등록</Button>
+        <Button onClick={postComment}>등록</Button>
         {parentId && onClickCloseReplyForm && (
           <Button onClick={onClickCloseReplyForm} variant={"sub"}>
             취소

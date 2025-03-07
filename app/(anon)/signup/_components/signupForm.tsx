@@ -1,7 +1,5 @@
-import Image from "next/image";
-
 import { useState } from "react";
-import type { ChangeEvent, Dispatch } from "react";
+import type { Dispatch } from "react";
 
 import Button from "@/components/button/button";
 import Selector from "@/components/selector/selector";
@@ -27,15 +25,7 @@ interface SignUpFormProps {
 }
 
 export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProps) {
-  const {
-    container,
-    container__button,
-    container__inputblock,
-    container__submit,
-    container__profileImg,
-    profileImg__preview,
-    profileImg__button,
-  } = styles;
+  const { container, container__button, container__inputblock, container__submit } = styles;
   const {
     changeHandler,
     selectChangeHandler,
@@ -50,22 +40,6 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState<string | null>(null); // 🔹 비밀번호 확인 에러 상태 추가
   const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false); // 패스워드 확인 필드의 아이콘 상태 추가
-  const [profileImgFile, setProfileImgFile] = useState<File | null>(null); // 프로필 이미지 파일 상태 추가
-
-  const handleProfileImgChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setProfileImgFile(file); // 파일 상태 업데이트
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        dispatch({ type: "SET_PROFILE_IMG", payload: reader.result as string });
-      };
-      console.log(state.profileImg);
-      reader.readAsDataURL(file);
-    }
-  };
-
   return (
     <form className={container}>
       <div className={container__inputblock}>
@@ -85,25 +59,23 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
 
       <InputField
         name="password"
-        type={showPassword ? "text" : "password"}
+        type="password"
         label="비밀번호"
         value={state.password}
         onChange={changeHandler}
         onBlur={onBlurHandler}
         error={state.errors.password}
-        icon={showPassword ? FaRegEye : FaRegEyeSlash}
-        onIconClick={() => setShowPassword((prev) => !prev)}
       />
       <InputField
         name="passwordConfirm"
-        type={showPasswordConfirm ? "text" : "password"}
+        type={showPassword ? "text" : "password"}
         label="비밀번호 확인"
         value={passwordConfirm}
         onChange={(e) => setPasswordConfirm(e.target.value)}
         onBlur={() => onBlurPwdConfHandler(passwordConfirm, setPasswordConfirmError)}
         error={passwordConfirmError}
-        icon={showPasswordConfirm ? FaRegEye : FaRegEyeSlash}
-        onIconClick={() => setShowPasswordConfirm((prev) => !prev)}
+        icon={showPassword ? FaRegEye : FaRegEyeSlash}
+        onIconClick={() => setShowPassword((prev) => !prev)}
       />
 
       <div className={container__inputblock}>
@@ -180,23 +152,6 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
         onChange={(selected) => selectChangeHandler(selected, "career")}
         error={state.errors.career}
       />
-
-      <div className={container__profileImg}>
-        <label htmlFor="profileImg">프로필 이미지 업로드</label>
-        <input type="file" id="profileImg" accept="image/*" onChange={handleProfileImgChange} />
-        {state.profileImg && (
-          <Image
-            src={profileImgFile ? URL.createObjectURL(profileImgFile) : state.profileImg}
-            alt="프로필 이미지 미리보기"
-            className={profileImg__preview}
-            width={100}
-            height={100}
-          />
-        )}
-        <label htmlFor="profileImg" className={profileImg__button}>
-          이미지 선택
-        </label>
-      </div>
 
       <Button className={container__submit} variant="main" size="long" onClick={onSubmit}>
         가입하기
