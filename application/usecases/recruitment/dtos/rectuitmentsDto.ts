@@ -1,9 +1,13 @@
+import type { TagDto } from "../../dtos/tagDto";
 import type { ProjectDto } from "../../dtos/projectDto";
-import type { ProjectTagDto } from "../../dtos/projectTagDto";
+
+export interface RecruitmentsTagDto {
+  tag: TagDto;
+}
 
 export interface RecruitmentsDto extends ProjectDto {
   leaderName: string;
-  projectTags: ProjectTagDto[];
+  projectTags: RecruitmentsTagDto[];
   commentCount: number;
   likeCount: number;
 }

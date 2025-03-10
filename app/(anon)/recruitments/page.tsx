@@ -25,17 +25,13 @@ const Recruitments = async ({ searchParams }: RecruitmentsProps) => {
     tags: searchParams.tags || "",
   });
 
-  console.log(`${basicUrl}api/recruitments?${params.toString()}`);
-
   const res = await fetch(`${basicUrl}api/recruitments?${params.toString()}`);
 
   if (!res.ok) {
     console.log("프로젝트 정보를 불러오는 중 오류가 발생했습니다");
   }
 
-  const recruitments: RecruitmentsDto = await res.json();
-
-  console.log("프로젝트 정보:", recruitments);
+  const recruitments: RecruitmentsDto[] = await res.json();
 
   return (
     <div className={styles["main"]}>
@@ -68,8 +64,8 @@ const Recruitments = async ({ searchParams }: RecruitmentsProps) => {
 
         {/* 글 리스트 */}
         <div className={styles["main__post-list"]}>
-          {mockData.map((item) => (
-            <RecruitmentsItem key={item.id} recruitmentData={item} />
+          {recruitments.map((recruitment) => (
+            <RecruitmentsItem key={recruitment.id} recruitment={recruitment} />
           ))}
         </div>
       </div>
