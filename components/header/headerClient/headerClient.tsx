@@ -50,5 +50,9 @@ export default function AuthSection() {
         </div>
       )}
     </div>
+  ) : (
+    <Link href="/login">
+      <button className={styles.header__loginMenuItem}>로그인</button>
+    </Link>
   );
 }
