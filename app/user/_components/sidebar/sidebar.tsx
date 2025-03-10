@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-
-import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 import styles from "./sidebar.module.scss";
 
@@ -28,12 +27,12 @@ const sidebarItems = [
   },
   {
     title: "신청 현황",
-    subItems: [{ name: "신청 현황", path: "/user/recruitments/myApplyStatus" }],
+    subItems: [{ name: "나의 신청 현황", path: "/user/recruitments/myApplyStatus" }],
   },
 ];
 
 export default function Sidebar() {
-  const [activeItem, setActiveItem] = useState<string | null>(null);
+  const pathname = usePathname();
 
   return (
     <div className={styles["sidebar"]}>
@@ -46,9 +45,8 @@ export default function Sidebar() {
                 <Link
                   href={item.path}
                   className={`${styles["sidebar__item"]} ${
-                    activeItem === item.name ? styles["sidebar__item--active"] : ""
+                    pathname === item.path ? styles["sidebar__item--active"] : ""
                   }`}
-                  onClick={() => setActiveItem(item.name)}
                 >
                   {item.name}
                 </Link>
