@@ -1,19 +1,21 @@
 import NoticeSection from "@/app/user/projects/[id]/_components/noticeSection";
 
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 
 describe("NoticeSection", () => {
-  it("heading, content, button이 렌더링되는지", () => {
-    render(<NoticeSection notices={[{ content: "내용" }]} />);
+  const updateNotice = vi.fn();
+
+  it("leader일 경우 heading, content, button이 렌더링되는지", () => {
+    render(<NoticeSection notice="공지내용" updateNotice={updateNotice} userRole="leader" />);
 
     expect(screen.getByText("📌 공지사항")).toBeInTheDocument();
-    expect(screen.getByText("내용")).toBeInTheDocument();
+    expect(screen.getByText("공지내용")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "수정" })).toBeInTheDocument();
   });
 
-  it("수정 버튼을 누르면 content가 input박스로 변경되는지", async () => {
-    render(<NoticeSection notices={[{ content: "내용" }]} />);
+  it("button을 누르면 content가 input박스로 변경되는지", async () => {
+    render(<NoticeSection notice="공지내용" updateNotice={updateNotice} userRole="leader" />);
 
     const editButton = screen.getByRole("button", { name: "수정" });
     fireEvent.click(editButton);
@@ -23,20 +25,22 @@ describe("NoticeSection", () => {
     });
   });
 
-  it("수정 후 완료 버튼을 누르면 content가 p태그로 변경되는지", async () => {
-    render(<NoticeSection notices={[{ content: "내용" }]} />);
+  it("수정 후 완료 button을 누르면 updateNotice 함수가 호출되는지 확인", () => {
+    render(<NoticeSection notice="공지내용" updateNotice={updateNotice} userRole="leader" />);
 
-    const editButton = screen.getByRole("button", { name: "수정" });
-    fireEvent.click(editButton);
+    fireEvent.click(screen.getByRole("button", { name: "수정" }));
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "수정된 내용" } });
+    fireEvent.click(screen.getByRole("button", { name: "완료" }));
 
-    const input = screen.getByRole("textbox");
-    fireEvent.change(input, { target: { value: "수정된 내용" } });
+    expect(updateNotice).toHaveBeenCalledTimes(1);
+    expect(updateNotice).toHaveBeenCalledWith("수정된 내용");
+  });
 
-    const completeButton = screen.getByRole("button", { name: "완료" });
-    fireEvent.click(completeButton);
+  it("member일 경우 heading, content만 렌더링되는지", () => {
+    render(<NoticeSection notice="공지내용" updateNotice={updateNotice} userRole="member" />);
 
-    await waitFor(() => {
-      expect(screen.getByText("수정된 내용")).toBeInTheDocument;
-    });
+    expect(screen.getByText("📌 공지사항")).toBeInTheDocument();
+    expect(screen.getByText("공지내용")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "수정" })).toBeNull();
   });
 });

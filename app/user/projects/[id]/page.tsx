@@ -28,7 +28,7 @@ export default function ProjectDetail() {
   const [error, setError] = useState<string | null>(null);
   const [refresh, setRefresh] = useState<boolean>(false);
   const [decodedId, setdecodedId] = useState<string | null>(null);
-  const [userRole, setUserRole] = useState<"leader" | "member" | "guest">("guest");
+  const [userRole, setUserRole] = useState<"leader" | "member" | "guest" | "realGuest">("realGuest");
 
   /* ---------------------------------- api call function --------------------------------- */
   const updateNotice = async (newNotice: string) => {
@@ -158,6 +158,8 @@ export default function ProjectDetail() {
         }
       } catch (error) {
         console.error("토큰 디코딩 실패:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -170,13 +172,14 @@ export default function ProjectDetail() {
       setError(null);
       try {
         const response = await fetch(`/api/project/${projectId}`, { method: "GET" });
+        console.log("📡 API 응답 상태:", response.status);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
         const data: ProjectDetailDto = await response.json();
 
         if (!decodedId) {
-          setUserRole("guest");
+          setUserRole("realGuest");
         } else if (data.leaderId === decodedId) {
           setUserRole("leader");
         } else if (data.members?.some((member) => member.user?.id === decodedId)) {
@@ -213,6 +216,9 @@ export default function ProjectDetail() {
 
   if (userRole === "guest") {
     return <div className={styles.error}>❌ 접근 권한이 없습니다.</div>;
+  }
+  if (userRole === "realGuest") {
+    return <div className={styles.error}>❌ 토큰이 유효하지 않습니다.</div>;
   }
 
   if (!project) {
