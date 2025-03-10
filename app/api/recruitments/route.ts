@@ -10,10 +10,16 @@ import { GetRecruitmentsUsecase } from "@/application/usecases/recruitment/getRe
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
-    const status = (searchParams.get("status") || "전체") as "전체" | "모집중" | "모집완료";
-    const sort = (searchParams.get("sort") || "최신순") as "최신순" | "조회수순" | "댓글많은순" | "좋아요순";
-    const search = (searchParams.get("search") || "") as string;
-    const tags = (searchParams.get("tags") || []) as string[];
+
+    const status = decodeURIComponent(searchParams.get("status") || "전체") as "전체" | "모집중" | "모집완료";
+    const sort = decodeURIComponent(searchParams.get("sort") || "최신순") as
+      | "최신순"
+      | "조회수순"
+      | "댓글많은순"
+      | "좋아요순";
+    const search = decodeURIComponent(searchParams.get("search") || "") as string;
+    const tagsString = decodeURIComponent(searchParams.get("tags") || "");
+    const tags = tagsString ? tagsString.split(",") : [];
 
     const usecase = new GetRecruitmentsUsecase(new PsProjectRepository());
 
