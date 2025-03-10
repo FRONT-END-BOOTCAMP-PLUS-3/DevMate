@@ -7,6 +7,7 @@ export interface ProjectRepository {
     search?: string,
     tags?: string[],
   ): Promise<Project[]>;
+  create(project: Omit<Project, "id" | "hits" | "createdAt" | "notice">): Promise<Project>;
   findById(id: number): Promise<Project | null>;
   findProjectTitleById(id: number): Promise<string | null>;
   update(id: number, project: Partial<Omit<Project, "id" | "createdAt">>): Promise<Project>;

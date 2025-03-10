@@ -43,5 +43,5 @@ next-env.d.ts
 # test
 test-results/
 
-# file
-public/data
+# development
+public/data/*

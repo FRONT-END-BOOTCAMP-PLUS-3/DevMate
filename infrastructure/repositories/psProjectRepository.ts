@@ -6,6 +6,18 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class PsProjectRepository implements ProjectRepository {
+  async create(project: Omit<Project, "id" | "hits" | "createdAt" | "notice">): Promise<Project> {
+    try {
+      const createdProject = await prisma.project.create({
+        data: project,
+      });
+      return createdProject;
+    } catch (error) {
+      console.error("Error creating project:", project);
+      throw new Error("프로젝트 생성에 실패했습니다.");
+    }
+  }
+
   async findById(id: number): Promise<Project | null> {
     try {
       const projectData = await prisma.project.findUnique({

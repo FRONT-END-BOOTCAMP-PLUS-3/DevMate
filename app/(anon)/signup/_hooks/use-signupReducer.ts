@@ -1,12 +1,7 @@
 import { useReducer } from "react";
 
-import type { SelectOption } from "@/types";
+import type { AddressCode, SelectOption } from "@/types";
 import type { MultiValue, SingleValue } from "react-select";
-
-export interface postCode {
-  address: string;
-  zonecode: number | string;
-}
 
 export interface SignupState {
   email: string;
@@ -20,10 +15,10 @@ export interface SignupState {
     day: number;
   };
   position: SelectOption | null;
-  address: postCode;
+  address: AddressCode;
   career: SelectOption | null;
-  profileImg?: string;
-  stack?: readonly SelectOption[];
+  profileImg?: string; // 프로필 이미지 URL
+  tagNames?: readonly SelectOption[];
 
   successMessages: Partial<Record<keyof SignupState, string>>;
   errors: Partial<Record<keyof SignupState, string>>;
@@ -36,11 +31,12 @@ export type SignupAction =
   | { type: "SET_POSITION"; value: SingleValue<SelectOption> | null }
   | { type: "SET_CAREER"; value: SingleValue<SelectOption> | null }
   | { type: "SET_TECH_STACK"; value: MultiValue<SelectOption> }
-  | { type: "SET_ADDRESS"; address: postCode }
+  | { type: "SET_ADDRESS"; address: AddressCode }
   | { type: "SET_GENDER"; gender: string }
   | { type: "SET_ERRORS"; errors: SignupState["errors"] }
   | { type: "SET_SUCCESS_MESSAGES"; successMessages: SignupState["successMessages"] } // ✅ 성공 메시지 추가
   | { type: "SET_EMAIL_CHECKED"; value: boolean }
+  | { type: "SET_PROFILE_IMG"; payload: string } // 프로필 이미지 URL 액션 추가
   | { type: "RESET_ERRORS" }
   | { type: "RESET_SUCCESS_MESSAGES" }
   | { type: "RESET" };
@@ -63,7 +59,7 @@ const signupReducer = (state: SignupState, action: SignupAction): SignupState =>
     case "SET_CAREER":
       return { ...state, career: action.value };
     case "SET_TECH_STACK":
-      return { ...state, stack: action.value };
+      return { ...state, tagNames: action.value };
     case "SET_ADDRESS":
       return { ...state, address: action.address };
     case "SET_GENDER":
@@ -74,6 +70,8 @@ const signupReducer = (state: SignupState, action: SignupAction): SignupState =>
       return { ...state, successMessages: action.successMessages };
     case "SET_EMAIL_CHECKED":
       return { ...state, isEmailChecked: action.value };
+    case "SET_PROFILE_IMG":
+      return { ...state, profileImg: action.payload };
     case "RESET_SUCCESS_MESSAGES":
       return { ...state, successMessages: {} };
     case "RESET_ERRORS":
@@ -108,8 +106,8 @@ export const initialState: SignupState = {
     value: "",
     label: "",
   },
-  profileImg: "",
-  stack: [],
+  profileImg: "", // 초기값 설정
+  tagNames: [],
   errors: {},
   isEmailChecked: false,
   successMessages: {},

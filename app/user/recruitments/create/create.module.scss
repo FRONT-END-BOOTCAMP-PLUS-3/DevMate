@@ -1,6 +1,6 @@
 .create {
   margin: 0 auto;
-  width: 1080px;
+  width: 768px;
   padding-top: 30px;
   padding-bottom: 30px;
 
@@ -8,6 +8,7 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: $color-main;
   }
 
   &__divider {
@@ -22,7 +23,7 @@
     font-size: 20px;
     margin-bottom: 20px;
 
-    &--required {
+    &__required {
       color: red;
       margin-left: 5px;
     }
@@ -43,27 +44,23 @@
     border: 1px solid $color-solid-line;
     border-radius: 5px;
     margin-top: 5px;
-    overflow: auto;  
-    word-wrap: break-word; 
-    word-break: break-word; 
-     
-
+    overflow: auto;
+    word-wrap: break-word;
+    word-break: break-word;
   }
-  &__editor-content {
+  &__editor_content {
     width: 100%;
     height: 360px;
     padding: 20px;
     border-radius: 0px 0px 5px 5px;
 
     & > div:focus {
-      outline: none;  
-      box-shadow: none;  
+      outline: none;
+      box-shadow: none;
     }
-    
   }
 
-
-  &__calendar-container {
+  &__calendar_container {
     display: flex;
     justify-content: left;
     gap: 100px;
@@ -71,8 +68,9 @@
     margin-bottom: 20px;
   }
 
-  &__calendar-project, &__calendar-recruit{
-    margin-bottom: 20px; 
+  &__calendar_project,
+  &__calendar_recruit {
+    margin-bottom: 20px;
   }
 
   .create__buttons {
@@ -81,31 +79,29 @@
     gap: 20px;
     margin-top: 40px;
   }
-  
-  .create__button-cancel,
-  .create__button-submit {
+
+  .create__button_cancel,
+  .create__button_submit {
     padding: 12px 20px;
     font-size: 16px;
     border-radius: 4px;
     border: none;
     cursor: pointer;
   }
-  
-  .create__button-cancel {
+
+  .create__button_cancel {
     background-color: white;
     color: black;
-    border: 1px solid #ccc; 
+    border: 1px solid #ccc;
   }
-  
-  .create__button-submit {
-    background-color: #706efa; 
+
+  .create__button_submit {
+    background-color: #706efa;
     color: white;
   }
-  
-  .create__button-cancel:hover,
-  .create__button-submit:hover {
+
+  .create__button_cancel:hover,
+  .create__button_submit:hover {
     opacity: 0.8;
   }
- 
-
 }

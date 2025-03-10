@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import { useEffect, useRef, useState } from "react";
 
-import Button from "@/components/button/button";
 import styles from "@/components/header/header.module.scss";
 
 import { getAuthStatus, removeAuthToken } from "@/utils/cookie";
@@ -63,7 +62,7 @@ export default function AuthSection({ isLogIn }: AuthSectionProps) {
     </div>
   ) : (
     <Link href="/login">
-      <Button> 로그인</Button>
+      <button className={styles.header__loginMenuItem}>로그인</button>
     </Link>
   );
 }

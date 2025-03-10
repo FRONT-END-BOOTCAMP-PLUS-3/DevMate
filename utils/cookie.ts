@@ -28,7 +28,7 @@ export async function getCookie(key: string) {
 }
 
 // 토큰 디코딩 (쿠키에서 토큰 값을 가져와 디코딩)
-export async function decodeToken(value?: DecodedInfo): Promise<DecodedToken | string | { error: string }> {
+export async function decodeToken(value?: DecodedInfo): Promise<DecodedToken | string> {
   try {
     const token = await getCookie("token");
     if (!token) {
