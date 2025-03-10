@@ -60,7 +60,7 @@ export default function MyApplyStatusItem({
         {/* content */}
         <div className={styles["myapplystatusitem__post-meta"]}>
           <div>
-            <span className={styles["myapplystatusitem__post-author"]}>{apply.user?.name}</span>
+            <span className={styles["myapplystatusitem__post-author"]}>{apply.project?.leader?.nickname}</span>
             <span className={styles["myapplystatusitem__post-dot"]}>·</span>
             <span className={styles["myapplystatusitem__post-date"]}>
               {apply.project?.createdAt !== undefined ? formatDateTime(new Date(apply.project.createdAt)) : "값 없음"}

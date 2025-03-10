@@ -23,7 +23,11 @@ export class PsApplyRepository implements ApplyRepository {
       const applyData = await prisma.apply.findMany({
         where: { userId },
         include: {
-          project: true,
+          project: {
+            include: {
+              leader: true,
+            },
+          },
           user: true,
         },
       });
