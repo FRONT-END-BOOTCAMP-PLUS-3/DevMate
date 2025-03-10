@@ -1,6 +1,5 @@
 import type { ProjectRepository } from "@/domain/repositories/projectRepository";
 
-import type { ProjectDto } from "../dtos/projectDto";
 import type { ProjectDetailDto } from "./dtos/projectDetailDto";
 
 export class UpdateProjectUsecase {
@@ -19,7 +18,7 @@ export class UpdateProjectUsecase {
     },
   ): Promise<ProjectDetailDto | null> {
     try {
-      const projectData: ProjectDto | null = await this.projectRepository.findById(id);
+      const projectData: ProjectDetailDto | null = await this.projectRepository.findById(id);
       if (!projectData) return null;
 
       // 업데이트 수행

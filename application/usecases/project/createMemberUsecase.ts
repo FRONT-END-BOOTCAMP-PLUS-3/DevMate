@@ -21,7 +21,7 @@ export class CreateMemberUsecase {
         userId: applyData.userId,
       });
 
-      await this.applyRepository.updateStatus(applyId, "accept");
+      await this.applyRepository.updateStatus(applyId, "ACCEPT");
 
       return createdMember;
     } catch (error) {
