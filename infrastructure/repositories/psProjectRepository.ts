@@ -15,6 +15,8 @@ export class PsProjectRepository implements ProjectRepository {
     } catch (error) {
       console.error("Error creating project:", project);
       throw new Error("프로젝트 생성에 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -60,6 +62,8 @@ export class PsProjectRepository implements ProjectRepository {
     } catch (error) {
       console.error("Error finding project by ID:", error);
       return null;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -73,6 +77,8 @@ export class PsProjectRepository implements ProjectRepository {
     } catch (error) {
       console.error("Error finding project name by ID:", error);
       return null;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -86,6 +92,8 @@ export class PsProjectRepository implements ProjectRepository {
     } catch (error) {
       console.error("Error updating project:", error);
       throw new Error("프로젝트 업데이트에 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -95,6 +103,8 @@ export class PsProjectRepository implements ProjectRepository {
     } catch (error) {
       console.error("Error deleting project:", error);
       throw new Error("프로젝트 삭제에 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -107,6 +117,8 @@ export class PsProjectRepository implements ProjectRepository {
     } catch (error) {
       console.error("Error incrementing hits:", error);
       throw new Error("조회수 증가에 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -175,6 +187,8 @@ export class PsProjectRepository implements ProjectRepository {
     } catch (error) {
       console.log("Error finding all projects:", error);
       throw new Error("프로젝트 목록 조회에 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }
