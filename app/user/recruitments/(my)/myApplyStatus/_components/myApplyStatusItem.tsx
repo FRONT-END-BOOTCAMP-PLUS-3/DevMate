@@ -68,8 +68,7 @@ export default function MyApplyStatusItem({
           </div>
           <div className={styles["myapplystatusitem__post-stats"]}>
             <div className={styles["myapplystatusitem__post-stats-heart"]}>
-              {/* 나중에 좋아요 수로 바꿔야 함 */}
-              <FaHeart /> <span>{apply.project?.hits}</span>
+              <FaHeart /> <span>{apply.project?.likes?.length}</span>
             </div>
             <div className={styles["myapplystatusitem__post-stats-eye"]}>
               <FaEye /> <span>{apply.project?.hits}</span>

@@ -26,6 +26,8 @@ export class PsApplyRepository implements ApplyRepository {
           project: {
             include: {
               leader: true,
+              likes: true,
+              comments: true,
             },
           },
           user: true,
@@ -35,6 +37,8 @@ export class PsApplyRepository implements ApplyRepository {
     } catch (error) {
       console.error("Error finding apply by user:", error);
       return [];
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
