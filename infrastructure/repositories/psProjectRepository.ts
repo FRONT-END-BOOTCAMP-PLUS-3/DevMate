@@ -191,4 +191,53 @@ export class PsProjectRepository implements ProjectRepository {
       await prisma.$disconnect();
     }
   }
+
+  async findByUserId(
+    userId: string,
+    status?: "ALL" | "RECRUITING" | "COMPLETED",
+    filter?: "CREATE" | "LIKE" | "COMMENT" | "MEMBER",
+  ): Promise<Project[]> {
+    try {
+      const where: any = {};
+
+      if (status && status !== "ALL") {
+        const today = new Date();
+        if (status === "RECRUITING") {
+          where.recruitmentEnd = { gte: today };
+        } else if (status === "COMPLETED") {
+          where.recruitmentEnd = { lt: today };
+        }
+      }
+
+      if (filter) {
+        if (filter === "CREATE") {
+          where.leaderId = userId;
+        } else if (filter === "LIKE") {
+          where.likes = { some: { userId } };
+        } else if (filter === "COMMENT") {
+          where.comments = { some: { userId } };
+        } else if (filter === "MEMBER") {
+          where.members = { some: { userId } };
+        }
+      }
+
+      return await prisma.project.findMany({
+        where,
+        include: {
+          leader: { select: { nickname: true } },
+          projectTags: {
+            include: {
+              tag: true,
+            },
+          },
+          _count: { select: { comments: true, likes: true } },
+        },
+      });
+    } catch (error) {
+      console.log("Error finding projects by user ID:", error);
+      return [];
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
 }
