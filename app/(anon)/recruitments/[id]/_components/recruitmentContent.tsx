@@ -74,7 +74,7 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = async ({ project }
             </span>
           </p>
         </div>
-        <div className={styles["recruitmentContent__content"]}>{description}</div>
+        <div className={styles["recruitmentContent__content"]} dangerouslySetInnerHTML={{ __html: description }} />
         <div className={styles["recruitmentContent__actions"]}>
           <LikeButton projectId={id} likes={likes} />
           <Button>
