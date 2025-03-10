@@ -1,21 +1,21 @@
 "use client";
-import { useState } from "react";
+import { useFilterStore } from "@/hooks/use-filterStore";
 
 import styles from "./fitter.module.scss";
 
-const Filter = () => {
-  const [selectedFilter, setSelectedFilter] = useState<string>("전체");
+export default function Filter() {
+  const { selectedFilter, setFilter } = useFilterStore();
 
-  const handleClick = (filter: string) => {
-    setSelectedFilter(filter);
-  };
+  function handleClick(filter: string) {
+    setFilter(filter);
+  }
 
   return (
-    <div className={styles.layout__filter}>
+    <div className={styles.filter}>
       {["전체", "모집중", "모집완료"].map((filter) => (
         <button
           key={filter}
-          className={`${styles.layout__filter__item} ${selectedFilter === filter ? styles.active : ""}`}
+          className={`${styles.filter__item} ${selectedFilter === filter ? styles.active : ""}`}
           onClick={() => handleClick(filter)}
         >
           {filter}
@@ -23,6 +23,4 @@ const Filter = () => {
       ))}
     </div>
   );
-};
-
-export default Filter;
+}

@@ -33,6 +33,7 @@ import { FaSearch } from "react-icons/fa";
 export default function Information() {
   const {
     red,
+    last,
     button__icon,
     container,
     container__title,
@@ -269,7 +270,7 @@ export default function Information() {
           {edit ? "저장" : "수정"}
         </Button>
       </section>
-      <section className={container__section}>
+      <section className={`${container__section} ${last}`}>
         <div className={container__section__content}>
           <InfoUserRow title="이메일" isDefault info={userBasicInfo?.email} />
           <InfoUserRow title="이름" isDefault info={userBasicInfo?.name} />

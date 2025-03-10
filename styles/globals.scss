@@ -1,9 +1,12 @@
 @use "./reset.scss" as *;
 @use "./colors.scss" as *;
 @use "./mixin.scss" as *;
-
+html,
 body {
-  min-height: 100vh;
+  height: 100%;
+  margin: 0;
+}
+body {
   position: relative;
   font-family: "Pretendard", "Inter";
 }

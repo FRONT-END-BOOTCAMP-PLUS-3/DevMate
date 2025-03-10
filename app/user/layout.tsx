@@ -10,13 +10,11 @@ import styles from "./layout.module.scss";
 export default function UserLayout({ children }: { children: ReactNode }) {
   return (
     <div className={styles.layout}>
-      <header>
-        <Header />
-      </header>
+      <Header />
+
       <main className={styles.main}>{children}</main>
-      <footer className={styles.footer}>
-        <Footer />
-      </footer>
+
+      <Footer />
     </div>
   );
 }

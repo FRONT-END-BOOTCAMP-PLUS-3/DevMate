@@ -40,6 +40,7 @@
       height: 36px;
     }
   }
+
   &__img {
     display: flex;
     padding: 12px 10px;
@@ -98,4 +99,7 @@
   border: none;
   color: $color-white;
   background-color: $color-red;
+}
+.last {
+  margin-bottom: 48px;
 }
