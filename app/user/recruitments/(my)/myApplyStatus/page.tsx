@@ -10,7 +10,7 @@ import styles from "./myApplyStatus.module.scss";
 
 import type { MyApplyDto } from "@/application/usecases/recruitment/dtos/myApply/myApplyDto";
 
-import MyApplyStatusItem from "../_components/myApplyStatusItem/myApplyStatusItem";
+import MyApplyStatusItem from "./_components/myApplyStatusItem";
 
 /* ---------------------------------- component --------------------------------- */
 export default function Page() {
