@@ -3,8 +3,11 @@
 // 수정 시 유의해주세요
 import { getEncryptionKey } from "@/utils/security";
 
+import type { TagRepository } from "@/domain/repositories/tagRepository";
 import type { ProjectRepository } from "@/domain/repositories/projectRepository";
+import type { ProjectTagRepository } from "@/domain/repositories/projectTagRepository";
 
+import type { ProjectTagDto } from "../dtos/projectTagDto";
 import type { ProjectDetailDto } from "./dtos/projectDetailDto";
 import type { ProjectDetailApplyDto } from "./dtos/projectDetailApplyDto";
 import type { ProjectDetailMemberDto } from "./dtos/projectDetailMemberDto";
@@ -15,7 +18,11 @@ export class GetProjectDetailUsecase {
   // eslint-disable-next-line prettier/prettier
   private encryptionKey: Buffer;
   private algorithm = "aes-256-cbc";
-  constructor(private projectRepository: ProjectRepository) {
+  constructor(
+    private projectRepository: ProjectRepository,
+    private tagRepository: TagRepository,
+    private projectTagRepository: ProjectTagRepository,
+  ) {
     this.encryptionKey = getEncryptionKey();
   }
 
@@ -33,15 +40,21 @@ export class GetProjectDetailUsecase {
     try {
       const projectData: ProjectDetailDto | null = await this.projectRepository.findById(projectId);
       if (!projectData) return null;
+      const tags: ProjectTagDto[] = await this.projectTagRepository.findByProjectId(projectId);
+      const tagIds: number[] = tags.map((tag) => tag.tagId);
+      const tagNames: string[] = await this.tagRepository.findTagNamesByIds(tagIds);
 
       return {
         id: projectData.id,
         leaderId: projectData.leaderId,
+        recruitmentTitle: projectData.recruitmentTitle,
         projectTitle: projectData.projectTitle,
         goal: projectData.goal,
         description: projectData.description,
         projectPeriodStart: projectData.projectPeriodStart,
         projectPeriodEnd: projectData.projectPeriodEnd,
+        recruitmentStart: projectData.recruitmentStart,
+        recruitmentEnd: projectData.recruitmentEnd,
         notice: projectData.notice,
         leader: projectData.leader,
         applications: projectData.applications
@@ -73,6 +86,7 @@ export class GetProjectDetailUsecase {
             userId: mem.userId,
             user: mem.user,
           })),
+        projectTags: tagNames,
       };
     } catch (error) {
       console.error("Error executing GetProjectDetailUsecase:", error);

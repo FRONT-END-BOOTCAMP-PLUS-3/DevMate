@@ -12,12 +12,20 @@ import { FaHeart, FaEye, FaComment } from "react-icons/fa";
 export default function MyApplyStatusItem({
   apply,
   handleModal,
+  handleClick,
 }: {
   apply: MyApplyDto;
   handleModal: (selectedId: number) => void;
+  handleClick: (selectedProjectId: number) => void;
 }) {
   return (
-    <div className={styles["myapplystatusitem__post-item"]}>
+    <div
+      className={styles["myapplystatusitem__post-item"]}
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+        handleClick(apply.projectId);
+      }}
+    >
       <div className={styles["myapplystatusitem__post-content"]}>
         {/* header */}
         <div className={styles["myapplystatusitem__post-header-button"]}>
@@ -60,7 +68,8 @@ export default function MyApplyStatusItem({
           </div>
           <div className={styles["myapplystatusitem__post-stats"]}>
             <div className={styles["myapplystatusitem__post-stats-heart"]}>
-              <FaHeart /> <span>{apply.project?.likes}</span>
+              {/* 나중에 좋아요 수로 바꿔야 함 */}
+              <FaHeart /> <span>{apply.project?.hits}</span>
             </div>
             <div className={styles["myapplystatusitem__post-stats-eye"]}>
               <FaEye /> <span>{apply.project?.hits}</span>

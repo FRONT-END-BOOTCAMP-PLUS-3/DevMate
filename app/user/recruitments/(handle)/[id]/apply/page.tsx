@@ -1,16 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import { useParams } from "next/navigation";
+
+import React, { useEffect, useState } from "react";
 
 import Button from "@/components/button/button";
 import InputField from "@/components/inputField/inputField";
 
+import { decodeToken } from "@/utils/cookie";
+
 import styles from "./apply.module.scss";
 
-import type { ProjectDto } from "@/application/usecases/dtos/projectDto";
-
 const Apply: React.FC = () => {
-  const [project, setProject] = useState<ProjectDto>();
+  const params = useParams();
+  const id = params.id;
+
+  const [userId, setUserId] = useState<string | null>(null);
+  const [projectName, setProjectName] = useState<string>("");
 
   const [form, setForm] = useState({
     job: "",
@@ -18,17 +24,30 @@ const Apply: React.FC = () => {
     portfolio: null as File | null,
   });
 
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  const fetchUserId = async () => {
+    try {
+      const decoded = await decodeToken("id");
+      if (typeof decoded === "string") {
+        setUserId(decoded);
+      }
+    } catch {
+      setUserId(null);
+    }
+  };
+
   const ChangeHandle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    console.log(form);
   };
 
   const FileChangeHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setForm((prev) => ({ ...prev, portfolio: e.target.files![0] }));
     }
-    console.log(form);
   };
 
   const cancelHandle = () => {
@@ -38,22 +57,55 @@ const Apply: React.FC = () => {
   };
 
   const postApply = async () => {
-    console.log(form);
+    try {
+      const formData = new FormData();
+      formData.append("projectId", String(id));
+      formData.append("userId", String(userId));
+      formData.append("position", form.job);
+      formData.append("introduction", form.introduction);
+      if (form.portfolio) {
+        formData.append("portfolio", form.portfolio);
+      } else {
+        formData.append("portfolio", "");
+      }
+
+      const response = await fetch(`/api/recruitments/${id}/apply`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("지원서 제출에 실패했습니다.");
+      }
+
+      alert("지원 완료!");
+      history.back();
+    } catch (error) {
+      console.log("Error submitting application:", error);
+    }
   };
 
-  // TODO: 프로젝트 정보 가져오는 통신 만들기
-  // // 프로젝트 정보 가져오기
-  // const getProject = async () => {
-  //   try {
+  // 프로젝트 정보 가져오기
+  const getProjectTitle = async () => {
+    try {
+      const response = await fetch(`/api/recruitments/${id}/apply`);
 
-  //   } catch {
+      if (!response.ok) {
+        throw new Error("프로젝트 정보를 불러오는데 실패했습니다.");
+      }
 
-  //   }
-  // }
+      const data = await response.json();
 
-  // useEffect(() => {
-  //    getProject();
-  // }, []);
+      setProjectName(data.title);
+    } catch (error) {
+      console.log("Error fetching project:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    getProjectTitle();
+  }, []);
 
   return (
     <div className={styles.apply}>
@@ -62,7 +114,7 @@ const Apply: React.FC = () => {
       {/* 프로젝트명 표시 */}
       <section className={styles.apply__projectInfo}>
         <span className={styles.apply__projectInfo__label}>프로젝트명</span>
-        <span className={styles.apply__projectInfo__projectName}>{project?.projectTitle}</span>
+        <span className={styles.apply__projectInfo__projectName}>{projectName}</span>
       </section>
 
       {/* 지원서 폼 */}

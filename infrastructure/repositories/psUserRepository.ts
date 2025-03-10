@@ -19,6 +19,8 @@ export class PsUserRepository implements UserRepository {
         console.error("An unknown error occurred");
       }
       throw new Error("An error occurred during user creation");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -33,6 +35,8 @@ export class PsUserRepository implements UserRepository {
         console.error("An unknown error occurred");
       }
       return null;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -50,6 +54,8 @@ export class PsUserRepository implements UserRepository {
         console.error("An unknown error occurred");
       }
       return null;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -64,6 +70,8 @@ export class PsUserRepository implements UserRepository {
         console.error("An unknown error occurred");
       }
       return null;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -81,6 +89,8 @@ export class PsUserRepository implements UserRepository {
         console.error("An unknown error occurred");
       }
       throw new Error("An error occurred during user update");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -94,6 +104,8 @@ export class PsUserRepository implements UserRepository {
         console.error("An unknown error occurred");
       }
       throw new Error("An error occurred during user deletion");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

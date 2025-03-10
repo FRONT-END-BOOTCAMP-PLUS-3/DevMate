@@ -3,6 +3,7 @@ export interface DecodedToken {
   name: string;
   email: string;
   createdAt: Date;
+  nickname: string;
 }
 
-export type DecodedInfo = "id" | "name" | "email" | "createdAt";
+export type DecodedInfo = "id" | "name" | "email" | "createdAt" | "nickname";

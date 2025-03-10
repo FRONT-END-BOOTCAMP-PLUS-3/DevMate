@@ -23,7 +23,6 @@ const RecruitmentDetail = async ({ params }: { params: { id: string } }) => {
     if (res.status === 404) {
       return notFound();
     }
-
     console.log("프로젝트 정보를 불러오는 중 오류가 발생했습니다");
   }
 

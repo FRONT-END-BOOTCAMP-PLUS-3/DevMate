@@ -3,18 +3,39 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { decodeToken } from "@/utils/cookie";
 
 import styles from "./actionButtons.module.scss";
 
-import ClipLoader from "react-spinners/ClipLoader";
+interface ActionButtonsProps {
+  leaderId?: string;
+}
 
-const ActionButtons: React.FC = () => {
+const ActionButtons: React.FC<ActionButtonsProps> = ({ leaderId = null }) => {
+  const [userId, setUserId] = useState<string | null>(null);
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const params = useParams();
   const id = params.id;
+
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  const fetchUserId = async () => {
+    try {
+      const decoded = await decodeToken("id");
+      if (typeof decoded === "string") {
+        setUserId(decoded);
+      }
+    } catch {
+      setUserId(null);
+    }
+  };
 
   const deleteRecruitment = async () => {
     if (!confirm("정말 삭제하시겠습니까?")) return;
@@ -38,6 +59,8 @@ const ActionButtons: React.FC = () => {
       setLoading(false);
     }
   };
+
+  if (leaderId !== userId) return;
 
   return (
     <div className={styles.actionButtons}>

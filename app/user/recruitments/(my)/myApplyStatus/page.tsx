@@ -1,4 +1,6 @@
 "use client";
+import { useRouter } from "next/navigation";
+
 import { useState, useEffect } from "react";
 
 import Modal from "@/components/modal/modal";
@@ -15,6 +17,7 @@ import MyApplyStatusItem from "./_components/myApplyStatusItem";
 /* ---------------------------------- component --------------------------------- */
 export default function Page() {
   /* ---------------------------------- state --------------------------------- */
+  const router = useRouter();
   const [decodedId, setDecodedId] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>("전체");
   const [applyStatusData, setApplyStatusData] = useState<MyApplyDto[]>([]);
@@ -33,6 +36,10 @@ export default function Page() {
       setSelectedApply(selected);
       setIsModalOpen(true);
     }
+  };
+
+  const handleClick = (selectedProjectId: number) => {
+    router.push(`/recruitments/${selectedProjectId}`);
   };
 
   /* ---------------------------------- useEffect --------------------------------- */
@@ -126,7 +133,9 @@ export default function Page() {
         !error &&
         applyStatusData
           .filter((item) => activeFilter === "전체" || item.status === activeFilter)
-          .map((item) => <MyApplyStatusItem key={item.id} apply={item} handleModal={handleModal} />)}
+          .map((item) => (
+            <MyApplyStatusItem key={item.id} apply={item} handleModal={handleModal} handleClick={handleClick} />
+          ))}
 
       {/* 모달 */}
       {selectedApply && (

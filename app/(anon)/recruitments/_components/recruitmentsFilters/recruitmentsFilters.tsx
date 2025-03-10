@@ -1,11 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 import styles from "./recruitmentsFilters.module.scss";
 
 export default function RecruitmentsFilters() {
-  const [activeFilter, setActiveFilter] = useState("전체");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const activeFilter = searchParams.get("status") || "전체";
+
+  const handleFilterClick = (filter: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("status", filter);
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <div className={styles["main__filter"]}>
@@ -13,7 +21,7 @@ export default function RecruitmentsFilters() {
         <button
           key={filter}
           className={`${styles["main__filter-item"]} ${activeFilter === filter ? styles["main__filter-item--active"] : ""}`}
-          onClick={() => setActiveFilter(filter)}
+          onClick={() => handleFilterClick(filter)}
         >
           {filter}
         </button>

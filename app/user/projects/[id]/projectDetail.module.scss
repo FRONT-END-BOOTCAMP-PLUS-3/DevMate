@@ -170,21 +170,7 @@
   width: 100%;
   max-width: 768px;
   height: calc(100vh - 64px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  place-items: center;
   color: $color-red;
-}
-
-//edit 페이지
-.container {
-  &__calendar_project {
-    margin-bottom: 20px;
-  }
-
-  &__button_save {
-    align-self: flex-end;
-    display: flex;
-    gap: 10px;
-  }
 }

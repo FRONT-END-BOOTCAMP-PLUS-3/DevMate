@@ -18,6 +18,8 @@ export class PsMemberRepository implements MemberRepository {
     } catch (error) {
       console.error("Error creating member:", error);
       throw new Error("멤버 생성에 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -28,6 +30,8 @@ export class PsMemberRepository implements MemberRepository {
     } catch (error) {
       console.error("Error finding member by user and project:", error);
       return null;
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -37,6 +41,8 @@ export class PsMemberRepository implements MemberRepository {
     } catch (error) {
       console.error("Error deleting member:", error);
       throw new Error("멤버 삭제에 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }
