@@ -104,60 +104,65 @@ export class PsProjectRepository implements ProjectRepository {
     search = "", // 프로젝트 제목 검색
     tags = [], // 태그 검색
   ): Promise<Project[]> {
-    const where: any = {};
-    const today = new Date();
+    try {
+      const where: any = {};
+      const today = new Date();
 
-    // 모집 상태 필터링
-    if (status && status !== "전체") {
-      if (status === "모집중") {
-        where.recruitmentEnd = { gte: today }; // 모집 마감일이 오늘 이후
-      } else if (status === "모집완료") {
-        where.recruitmentEnd = { lt: today }; // 모집 마감일이 오늘 이전
+      // 모집 상태 필터링
+      if (status && status !== "전체") {
+        if (status === "모집중") {
+          where.recruitmentEnd = { gte: today }; // 모집 마감일이 오늘 이후
+        } else if (status === "모집완료") {
+          where.recruitmentEnd = { lt: today }; // 모집 마감일이 오늘 이전
+        }
       }
-    }
 
-    // 제목 검색
-    if (search) {
-      where.recruitmentTitle = { contains: search, mode: "insensitive" };
-    }
+      // 제목 검색
+      if (search) {
+        where.recruitmentTitle = { contains: search, mode: "insensitive" };
+      }
 
-    // 태그 검색
-    if (tags && tags.length > 0) {
-      where.techStackTags = { some: { name: { in: tags } } };
-    }
+      // 태그 검색
+      if (tags && tags.length > 0) {
+        where.projectTags = { some: { tag: { tagName: { in: tags } } } };
+      }
 
-    // 정렬 조건
-    let orderBy = {};
-    if (sort === "조회수순") {
-      orderBy = { hits: "desc" };
-    } else if (sort === "댓글많은순") {
-      orderBy = {
-        comments: {
-          _count: "desc",
-        },
-      };
-    } else if (sort === "좋아요순") {
-      orderBy = {
-        likes: {
-          _count: "desc",
-        },
-      };
-    } else {
-      orderBy = { createdAt: "desc" };
-    }
-
-    return await prisma.project.findMany({
-      where,
-      orderBy,
-      include: {
-        leader: { select: { nickname: true } }, // 프로젝트 리더 정보 포함
-        projectTags: {
-          include: {
-            tag: true, // 프로젝트 태그 포함
+      // 정렬 조건
+      let orderBy = {};
+      if (sort === "조회수순") {
+        orderBy = { hits: "desc" };
+      } else if (sort === "댓글많은순") {
+        orderBy = {
+          comments: {
+            _count: "desc",
           },
+        };
+      } else if (sort === "좋아요순") {
+        orderBy = {
+          likes: {
+            _count: "desc",
+          },
+        };
+      } else {
+        orderBy = { createdAt: "desc" };
+      }
+
+      return await prisma.project.findMany({
+        where,
+        orderBy,
+        include: {
+          leader: { select: { nickname: true } }, // 프로젝트 리더 정보 포함
+          projectTags: {
+            include: {
+              tag: true, // 프로젝트 태그 포함
+            },
+          },
+          _count: { select: { comments: true, likes: true } }, // 댓글 및 좋아요 개수 포함
         },
-        _count: { select: { comments: true, likes: true } }, // 댓글 및 좋아요 개수 포함
-      },
-    });
+      });
+    } catch (error) {
+      console.log("Error finding all projects:", error);
+      throw new Error("프로젝트 목록 조회에 실패했습니다.");
+    }
   }
 }

@@ -13,19 +13,24 @@ export default function RecruitmentsTagSearch() {
   const router = useRouter();
 
   const [inputValue, setInputValue] = useState("");
-  const [tags, setTags] = useState<string[]>(searchParams.getAll("tags"));
+  const [tags, setTags] = useState<string[]>(() => {
+    const paramTags = searchParams.get("tags");
+    return paramTags ? paramTags.split(",") : [];
+  });
 
   // URL 업데이트 함수
   const updateURL = (updatedTags: string[]) => {
     const params = new URLSearchParams();
-    updatedTags.forEach((tag) => params.append("tags", tag));
+    if (updatedTags.length > 0) {
+      params.set("tags", updatedTags.join(","));
+    }
     router.push(`?${params.toString()}`);
   };
 
   // 태그 추가
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Tab" && inputValue.trim()) {
-      event.preventDefault(); // 기본 Tab 동작 방지
+      event.preventDefault();
       const newTags = [...tags, inputValue.trim()];
       setTags(newTags);
       setInputValue("");
@@ -58,7 +63,7 @@ export default function RecruitmentsTagSearch() {
     <div className={styles["main__tag-search"]}>
       <div className={styles["main__tag-input"]}>
         <FaHashtag className={styles["main__tag-icon"]} />
-        <div className={styles["main__tag-input-wrapper"]}>
+        <label className={styles["main__tag-input-wrapper"]}>
           {tags.map((tag, index) => (
             <div key={index} className={styles["main__tag-item"]}>
               <span className={styles["main__tag-text"]}>{tag}</span>
@@ -72,7 +77,7 @@ export default function RecruitmentsTagSearch() {
             onKeyDown={handleKeyDown}
             placeholder={tags.length === 0 ? "태그로 검색해보세요!" : ""}
           />
-        </div>
+        </label>
       </div>
       <button className={styles["main__tag-reset"]} onClick={handleReset}>
         초기화

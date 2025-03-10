@@ -13,7 +13,6 @@ export default function RecruitmentsSortFilters() {
     const params = new URLSearchParams(searchParams);
     params.set("sort", sort);
     router.push(`?${params.toString()}`);
-    console.log("🔍 변경된 URL:", `?${params.toString()}`);
   };
 
   return (
