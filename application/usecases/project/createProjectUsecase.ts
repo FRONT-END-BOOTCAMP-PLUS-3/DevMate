@@ -27,7 +27,6 @@ export class CreateProjectUsecase {
       }
 
       const createdProject = { ...newProject, projectTags: project.projectTags };
-      console.log("프로젝트 생성 성공", createdProject);
       return createdProject;
     } catch (error) {
       console.error("Error occurred creating projcet", error);
