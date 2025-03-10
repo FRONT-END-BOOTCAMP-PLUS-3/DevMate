@@ -1,4 +1,3 @@
-import type { UserDto } from "@/application/usecases/dtos/userDto";
 import type { SignupState } from "@/app/(anon)/signup/_hooks/use-signupReducer";
 import type { SignUpDto } from "@/application/usecases/auth/signup/dtos/signupDto";
 import type { editUserInfoState } from "@/app/user/information/_hooks/use-editUserInfo";
@@ -19,14 +18,14 @@ export function transformUserData(data: SignupState): SignUpDto {
     birthDate: new Date(data.birthDate.year, data.birthDate.month - 1, data.birthDate.day), // Date 변환
     position: data.position ? String(data.position.value) : "", // value 값 사용
     career: transformCareer(String(data.career ? data.career.value : 0)), // 변환 함수 적용
-    profileImg: data.profileImg || null,
+    profileImg: data.profileImg || "/defaultProfile.svg", // 빈 문자열이면 default 처리
     tagNames: data.tagNames?.map((item) => String(item.value)) || [], // 빈 문자열이면 null 처리
   };
 }
 
 export function transformUserInfo(data: editUserInfoState): UserEditInfoDto {
   return {
-    profileImg: data.profileImg,
+    profileImg: data.profileImg || "/defaultProfile.svg",
     nickname: data.nickname,
     career: transformCareer(String(data.career ? data.career.value : 0)),
     position: data.position ? String(data.position.value) : "",

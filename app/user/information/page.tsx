@@ -41,7 +41,10 @@ export default function Information() {
     container__section__button,
     container__section__content,
     container__img,
+    container__img__box,
     container__img__title,
+    container__img__input,
+    container__img__label,
   } = styles;
   const { state, dispatch } = useEditUserInfo();
   const [userId, setUserId] = useState<string>();
@@ -50,6 +53,20 @@ export default function Information() {
   const [edit, setEdit] = useState<boolean>(false);
   const [isAddrSearchOpen, setIsAddrSearchOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [profileImgFile, setProfileImgFile] = useState<File | null>(null); // 프로필 이미지 파일 상태 추가
+
+  const handleProfileImgChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setProfileImgFile(file); // 파일 상태 업데이트
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        dispatch({ type: "SET_PROFILE_IMG", payload: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const selectChangeHandler = (
     selected: SingleValue<SelectOption> | MultiValue<SelectOption> | null,
     name?: string,
@@ -140,7 +157,57 @@ export default function Information() {
         <div className={container__section__content}>
           <div className={container__img}>
             <span className={container__img__title}>이미지</span>
-            <Image src={userDetailInfo?.profileImg ?? "/test.jpg"} alt="유저 프로필" width={100} height={100} />
+            {edit ? (
+              <div className={container__img__box}>
+                <Image
+                  src={
+                    profileImgFile
+                      ? URL.createObjectURL(profileImgFile)
+                      : state.profileImg
+                        ? state.profileImg
+                        : "/defaultProfile.svg"
+                  }
+                  alt="프로필 이미지 미리보기"
+                  width={100}
+                  height={100}
+                  style={{
+                    objectFit: "cover",
+                    minWidth: "100px",
+                    minHeight: "100px",
+                    borderRadius: "50%",
+                  }}
+                />
+                <input
+                  type="file"
+                  id="profileImg"
+                  accept="image/*"
+                  onChange={handleProfileImgChange}
+                  className={container__img__input}
+                />
+                <label htmlFor="profileImg" className={container__img__label}>
+                  변경
+                </label>
+              </div>
+            ) : (
+              <Image
+                src={
+                  profileImgFile
+                    ? URL.createObjectURL(profileImgFile)
+                    : state.profileImg
+                      ? state.profileImg
+                      : "/defaultProfile.svg"
+                }
+                alt="유저 프로필"
+                width={100}
+                height={100}
+                style={{
+                  objectFit: "cover",
+                  minWidth: "100px",
+                  minHeight: "100px",
+                  borderRadius: "50%",
+                }}
+              />
+            )}
           </div>
           <InfoUserRow title="닉네임" edit={edit} info={userDetailInfo?.nickname}>
             <InputField
@@ -193,7 +260,12 @@ export default function Information() {
             </Button>
           </InfoUserRow>
         </div>
-        <Button size="small" variant="main" className={container__section__button} onClick={editClickHandler}>
+        <Button
+          size="small"
+          variant="main"
+          className={container__section__button}
+          onClick={edit ? editClickHandler : () => setEdit((prev) => !prev)}
+        >
           {edit ? "저장" : "수정"}
         </Button>
       </section>
