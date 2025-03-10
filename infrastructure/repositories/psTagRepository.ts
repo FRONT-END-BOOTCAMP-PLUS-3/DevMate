@@ -22,6 +22,7 @@ export class PsTagRepository implements TagRepository {
         where: { id: { in: ids } }, // 여러 ID 조회
         select: { tagName: true }, // tagName만 선택
       });
+      console.log("태그 이름 조회 결과:", tags);
       const tagNames = tags.map((tag) => tag.tagName);
 
       return tagNames; // 태그 이름 배열로 반환

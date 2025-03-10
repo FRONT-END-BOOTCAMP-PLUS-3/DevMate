@@ -7,10 +7,7 @@ import type { TechStackTagRepository } from "@/domain/repositories/techStackTagR
 
 import type { UserEditInfoDto } from "./dtos/infoUserDto";
 
-import fs from "fs";
-import path from "path";
 import crypto from "crypto";
-
 export class UpdateUserInfoUsecase {
   private userRepository: UserRepository;
   private tagRepository: TagRepository;
@@ -34,32 +31,10 @@ export class UpdateUserInfoUsecase {
     const encrypted = cipher.update(address, "utf8", "hex") + cipher.final("hex");
     return iv.toString("hex") + encrypted;
   }
-
-  private saveProfileImage(profileImg: string, email: string): string {
-    const profileDir = path.join(process.cwd(), "public", "data", "profile");
-    if (!fs.existsSync(profileDir)) {
-      fs.mkdirSync(profileDir, { recursive: true });
-    }
-    const buffer = Buffer.from(profileImg.split(",")[1], "base64");
-    const filePath = path.join(profileDir, `${email}-profile.png`);
-    fs.writeFileSync(filePath, buffer);
-    return `/data/profile/${email}-profile.png`;
-  }
   async execute(userId: string, userInfo: Partial<UserEditInfoDto>): Promise<UserDto> {
-    const userRecord = await this.userRepository.findById(userId);
-    if (!userRecord) {
-      throw new Error("유저 찾을수 없음");
-    }
-    const profileImgUrl =
-      userInfo.profileImg === "/defaultProfile.svg"
-        ? "/defaultProfile.svg"
-        : userInfo.profileImg === undefined
-          ? "/defaultProfile.svg"
-          : this.saveProfileImage(userInfo.profileImg, userRecord.email);
-
     try {
       const user = {
-        profileImg: profileImgUrl,
+        profileImg: userInfo.profileImg,
         nickname: userInfo.nickname,
         career: userInfo.career,
         position: userInfo.position,
