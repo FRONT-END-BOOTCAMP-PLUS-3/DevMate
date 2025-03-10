@@ -12,6 +12,7 @@ import styles from "./recruitmentContent.module.scss";
 import type { RecruitmentDetailDto } from "@/application/usecases/recruitment/dtos/recruitmentDetailDto";
 
 import LikeButton from "./likeButton";
+import ActionButtons from "./actionButtons";
 
 interface RecruitmentContentProps {
   project: RecruitmentDetailDto;
@@ -38,14 +39,15 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = ({ project }) => {
     <div className={styles["recruitmentContent"]}>
       <section className={styles["recruitmentContent__header"]}>
         <div className={styles["recruitmentContent__title"]}>{recruitmentTitle}</div>
-        <div className={styles["recruitmentContent__author"]}>{leader.nickname}</div>
+        <div className={styles["recruitmentContent__author"]}>
+          {leader?.nickname ? leader.nickname : "탈퇴한 사용자"}
+        </div>
         <div className={styles["recruitmentContent__meta"]}>
           <span className={styles["recruitmentContent__date"]}>
             작성일 {formatDateTime(createdAt)} | 조회수 {hits}
           </span>
           <span className={styles["recruitmentContent__actions"]}>
-            <button className={styles["recruitmentContent__actions__button"]}>수정</button>|
-            <button className={styles["recruitmentContent__actions__button"]}>삭제</button>
+            <ActionButtons />
           </span>
         </div>
       </section>

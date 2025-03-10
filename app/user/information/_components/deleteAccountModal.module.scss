@@ -1,0 +1,113 @@
+.modal {
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  &__content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  &__description {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+  }
+
+  &__confirmation {
+    font-size: 14px;
+    margin-top: 10px;
+    color: #777;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    transition:
+      border-color 0.3s,
+      background-color 0.3s;
+
+    &:focus {
+      outline: none;
+      border-color: #4caf50; /* 초록색 */
+    }
+
+    &.valid {
+      background-color: #e8f5e9; /* 초록색 배경 */
+      border-color: #4caf50;
+    }
+
+    &.invalid {
+      background-color: transparent;
+      border-color: #ccc;
+    }
+  }
+
+  &__error {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  &__button__box {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }
+  &__button {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 5px;
+
+    &__cancel {
+      background-color: #f1f1f1;
+      color: #333;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+
+    &__delete {
+      background-color: #e74c3c;
+      color: white;
+
+      &:hover {
+        background-color: #c0392b;
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

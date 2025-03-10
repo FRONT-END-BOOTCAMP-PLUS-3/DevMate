@@ -4,7 +4,7 @@ import { PsProjectRepository } from "@/infrastructure/repositories/psProjectRepo
 
 import type { NextRequest } from "next/server";
 
-import { DfGetProjectDetailUsecase } from "@/application/usecases/recruitment/recruitmentDetailUsecase";
+import { GetProjectDetailUsecase } from "@/application/usecases/recruitment/getRecruitmentDetailUsecase";
 
 // /recruitments/[id] -> GET 상세 반환
 export async function GET(request: NextRequest) {
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Project ID is required" }, { status: 400 });
     }
 
-    const usecase = new DfGetProjectDetailUsecase(new PsProjectRepository());
+    const usecase = new GetProjectDetailUsecase(new PsProjectRepository());
 
     // 프로젝트 상세 정보 가져오기
     const projectDetail = await usecase.execute(Number(id));
@@ -34,6 +34,3 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
-
-// /recruitments/[id] -> POST 좋아요 수정
-// export async function FETCH(request: NextRequest) {}/
