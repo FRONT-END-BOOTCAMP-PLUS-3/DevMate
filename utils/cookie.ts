@@ -1,6 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 
+import type { JwtPayload } from "jsonwebtoken";
 import type { DecodedInfo, DecodedToken } from "@/types/cookie";
 
 import jwt from "jsonwebtoken";
@@ -28,7 +29,7 @@ export async function getCookie(key: string) {
 }
 
 // 토큰 디코딩 (쿠키에서 토큰 값을 가져와 디코딩)
-export async function decodeToken(value?: DecodedInfo): Promise<DecodedToken | string> {
+export async function decodeToken(value?: DecodedInfo): Promise<DecodedToken | string | JwtPayload> {
   try {
     const token = await getCookie("token");
     if (!token) {

@@ -6,13 +6,14 @@ import { useEffect, useState } from "react";
 
 import { DateRange } from "react-date-range";
 
+import Toolbar from "@/app/user/recruitments/_components/Toolbar/toolbar";
+
 import { decodeToken } from "@/utils/cookie";
 
 import styles from "./create.module.scss";
 
 import type { SelectionRange } from "react-date-range";
 
-import Toolbar from "../_components/Toolbar/toolbar";
 import CreateTags from "./_components/createTags/createTags";
 
 import "react-date-range/dist/styles.css";
