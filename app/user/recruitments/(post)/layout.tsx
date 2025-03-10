@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import styles from "./layout.module.scss";
 
-import Filter from "./_components/fitter/fitter";
+import Filter from "./_components/filter/filter";
 import Sidebar from "../../_components/sidebar/sidebar";
 
 export default function MypageLayout({ children }: { children: ReactNode }) {

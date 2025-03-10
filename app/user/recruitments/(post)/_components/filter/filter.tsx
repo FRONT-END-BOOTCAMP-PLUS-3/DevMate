@@ -1,7 +1,7 @@
 "use client";
 import { useFilterStore } from "@/hooks/use-filterStore";
 
-import styles from "./fitter.module.scss";
+import styles from "./filter.module.scss";
 
 export default function Filter() {
   const { selectedFilter, setFilter } = useFilterStore();

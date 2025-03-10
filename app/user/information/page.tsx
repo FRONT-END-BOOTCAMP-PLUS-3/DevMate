@@ -283,7 +283,7 @@ export default function Information() {
           variant="sub"
           className={`${container__section__button} ${red}`}
         >
-          게정탈퇴
+          계정탈퇴
         </Button>
       </section>
       {isAddrSearchOpen && (
