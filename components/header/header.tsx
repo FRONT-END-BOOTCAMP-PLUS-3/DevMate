@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 
 import styles from "./header.module.scss";
 
-import Button from "../button/button";
 import AuthSection from "./headerClient/headerClient";
 
 export default async function Header() {
@@ -21,7 +20,7 @@ export default async function Header() {
           <AuthSection />
         ) : (
           <Link href="/login">
-            <Button> 로그인</Button>
+            <button className={styles.header__loginMenuItem}>로그인</button>
           </Link>
         )}
       </div>

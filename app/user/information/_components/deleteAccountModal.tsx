@@ -31,13 +31,10 @@ export const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({ isOpen, 
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/user", {
+      const response = await fetch(`/api/user/${userId}`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId }),
       });
+
       if (!response.ok) {
         throw new Error("Failed to fetch user information.");
       }
