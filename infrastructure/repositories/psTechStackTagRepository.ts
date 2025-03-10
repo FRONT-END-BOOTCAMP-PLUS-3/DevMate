@@ -15,6 +15,8 @@ export class PsTechStackTagRepository implements TechStackTagRepository {
     } catch (error) {
       console.error("사용자 ID로 기술 스택 태그를 찾는 중 오류 발생:", error);
       throw new Error("기술 스택 태그를 찾는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -26,6 +28,8 @@ export class PsTechStackTagRepository implements TechStackTagRepository {
     } catch (error) {
       console.error("기술 스택 태그 생성 중 오류 발생:", error);
       throw new Error("기술 스택 태그를 생성하는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -49,6 +53,8 @@ export class PsTechStackTagRepository implements TechStackTagRepository {
     } catch (error) {
       console.error("기술 스택 태그 생성 중 오류 발생:", error);
       throw new Error("기술 스택 태그를 생성하는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
   async delete(userId: string, tagId: number): Promise<void> {
@@ -59,6 +65,8 @@ export class PsTechStackTagRepository implements TechStackTagRepository {
     } catch (error) {
       console.error("기술 스택 태그 삭제 중 오류 발생:", error);
       throw new Error("기술 스택 태그를 삭제하는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -71,6 +79,8 @@ export class PsTechStackTagRepository implements TechStackTagRepository {
     } catch (error) {
       console.error("태그 이름으로 태그 ID를 찾는 중 오류 발생:", error);
       throw new Error("태그 ID를 찾는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

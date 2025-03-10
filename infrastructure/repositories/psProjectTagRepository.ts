@@ -16,6 +16,8 @@ export class PsProjectTagRepository implements ProjectTagRepository {
     } catch (error) {
       console.error("프로젝트 ID로 태그를 찾는 중 오류 발생:", error);
       throw new Error("프로젝트 태그를 찾는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -27,6 +29,8 @@ export class PsProjectTagRepository implements ProjectTagRepository {
     } catch (error) {
       console.error("프로젝트 태그 생성 중 오류 발생:", error);
       throw new Error("프로젝트 태그를 생성하는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -50,6 +54,8 @@ export class PsProjectTagRepository implements ProjectTagRepository {
     } catch (error) {
       console.error("프로젝트 태그 생성 중 오류 발생:", error);
       throw new Error("프로젝트 태그를 생성하는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

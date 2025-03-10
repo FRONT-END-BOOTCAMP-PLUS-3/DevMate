@@ -14,6 +14,8 @@ export class PsTagRepository implements TagRepository {
     } catch (error) {
       console.error("태그 ID로 태그를 찾는 중 오류 발생:", error);
       throw new Error("태그를 찾는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
   async findTagNamesByIds(ids: number[]): Promise<string[]> {
@@ -28,6 +30,8 @@ export class PsTagRepository implements TagRepository {
     } catch (error) {
       console.error("태그 ID 배열로 태그 이름을 찾는 중 오류 발생:", error);
       throw new Error("태그 이름을 찾는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -39,6 +43,8 @@ export class PsTagRepository implements TagRepository {
     } catch (error) {
       console.error("태그 이름으로 태그를 찾는 중 오류 발생:", error);
       throw new Error("태그를 찾는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -50,6 +56,8 @@ export class PsTagRepository implements TagRepository {
     } catch (error) {
       console.error("태그 생성 중 오류 발생:", error);
       throw new Error("태그를 생성하는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
   async addTags(tagNames: string[]): Promise<Tag[]> {
@@ -67,6 +75,8 @@ export class PsTagRepository implements TagRepository {
     } catch (error) {
       console.error("태그 추가 중 오류 발생:", error);
       throw new Error("태그를 추가하는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 
@@ -87,6 +97,8 @@ export class PsTagRepository implements TagRepository {
     } catch (error) {
       console.error("태그 ID 조회 중 오류 발생:", error);
       throw new Error("태그 ID를 조회하는 데 실패했습니다.");
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }
