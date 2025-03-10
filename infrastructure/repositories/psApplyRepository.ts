@@ -16,6 +16,22 @@ export class PsApplyRepository implements ApplyRepository {
     }
   }
 
+  async findByUserId(userId: string): Promise<Apply[]> {
+    try {
+      const applyData = await prisma.apply.findMany({
+        where: { userId },
+        include: {
+          project: true,
+          user: true,
+        },
+      });
+      return applyData;
+    } catch (error) {
+      console.error("Error finding apply by user:", error);
+      return [];
+    }
+  }
+
   async findByUserProject(userId: string, projectId: number): Promise<Apply | null> {
     try {
       const applyData = await prisma.apply.findFirst({ where: { userId, projectId } });

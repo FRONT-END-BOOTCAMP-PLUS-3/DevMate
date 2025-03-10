@@ -1,45 +1,72 @@
+"use client";
 import Badge from "@/components/badge/badge";
+
+import { formatDateTime } from "@/utils/formatDateTime";
 
 import styles from "./myApplyStatusItem.module.scss";
 
+import type { MyApplyDto } from "@/application/usecases/recruitment/dtos/myApply/myApplyDto";
+
 import { FaHeart, FaEye, FaComment } from "react-icons/fa";
 
-export default function MyApplyStatusItem() {
+export default function MyApplyStatusItem({
+  apply,
+  handleModal,
+}: {
+  apply: MyApplyDto;
+  handleModal: (selectedId: number) => void;
+}) {
   return (
     <div className={styles["myapplystatusitem__post-item"]}>
       <div className={styles["myapplystatusitem__post-content"]}>
+        {/* header */}
         <div className={styles["myapplystatusitem__post-header-button"]}>
           <div className={styles["myapplystatusitem__post-header-description"]}>
             <div className={styles["myapplystatusitem__post-header"]}>
-              <Badge color="primary" fontColor="white" width={60} height={24} borderRadius={16} fontSize={12}>
-                모집중
+              <Badge
+                color={apply.status === "수락됨" ? "primary" : apply.status === "거절됨" ? "red" : "darkGray"}
+                fontColor="white"
+                width={60}
+                height={24}
+                borderRadius={16}
+                fontSize={12}
+              >
+                {apply.status}
               </Badge>
-              <h2 className={styles["myapplystatusitem__post-title"]}>프로젝트 제목</h2>
+              <h2 className={styles["myapplystatusitem__post-title"]}>{apply.project?.recruitmentTitle}</h2>
             </div>
-            <p className={styles["myapplystatusitem__post-description"]}>
-              프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에
-              들어갑니다.프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에
-              들어갑니다.프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에
-              들어갑니다.
-            </p>
+            <p className={styles["myapplystatusitem__post-description"]}>{apply.project?.description}</p>
           </div>
-          <button className={styles["myapplystatusitem__apply-button"]}>지원서 보기</button>
+
+          <button
+            className={styles["myapplystatusitem__apply-button"]}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.stopPropagation();
+              handleModal(apply.id);
+            }}
+          >
+            지원서 보기
+          </button>
         </div>
+
+        {/* content */}
         <div className={styles["myapplystatusitem__post-meta"]}>
           <div>
-            <span className={styles["myapplystatusitem__post-author"]}>신짱구</span>
+            <span className={styles["myapplystatusitem__post-author"]}>{apply.user?.name}</span>
             <span className={styles["myapplystatusitem__post-dot"]}>·</span>
-            <span className={styles["myapplystatusitem__post-date"]}>5분 전</span>
+            <span className={styles["myapplystatusitem__post-date"]}>
+              {apply.project?.createdAt !== undefined ? formatDateTime(new Date(apply.project.createdAt)) : "값 없음"}
+            </span>
           </div>
           <div className={styles["myapplystatusitem__post-stats"]}>
             <div className={styles["myapplystatusitem__post-stats-heart"]}>
-              <FaHeart /> <span>12</span>
+              <FaHeart /> <span>{apply.project?.likes}</span>
             </div>
             <div className={styles["myapplystatusitem__post-stats-eye"]}>
-              <FaEye /> <span>34</span>
+              <FaEye /> <span>{apply.project?.hits}</span>
             </div>
             <div className={styles["myapplystatusitem__post-stats-comment"]}>
-              <FaComment /> <span>5</span>
+              <FaComment /> <span>{apply.project?.comments?.length}</span>
             </div>
           </div>
         </div>
