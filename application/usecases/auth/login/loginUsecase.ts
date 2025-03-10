@@ -29,6 +29,7 @@ export class LoginUsecase {
         name: userData.name,
         email: userData.email,
         createdAt: userData.createdAt,
+        nickname: userData.nickname,
       };
 
       const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: "6h" });
