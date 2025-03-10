@@ -68,13 +68,13 @@ export default function MyApplyStatusItem({
           </div>
           <div className={styles["myapplystatusitem__post-stats"]}>
             <div className={styles["myapplystatusitem__post-stats-heart"]}>
-              <FaHeart /> <span>{apply.project?.likes?.length}</span>
+              <FaHeart /> <span>{apply.project?.likes}</span>
             </div>
             <div className={styles["myapplystatusitem__post-stats-eye"]}>
               <FaEye /> <span>{apply.project?.hits}</span>
             </div>
             <div className={styles["myapplystatusitem__post-stats-comment"]}>
-              <FaComment /> <span>{apply.project?.comments?.length}</span>
+              <FaComment /> <span>{apply.project?.comments}</span>
             </div>
           </div>
         </div>
