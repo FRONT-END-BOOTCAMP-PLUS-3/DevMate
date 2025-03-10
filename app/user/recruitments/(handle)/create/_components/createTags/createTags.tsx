@@ -22,20 +22,27 @@ export default function CreateTags({ selectedTags, setSelectedTags }: CreateTags
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (isComposing) return; // 한글 조합 중이면 실행되지 않도록 방지
 
-    if (event.key === "Enter" && inputValue && selectedTags.length < 10) {
-      // 태그 길이 체크: 1자 이상, 20자 이하
+    if ((event.key === "Tab" || event.key === "Enter") && inputValue && selectedTags.length < 10) {
+      event.preventDefault();
+
       if (inputValue.length < 1 || inputValue.length > 20) {
         alert("태그는 1자 이상 20자 이하로 설정이 가능합니다.");
-        return; // 길이가 초과하면 추가하지 않음
+        return;
       }
 
-      // 입력 값이 있고, 태그 개수가 10개 미만이면 태그 추가
       if (!selectedTags.includes(inputValue)) {
         setSelectedTags((prevTags) => [...prevTags, inputValue]);
         setInputValue("");
       } else {
         alert("같은 태그는 여러 번 추가할 수 없습니다.");
       }
+    }
+
+    if (event.key === "Backspace" && inputValue.length === 0 && selectedTags.length > 0) {
+      event.preventDefault();
+      const newTags = [...selectedTags];
+      newTags.pop();
+      setSelectedTags(newTags);
     }
   };
 

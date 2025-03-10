@@ -79,7 +79,7 @@ export default function ApplicationsSection({
         <h1>🎨 지원서</h1>
         {selectedApplicant && <ApplicantDetails applicant={selectedApplicant} />}
 
-        {selectedApplicant?.status === "waiting" && (
+        {selectedApplicant?.status === "WAITING" && (
           <>
             <span style={{ fontWeight: "bold", color: "#706efa", marginTop: "30px" }}>
               프로젝트 참여를 수락하시겠습니까?

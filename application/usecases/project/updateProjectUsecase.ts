@@ -2,7 +2,6 @@ import type { ProjectRepository } from "@/domain/repositories/projectRepository"
 import type { PsTagRepository } from "@/infrastructure/repositories/psTagRepository";
 import type { PsProjectTagRepository } from "@/infrastructure/repositories/psProjectTagRepository";
 
-import type { ProjectDto } from "../dtos/projectDto";
 import type { ProjectDetailDto } from "./dtos/projectDetailDto";
 import type { UpdateProjectDto } from "./dtos/updateProjectDto";
 
@@ -16,11 +15,8 @@ export class UpdateProjectUsecase {
 
   async execute(id: number, updateData: Partial<UpdateProjectDto>): Promise<ProjectDetailDto | null> {
     try {
-      const projectData: ProjectDto | null = await this.projectRepository.findById(id);
-      if (!projectData) {
-        console.error(`❌ 프로젝트 ${id}를 찾을 수 없음`);
-        return null;
-      }
+      const projectData: ProjectDetailDto | null = await this.projectRepository.findById(id);
+      if (!projectData) return null;
 
       const { projectTags, ...updateDataWithoutTags } = updateData;
       const updatedProject = await this.projectRepository.update(id, updateDataWithoutTags);
