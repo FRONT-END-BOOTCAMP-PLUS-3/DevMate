@@ -21,7 +21,7 @@ export default function RecruitmentsItem({ recruitment }: { recruitment: Recruit
   };
 
   // 모집 종료일이 현재 시간보다 이전이면 '모집완료', 아니면 '모집중'
-  const isRecruitmentActive = new Date() < recruitment.recruitmentEnd;
+  const isRecruitmentActive = new Date() < new Date(recruitment.recruitmentEnd);
   const badgeText = isRecruitmentActive ? "모집중" : "모집완료";
 
   // 배지 색상 조건 설정
