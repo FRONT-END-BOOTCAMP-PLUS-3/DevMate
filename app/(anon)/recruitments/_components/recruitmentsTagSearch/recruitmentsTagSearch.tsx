@@ -29,7 +29,7 @@ export default function RecruitmentsTagSearch() {
 
   // 태그 추가
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Tab" && inputValue.trim()) {
+    if ((event.key === "Tab" || event.key === "Enter") && inputValue.trim()) {
       event.preventDefault();
       const newTags = [...tags, inputValue.trim()];
       setTags(newTags);
