@@ -74,6 +74,12 @@ const Recruitments = async ({
             <RecruitmentsItem key={recruitment.id} recruitment={recruitment} />
           ))}
         </div>
+
+        {recruitments.length === 0 && (
+          <div className={styles["main__post-none"]}>
+            <p>모집글이 존재하지 않습니다.</p>
+          </div>
+        )}
       </div>
     </div>
   );
