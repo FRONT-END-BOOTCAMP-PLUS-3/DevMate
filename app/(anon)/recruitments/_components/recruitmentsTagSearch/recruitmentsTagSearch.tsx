@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { useState } from "react";
 
 import styles from "./recruitmentsTagSearch.module.scss";
@@ -7,44 +9,49 @@ import styles from "./recruitmentsTagSearch.module.scss";
 import { FaHashtag, FaTimes } from "react-icons/fa";
 
 export default function RecruitmentsTagSearch() {
-  const [inputValue, setInputValue] = useState(""); // 입력값 관리
-  const [tags, setTags] = useState<string[]>([]); // 태그 목록
-  const [isComposing, setIsComposing] = useState(false); // 한글 조합 상태
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+  const [inputValue, setInputValue] = useState("");
+  const [tags, setTags] = useState<string[]>(searchParams.getAll("tags"));
+
+  // URL 업데이트 함수
+  const updateURL = (updatedTags: string[]) => {
+    const params = new URLSearchParams();
+    updatedTags.forEach((tag) => params.append("tags", tag));
+    router.push(`?${params.toString()}`);
   };
 
+  // 태그 추가
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (isComposing) return; // 한글 조합 중이면 실행되지 않도록 방지
-    if (event.key === "Enter" && inputValue && tags.length < 10) {
-      // 태그 길이 체크: 1자 이상, 20자 이하
-      if (inputValue.length < 1 || inputValue.length > 20) {
-        alert("태그는 1자 이상 20자 이하로 설정이 가능합니다.");
-        return; // 길이가 초과하면 추가하지 않음
-      }
+    if (event.key === "Tab" && inputValue.trim()) {
+      event.preventDefault(); // 기본 Tab 동작 방지
+      const newTags = [...tags, inputValue.trim()];
+      setTags(newTags);
+      setInputValue("");
+      updateURL(newTags);
+    }
 
-      // 입력 값이 있고, 태그 개수가 10개 미만이면 태그 추가
-      if (!tags.includes(inputValue)) {
-        setTags([...tags, inputValue]);
-        setInputValue("");
-      } else {
-        alert("같은 태그는 여러 번 추가할 수 없습니다.");
-      }
-    } else if (tags.length >= 10) {
-      alert("태그는 최대 10개까지 설정이 가능합니다.");
+    // 백스페이스로 마지막 태그 삭제
+    if (event.key === "Backspace" && inputValue === "" && tags.length > 0) {
+      const newTags = tags.slice(0, -1);
+      setTags(newTags);
+      updateURL(newTags);
     }
   };
 
-  // 태그 삭제
+  // 태그 삭제 (X 버튼 클릭)
   const handleTagRemove = (tag: string) => {
-    setTags(tags.filter((item) => item !== tag));
+    const newTags = tags.filter((t) => t !== tag);
+    setTags(newTags);
+    updateURL(newTags);
   };
 
   // 태그 초기화
   const handleReset = () => {
     setTags([]);
     setInputValue("");
+    updateURL([]);
   };
 
   return (
@@ -61,15 +68,12 @@ export default function RecruitmentsTagSearch() {
           <input
             type="text"
             value={inputValue}
-            onChange={handleInputChange}
+            onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            onCompositionStart={() => setIsComposing(true)} // 한글 조합 시작
-            onCompositionEnd={() => setIsComposing(false)} // 한글 조합 완료
             placeholder={tags.length === 0 ? "태그로 검색해보세요!" : ""}
           />
         </div>
       </div>
-
       <button className={styles["main__tag-reset"]} onClick={handleReset}>
         초기화
       </button>

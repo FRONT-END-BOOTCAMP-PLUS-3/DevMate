@@ -10,10 +10,24 @@ import RecruitmentsTagSearch from "./_components/recruitmentsTagSearch/recruitme
 import RecruitmentsSortFilters from "./_components/recruitmentsSortFilters/recruitmentsSortFilters";
 import RecruitmentsWriteButton from "./_components/recruitmentsWriteButton/recruitmentsWriteButton";
 
-const Recruitments = async () => {
+interface RecruitmentsProps {
+  searchParams: Record<string, string | undefined>;
+}
+
+const Recruitments = async ({ searchParams }: RecruitmentsProps) => {
   const basicUrl = process.env.NEXT_PUBLIC_API_BASE;
 
-  const res = await fetch(`${basicUrl}api/recruitments`);
+  // URL에서 받은 searchParams를 기본값과 병합
+  const params = new URLSearchParams({
+    status: searchParams.status || "전체",
+    sort: searchParams.sort || "최신순",
+    search: searchParams.search || "",
+    tags: searchParams.tags || "",
+  });
+
+  console.log(`${basicUrl}api/recruitments?${params.toString()}`);
+
+  const res = await fetch(`${basicUrl}api/recruitments?${params.toString()}`);
 
   if (!res.ok) {
     console.log("프로젝트 정보를 불러오는 중 오류가 발생했습니다");
