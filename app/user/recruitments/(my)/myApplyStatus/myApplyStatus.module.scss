@@ -46,6 +46,15 @@
     border-bottom: 1px solid $color-solid-line;
     margin-bottom: 16px;
   }
+
+  &__loading,
+  &__error {
+    width: 850px;
+    height: 100px;
+    display: grid;
+    place-items: center;
+    color: $color-red;
+  }
 }
 
 // 모달 스타일
