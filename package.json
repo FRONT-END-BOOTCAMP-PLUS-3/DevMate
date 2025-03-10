@@ -39,6 +39,7 @@
     "@prisma/client": "^6.4.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -60,16 +61,22 @@
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^26.0.0",
     "lint-staged": "^15.2.2",
+    "msw": "^2.7.3",
     "prettier": "^3.1.1",
     "prisma": "^6.4.1",
     "sass": "^1.85.0",
     "typescript": "^5",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.0.6"
+    "vitest": "^3.0.7"
   },
   "jest": {
     "moduleNameMapper": {
       "\\.(css|scss)$": "identity-obj-proxy"
     }
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

@@ -1,43 +1,46 @@
 import type { ProjectRepository } from "@/domain/repositories/projectRepository";
+import type { PsTagRepository } from "@/infrastructure/repositories/psTagRepository";
+import type { PsProjectTagRepository } from "@/infrastructure/repositories/psProjectTagRepository";
 
 import type { ProjectDto } from "../dtos/projectDto";
 import type { ProjectDetailDto } from "./dtos/projectDetailDto";
+import type { UpdateProjectDto } from "./dtos/updateProjectDto";
 
 export class UpdateProjectUsecase {
-  // eslint-disable-next-line prettier/prettier
-  constructor(private projectRepository: ProjectRepository) { }
+  constructor(
+    private projectRepository: ProjectRepository,
+    private tagRepository: PsTagRepository,
+    private projectTagRepository: PsProjectTagRepository,
+    // eslint-disable-next-line prettier/prettier
+  ) { }
 
-  async execute(
-    id: number,
-    updateData: {
-      projectTitle?: string;
-      goal?: string;
-      description?: string;
-      projectPeriodStart?: Date;
-      projectPeriodEnd?: Date;
-      notice?: string;
-    },
-  ): Promise<ProjectDetailDto | null> {
+  async execute(id: number, updateData: Partial<UpdateProjectDto>): Promise<ProjectDetailDto | null> {
     try {
       const projectData: ProjectDto | null = await this.projectRepository.findById(id);
-      if (!projectData) return null;
+      if (!projectData) {
+        console.error(`❌ 프로젝트 ${id}를 찾을 수 없음`);
+        return null;
+      }
 
-      // 업데이트 수행
-      const updatedProject = await this.projectRepository.update(id, updateData);
-      console.log("✅ 업데이트된 프로젝트:", JSON.stringify(updatedProject, null, 2));
+      const { projectTags, ...updateDataWithoutTags } = updateData;
+      const updatedProject = await this.projectRepository.update(id, updateDataWithoutTags);
+      console.log("✅ 프로젝트 업데이트 성공:", JSON.stringify(updatedProject, null, 2));
 
-      return {
-        id: updatedProject.id,
-        leaderId: updatedProject.leaderId,
-        projectTitle: updatedProject.projectTitle,
-        goal: updatedProject.goal,
-        description: updatedProject.description,
-        projectPeriodStart: updatedProject.projectPeriodStart,
-        projectPeriodEnd: updatedProject.projectPeriodEnd,
-        notice: updatedProject.notice,
-      };
+      console.log("전달된 projectTags:", projectTags); // 전달된 태그 로그 추가
+      if (projectTags && projectTags.length > 0) {
+        const newTagNames = projectTags;
+
+        await this.tagRepository.addTags(newTagNames);
+
+        const newTagIds = await this.tagRepository.getTagIds(newTagNames);
+
+        await this.projectTagRepository.createMultiple(id, newTagIds);
+        console.log(`✅ 프로젝트 ${id}에 새 태그 추가 완료:`, newTagNames);
+      }
+
+      return { ...updatedProject, projectTags: projectTags || [] };
     } catch (error) {
-      console.error("❌ 프로젝트 업데이트 오류:", error);
+      console.error("❌ 프로젝트 업데이트 중 오류 발생:", error);
       return null;
     }
   }
