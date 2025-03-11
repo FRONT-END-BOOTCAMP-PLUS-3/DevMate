@@ -53,6 +53,13 @@ export default function EditProject() {
     extensions: [StarterKit, Underline, TextStyle, Heading.configure({ levels: [1, 2, 3] })],
     content: "",
     onUpdate: ({ editor }) => setDescription(editor.getHTML()),
+    editorProps: {
+      handleDOMEvents: {
+        beforeinput: () => false, // Next.js Hydration 오류 방지
+      },
+    },
+    injectCSS: false, // CSS 관련 Hydration 방지
+    immediatelyRender: false, // Hydration 오류 방지
   });
 
   /* ---------------------------------- 이벤트 핸들러 --------------------------------- */

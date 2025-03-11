@@ -69,6 +69,13 @@ export default function Create() {
       <p>📢 사전 공지사항 :</p>
     `,
     onUpdate: ({ editor }) => setDescription(editor.getHTML()),
+    editorProps: {
+      handleDOMEvents: {
+        beforeinput: () => false, // Next.js Hydration 오류 방지
+      },
+    },
+    injectCSS: false, // CSS 관련 Hydration 방지
+    immediatelyRender: false, // Hydration 오류 방지
   });
 
   /* ---------------------------------- event handler --------------------------------- */
