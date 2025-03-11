@@ -27,10 +27,6 @@ const Apply: React.FC = () => {
     portfolio: null as File | null,
   });
 
-  useEffect(() => {
-    fetchUserId();
-  }, []);
-
   const fetchUserId = async () => {
     try {
       const decoded = await decodeToken("id");
@@ -92,26 +88,35 @@ const Apply: React.FC = () => {
   const getProjectTitle = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/recruitments/${id}/apply`);
+
+      const response = await fetch(`/api/recruitments/${id}/apply?userId=${userId}`);
 
       if (!response.ok) {
-        throw new Error("프로젝트 정보를 불러오는데 실패했습니다.");
+        if (response.status === 409) {
+          alert("이미 해당 프로젝트에 지원서를 작성하셨습니다.");
+        } else {
+          alert("프로젝트 정보를 불러오는데 실패했습니다.");
+        }
+        return;
       }
 
       const data = await response.json();
-
-      setProjectName(data.title);
+      setProjectName(data.title); // 프로젝트 제목 설정
     } catch (error) {
       console.log("Error fetching project:", error);
-      return null;
+      alert("네트워크 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    getProjectTitle();
+    fetchUserId();
   }, []);
+
+  useEffect(() => {
+    getProjectTitle();
+  }, [userId]);
 
   if (loading) {
     return (
@@ -166,7 +171,7 @@ const Apply: React.FC = () => {
         <Button onClick={cancelHandle} variant="sub">
           취소
         </Button>
-        <Button onClick={postApply}>제출</Button>
+        <Button onClick={postApply}>{loading ? "제출중..." : "제출"}</Button>
       </section>
     </div>
   );

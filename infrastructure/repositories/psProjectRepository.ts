@@ -67,18 +67,29 @@ export class PsProjectRepository implements ProjectRepository {
     }
   }
 
-  async findProjectTitleById(id: number): Promise<string | null> {
+  async findProjectTitleById(projectId: number, userId: string): Promise<string | null> {
     try {
+      // 지원 내역 확인
+      const existingApplication = await prisma.apply.findFirst({
+        where: { projectId, userId },
+      });
+
+      console.log("existingApplication", existingApplication);
+
+      if (existingApplication) {
+        return "USER_ALREADY_APPLIED";
+      }
+
+      // 프로젝트 제목 가져오기
       const project = await prisma.project.findUnique({
-        where: { id },
+        where: { id: projectId },
         select: { projectTitle: true },
       });
+
       return project ? project.projectTitle : null;
     } catch (error) {
-      console.error("Error finding project name by ID:", error);
+      console.log("Error finding project name by ID:", error);
       return null;
-    } finally {
-      await prisma.$disconnect();
     }
   }
 
