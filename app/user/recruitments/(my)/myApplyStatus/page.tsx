@@ -72,11 +72,10 @@ export default function Page() {
 
       try {
         const response = await fetch("/api/recruitments/myApplyStatus", {
-          method: "POST",
+          method: "GET",
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${decodedId}`,
           },
-          body: JSON.stringify({ userId: decodedId }),
         });
 
         if (!response.ok) {
