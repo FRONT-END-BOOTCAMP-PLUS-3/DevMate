@@ -10,7 +10,6 @@ import { formatDateToString } from "@/utils/formatDateToString";
 import styles from "./projectDetail.module.scss";
 
 import type { ProjectDetailDto } from "@/application/usecases/project/dtos/projectDetailDto";
-import type { ProjectDetailApplyDto } from "@/application/usecases/project/dtos/projectDetailApplyDto";
 
 import NoticeSection from "./_components/noticeSection";
 import MembersSection from "./_components/membersSection";
@@ -64,8 +63,6 @@ export default function ProjectDetail() {
       if (!response.ok) {
         throw new Error(data.error || "서버 오류 발생");
       }
-
-      console.log(`✅ 멤버 생성 성공! User ID: ${data.userId}, Project ID: ${data.projectId}`);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -80,8 +77,6 @@ export default function ProjectDetail() {
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
-      const data: ProjectDetailApplyDto = await response.json();
-      console.log("거절됨", data);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -172,7 +167,6 @@ export default function ProjectDetail() {
       setError(null);
       try {
         const response = await fetch(`/api/project/${projectId}`, { method: "GET" });
-        console.log("📡 API 응답 상태:", response.status);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
