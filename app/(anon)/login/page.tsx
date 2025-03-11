@@ -37,6 +37,7 @@ export default function Login() {
           placeholder="비밀번호"
           icon={showPassword ? FaRegEye : FaRegEyeSlash}
           onIconClick={() => setShowPassword((prev) => !prev)}
+          iconSize={showPassword ? 18 : 20}
         />
         {state.message && <div>😒 오류 : {state.message}</div>}
 
@@ -45,8 +46,9 @@ export default function Login() {
         </Button>
 
         <div className={container__links}>
-          <Link href="/login/find/password">비밀번호 찾기</Link>|<Link href="/signup">회원가입</Link>|
-          <Link href="/login/find/id">아이디 찾기</Link>
+          {/* <Link href="/login/find/password">비밀번호 찾기</Link>|<Link href="/signup">회원가입</Link>| */}
+          {/* <Link href="/login/find/id">아이디 찾기</Link> */}
+          <Link href="/signup">회원가입</Link>
         </div>
       </form>
       <div className={container__social}>
