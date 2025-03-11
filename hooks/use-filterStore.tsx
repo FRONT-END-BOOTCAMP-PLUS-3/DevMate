@@ -1,17 +1,15 @@
 import { create } from "zustand";
 
-const filterMap: Record<string, string> = {
-  전체: "ALL",
-  모집중: "RECRUITING",
-  모집완료: "COMPLETED",
-};
+export const filters = ["전체", "모집중", "모집완료"] as const;
+
+type Filter = (typeof filters)[number];
 
 interface FilterState {
-  selectedFilter: string;
-  setFilter: (filter: string) => void;
+  selectedFilter: Filter;
+  setFilter: (filter: Filter) => void;
 }
 
 export const useFilterStore = create<FilterState>((set) => ({
-  selectedFilter: "ALL",
-  setFilter: (filter) => set({ selectedFilter: filterMap[filter] || "ALL" }),
+  selectedFilter: "전체",
+  setFilter: (filter) => set({ selectedFilter: filters.includes(filter) ? filter : "전체" }),
 }));
