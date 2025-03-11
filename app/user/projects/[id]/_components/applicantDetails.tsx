@@ -4,6 +4,8 @@ import styles from "../projectDetail.module.scss";
 
 import type { ProjectDetailApplyDto } from "@/application/usecases/project/dtos/projectDetailApplyDto";
 
+import { POSITION_MAP } from "./membersSection";
+
 interface ApplicantDetailsProps {
   applicant: ProjectDetailApplyDto;
 }
@@ -16,7 +18,7 @@ const ApplicantDetails = ({ applicant }: ApplicantDetailsProps) => {
       {Object.entries({
         이름: applicant.user?.name,
         생년월일: applicant.user?.birthDate,
-        직무: applicant.user?.position,
+        직무: applicant.user?.position ? POSITION_MAP[applicant.user?.position] : "직무 없음",
         성별: applicant.user?.gender,
         거주지: applicant.user?.address,
         경력: `${applicant.user?.career}년`,

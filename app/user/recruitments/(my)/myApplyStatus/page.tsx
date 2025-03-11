@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 import Modal from "@/components/modal/modal";
+import { POSITION_MAP } from "@/app/user/projects/[id]/_components/membersSection";
 
 import { decodeToken } from "@/utils/cookie";
 import { formatDateToString } from "@/utils/formatDateToString";
@@ -130,7 +131,7 @@ export default function Page() {
 
       {/* 데이터가 없을 경우 */}
       {!loading && !error && applyStatusData.length === 0 && (
-        <p className={styles["myapplystatus__empty"]}>내역이 없습니다.</p>
+        <p className={styles["myapplystatus__empty"]}>나의 신청현황이 없습니다.</p>
       )}
 
       {/* 데이터 렌더링 */}
@@ -150,7 +151,7 @@ export default function Page() {
             {Object.entries({
               이름: selectedApply.user?.name,
               생년월일: selectedApply.user?.birthDate,
-              직무: selectedApply.user?.position,
+              직무: selectedApply.user?.position ? POSITION_MAP[selectedApply.user?.position] : "직무 없음",
               성별: selectedApply.user?.gender,
               거주지: selectedApply.user?.address,
               경력: `${selectedApply.user?.career}년`,
