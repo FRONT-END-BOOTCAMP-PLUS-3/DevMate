@@ -55,10 +55,11 @@ export default function Page() {
 
       {loading && (
         <div className={styles["myparticipate__loading"]}>
-          <ClipLoader color="#868e96" loading={loading} size={100} aria-label="Loading Spinner" />
+          <ClipLoader color="#868e96" loading={loading} size={50} aria-label="Loading Spinner" />
         </div>
       )}
       {projects?.map((project) => <MyProjectItem key={project.id} project={project} />)}
+      {projects?.length === 0 && <div className={styles["myparticipate__empty"]}>참여한 프로젝트가 없습니다.</div>}
     </div>
   );
 }

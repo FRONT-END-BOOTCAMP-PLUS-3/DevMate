@@ -14,10 +14,13 @@ export default function MyProjectItem({ project }: { project: RecruitmentsDto })
           <div className={styles["myprojectitem__post-header"]}>
             <h2 className={styles["myprojectitem__post-title"]}>{project.projectTitle}</h2>
           </div>
-          <p className={styles["myprojectitem__post-description"]}>{project.description}</p>
+          <p className={styles["myprojectitem__post-description"]}>
+            {project.description.replace(/<\/?[^>]+(>|$)/g, "")}
+          </p>
         </div>
         <div className={styles["myprojectitem__post-meta"]}>
           <span className={styles["myprojectitem__post-date"]}>
+            <p>프로젝트 기간</p>
             {formatDateToString(project.projectPeriodStart)} ~ {formatDateToString(project.projectPeriodEnd)}
           </span>
         </div>
