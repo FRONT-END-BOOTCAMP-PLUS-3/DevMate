@@ -61,7 +61,6 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
       reader.onloadend = () => {
         dispatch({ type: "SET_PROFILE_IMG", payload: reader.result as string });
       };
-      console.log(state.profileImg);
       reader.readAsDataURL(file);
     }
   };
@@ -93,6 +92,7 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
         error={state.errors.password}
         icon={showPassword ? FaRegEye : FaRegEyeSlash}
         onIconClick={() => setShowPassword((prev) => !prev)}
+        iconSize={showPassword ? 18 : 20}
       />
       <InputField
         name="passwordConfirm"
@@ -104,6 +104,7 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
         error={passwordConfirmError}
         icon={showPasswordConfirm ? FaRegEye : FaRegEyeSlash}
         onIconClick={() => setShowPasswordConfirm((prev) => !prev)}
+        iconSize={showPasswordConfirm ? 18 : 20}
       />
 
       <div className={container__inputblock}>
