@@ -1,24 +1,27 @@
+import Link from "next/link";
+
+import { formatDateToString } from "@/utils/formatDateToString";
+
 import styles from "./myProjectItem.module.scss";
 
-export default function MyProjectItem() {
+import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/rectuitmentsDto";
+
+export default function MyProjectItem({ project }: { project: RecruitmentsDto }) {
   return (
-    <div>
+    <Link className={styles["myprojectitem"]} href={`/user/projects/${project.id}`}>
       <div className={styles["myprojectitem__post-item"]}>
         <div className={styles["myprojectitem__post-content"]}>
           <div className={styles["myprojectitem__post-header"]}>
-            <h2 className={styles["myprojectitem__post-title"]}>프로젝트 제목</h2>
+            <h2 className={styles["myprojectitem__post-title"]}>{project.projectTitle}</h2>
           </div>
-          <p className={styles["myprojectitem__post-description"]}>
-            프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에
-            들어갑니다.프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에
-            들어갑니다.프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에 들어갑니다.프로젝트 설명이 여기에
-            들어갑니다.
-          </p>
+          <p className={styles["myprojectitem__post-description"]}>{project.description}</p>
         </div>
         <div className={styles["myprojectitem__post-meta"]}>
-          <span className={styles["myprojectitem__post-date"]}>2025년 01월 01일 ~ 2025년 03월 01일</span>
+          <span className={styles["myprojectitem__post-date"]}>
+            {formatDateToString(project.projectPeriodStart)} ~ {formatDateToString(project.projectPeriodEnd)}
+          </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
