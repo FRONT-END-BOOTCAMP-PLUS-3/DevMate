@@ -43,7 +43,9 @@ export default function MyApplyStatusItem({
               </Badge>
               <h2 className={styles["myapplystatusitem__post-title"]}>{apply.project?.recruitmentTitle}</h2>
             </div>
-            <p className={styles["myapplystatusitem__post-description"]}>{apply.project?.description}</p>
+            <p className={styles["myapplystatusitem__post-description"]}>
+              {apply.project?.description.replace(/<\/?[^>]+(>|$)/g, " ")}
+            </p>
           </div>
 
           <button
