@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { PsLikeRepository } from "@/infrastructure/repositories/PsLikeRepository";
+import { PsLikeRepository } from "@/infrastructure/repositories/psLikeRepository";
 
 import { CreateToggleLikeUsecase } from "@/application/usecases/recruitment/createToggleLikeUsecase";
 
