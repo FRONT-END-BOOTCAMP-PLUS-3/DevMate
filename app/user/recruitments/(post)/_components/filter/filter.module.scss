@@ -1,0 +1,29 @@
+.filter {
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  height: 38px;
+
+  &__item {
+    width: 65px;
+    min-width: fit-content;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #adb5bd;
+    cursor: pointer;
+
+    &.active {
+      font-weight: bold;
+      height: 38px;
+      border-bottom: 2px solid #333b3d;
+      color: #333b3d;
+    }
+
+    &:hover {
+      color: #333b3d;
+    }
+  }
+}

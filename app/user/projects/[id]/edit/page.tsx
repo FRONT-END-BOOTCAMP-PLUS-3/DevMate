@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { DateRange } from "react-date-range";
 
 import Toolbar from "@/app/user/recruitments/_components/Toolbar/toolbar";
-import CreateTags from "@/app/user/recruitments/create/_components/createTags/createTags";
+import CreateTags from "@/app/user/recruitments/(handle)/create/_components/createTags/createTags";
 
 import { decodeToken } from "@/utils/cookie";
 
@@ -128,10 +128,6 @@ export default function EditProject() {
 
         // ✅ 태그 설정 수정
         setTags(data.projectTags?.map((tag) => tag) || []);
-        console.log(
-          "🎯 불러온 태그:",
-          data.projectTags?.map((tag) => tag),
-        );
       } catch (error) {
         console.error("❌ 오류 발생:", error);
         setError(error instanceof Error ? error.message : "알 수 없는 오류");

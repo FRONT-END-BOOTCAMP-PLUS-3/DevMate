@@ -35,10 +35,9 @@ export default function Create() {
     recruitmentTitle: "",
     projectTitle: "",
     goal: "",
-    description: "",
   });
 
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState("내용 없음");
   const [projectPeriod, setProjectPeriod] = useState<SelectionRange[]>([
     { startDate: new Date(), endDate: new Date(), key: "selection" },
   ]);
@@ -69,7 +68,7 @@ export default function Create() {
   /* ---------------------------------- event handler --------------------------------- */
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setProjectData({ ...projectData, [e.target.name]: e.target.value });
+    setProjectData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   // 프로젝트 생성 요청
@@ -80,12 +79,14 @@ export default function Create() {
     const requestBody = {
       ...projectData,
       description,
-      projectPeriodStart: projectPeriod[0].startDate,
-      projectPeriodEnd: projectPeriod[0].endDate,
-      recruitmentStart: recruitmentPeriod[0].startDate,
-      recruitmentEnd: recruitmentPeriod[0].endDate,
+      projectPeriodStart: projectPeriod[0].startDate ? new Date(projectPeriod[0].startDate) : null, // ✅ 변환
+      projectPeriodEnd: projectPeriod[0].endDate ? new Date(projectPeriod[0].endDate) : null, // ✅ 변환
+      recruitmentStart: recruitmentPeriod[0].startDate ? new Date(recruitmentPeriod[0].startDate) : null, // ✅ 변환
+      recruitmentEnd: recruitmentPeriod[0].endDate ? new Date(recruitmentPeriod[0].endDate) : null, // ✅ 변환
       projectTags: tags,
     };
+
+    console.log("📢 요청 데이터:", requestBody); // ✅ 요청 데이터 확인
 
     try {
       const response = await fetch("/api/project/1", {
