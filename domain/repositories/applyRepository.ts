@@ -6,5 +6,5 @@ export interface ApplyRepository {
   findByUserProject(userId: string, projectId: number): Promise<Apply | null>;
   updateStatus(id: number, status: string): Promise<Apply>;
   delete(id: number): Promise<void>;
-  create(applyData: Omit<Apply, "id" | "status">): Promise<Apply>;
+  create(applyData: Omit<Apply, "id" | "status" | "createdAt">): Promise<Apply>;
 }

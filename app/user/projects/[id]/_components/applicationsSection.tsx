@@ -54,9 +54,10 @@ export default function ApplicationsSection({
     }
   };
 
-  const transformedApplications = applications?.map((app) => ({
-    ...app,
-    user: typeof app.user === "object" ? app.user.name : app.user,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const transformedApplications = applications?.map(({ createdAt, ...rest }) => ({
+    ...rest,
+    user: typeof rest.user === "object" ? rest.user.name : rest.user,
   }));
 
   return (

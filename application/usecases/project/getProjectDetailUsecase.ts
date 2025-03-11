@@ -68,6 +68,7 @@ export class GetProjectDetailUsecase {
             introduction: apply.introduction,
             portfolioUrl: apply.portfolioUrl,
             status: apply.status,
+            createdAt: apply.createdAt,
             user: apply.user
               ? {
                 ...apply.user,
