@@ -81,6 +81,31 @@
     max-width: 100%;
     word-break: break-word;
   }
+
+  .noticeTextarea {
+    max-width: 100%;
+    min-height: 80px;
+    padding: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    border: 1px solid $color-dark-gray;
+    border-radius: 4px;
+    resize: none;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-light-gray;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  }
 }
 
 .container__row_2 {
