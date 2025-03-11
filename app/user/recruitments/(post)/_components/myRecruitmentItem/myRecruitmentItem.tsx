@@ -7,12 +7,13 @@ import { FaHeart, FaEye, FaComment } from "react-icons/fa";
 interface MyRecruitmentItemProps {
   projectTitle: string;
   description: string;
-  status: "모집중" | "마감";
-  LikeCount: number;
-  ViewCount: number;
-  CommentCount: number;
+  status: "모집중" | "모집완료";
+  likeCount: number;
+  viewCount: number;
+  commentCount: number;
   nickName: string;
-  timePassed: number;
+  timePassed: string;
+  onClick?: () => void;
 }
 export default function MyRecruitmentItem({
   projectTitle,
@@ -20,18 +21,19 @@ export default function MyRecruitmentItem({
   status,
   nickName,
   timePassed,
-  LikeCount,
-  ViewCount,
-  CommentCount,
+  likeCount,
+  viewCount,
+  commentCount,
+  onClick,
 }: MyRecruitmentItemProps) {
   const badgeColor = status === "모집중" ? "primary" : "red";
   return (
-    <div>
+    <div onClick={onClick}>
       <div className={styles["myrecruitmentitem__post-item"]}>
         <div className={styles["myrecruitmentitem__post-content"]}>
           <div className={styles["myrecruitmentitem__post-header"]}>
             <Badge color={badgeColor} fontColor="white" width={60} height={24} borderRadius={16} fontSize={12}>
-              모집중
+              {status}
             </Badge>
             <h2 className={styles["myrecruitmentitem__post-title"]}>{projectTitle}</h2>
           </div>
@@ -40,17 +42,17 @@ export default function MyRecruitmentItem({
             <div>
               <span className={styles["myrecruitmentitem__post-author"]}>{nickName}</span>
               <span className={styles["myrecruitmentitem__post-dot"]}>·</span>
-              <span className={styles["myrecruitmentitem__post-date"]}>{timePassed}분 전</span>
+              <span className={styles["myrecruitmentitem__post-date"]}>{timePassed}</span>
             </div>
             <div className={styles["myrecruitmentitem__post-stats"]}>
               <div className={styles["myrecruitmentitem__post-stats-heart"]}>
-                <FaHeart /> <span>{LikeCount}</span>
+                <FaHeart /> <span>{likeCount}</span>
               </div>
               <div className={styles["myrecruitmentitem__post-stats-eye"]}>
-                <FaEye /> <span>{ViewCount}</span>
+                <FaEye /> <span>{viewCount}</span>
               </div>
               <div className={styles["myrecruitmentitem__post-stats-comment"]}>
-                <FaComment /> <span>{CommentCount}</span>
+                <FaComment /> <span>{commentCount}</span>
               </div>
             </div>
           </div>
