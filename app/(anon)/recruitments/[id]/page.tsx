@@ -8,16 +8,16 @@ import CommentForm from "./_components/commentForm";
 import CommentContentList from "./_components/commentContentList";
 import RecruitmentContent from "./_components/recruitmentContent";
 
-const RecruitmentDetail = async ({ params }: { params: { id: string } }) => {
+const RecruitmentDetail = async ({ params }: { params: Promise<{ id: string }> }) => {
   const basicUrl = process.env.NEXT_PUBLIC_API_BASE;
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
 
-  if (!params?.id || isNaN(Number(params.id))) {
+  if (!id || isNaN(Number(id))) {
     return notFound();
   }
 
-  const id = Number(params.id);
-
-  const res = await fetch(`${basicUrl}api/recruitments/${id}`);
+  const res = await fetch(`${basicUrl}api/recruitments/${Number(id)}`);
 
   if (!res.ok) {
     if (res.status === 404) {

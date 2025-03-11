@@ -54,8 +54,6 @@ export class PsProjectRepository implements ProjectRepository {
 
       if (!projectData) {
         console.log("⚠️ 프로젝트 없음!");
-      } else {
-        console.log("✅ 프로젝트 데이터 반환:", JSON.stringify(projectData, null, 2));
       }
 
       return projectData;

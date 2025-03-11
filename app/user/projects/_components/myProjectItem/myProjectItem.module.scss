@@ -48,7 +48,7 @@
     -webkit-line-clamp: 2; // 크로스 브라우징을 위한 WebKit 속성
     -webkit-box-orient: vertical;
 
-    display: box;
+    display: flex;
     line-clamp: 2;
 
     overflow: hidden;
