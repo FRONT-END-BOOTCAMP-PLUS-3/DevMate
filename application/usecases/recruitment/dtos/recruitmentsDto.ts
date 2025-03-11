@@ -6,8 +6,8 @@ export interface RecruitmentsTagDto {
 }
 
 export interface RecruitmentsDto extends ProjectDto {
-  leaderName: string;
-  projectTags: RecruitmentsTagDto[];
-  commentCount: number;
-  likeCount: number;
+  leaderName?: string;
+  projectTags?: RecruitmentsTagDto[];
+  commentCount?: number;
+  likeCount?: number;
 }

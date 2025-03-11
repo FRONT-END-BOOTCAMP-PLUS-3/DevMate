@@ -1,6 +1,6 @@
 import styles from "./recruitments.module.scss";
 
-import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/rectuitmentsDto";
+import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/recruitmentsDto";
 
 import RecruitmentsItem from "./_components/recruitmentsItem/recruitmentsItem";
 import RecruitmentsSearch from "./_components/recruitmentsSearch/recruitmentsSearch";

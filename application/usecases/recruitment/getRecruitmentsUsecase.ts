@@ -1,6 +1,6 @@
 import type { ProjectRepository } from "@/domain/repositories/projectRepository";
 
-import type { RecruitmentsDto } from "./dtos/rectuitmentsDto";
+import type { RecruitmentsDto } from "./dtos/recruitmentsDto";
 
 export class GetRecruitmentsUsecase {
   constructor(private projectRepository: ProjectRepository) {}
@@ -16,7 +16,7 @@ export class GetRecruitmentsUsecase {
     search?: string;
     tags?: string[];
   }): Promise<RecruitmentsDto[]> {
-    const response = await this.projectRepository.findByAll(status, sort, search, tags);
+    const response: RecruitmentsDto[] = await this.projectRepository.findByAll(status, sort, search, tags);
 
     const recruitments: RecruitmentsDto[] = response.map((item) => ({
       id: item.id,
@@ -32,10 +32,10 @@ export class GetRecruitmentsUsecase {
       hits: item.hits,
       createdAt: item.createdAt,
       notice: item.notice,
-      leaderName: item.leader.nickname,
+      leaderName: item.leaderName,
       projectTags: item.projectTags,
-      commentCount: item._count.comments,
-      likeCount: item._count.likes,
+      commentCount: item.commentCount,
+      likeCount: item.likeCount,
     }));
 
     return recruitments;

@@ -169,7 +169,7 @@ export class PsProjectRepository implements ProjectRepository {
         orderBy = { createdAt: "desc" };
       }
 
-      return await prisma.project.findMany({
+      const projects = await prisma.project.findMany({
         where,
         orderBy,
         include: {
@@ -182,6 +182,13 @@ export class PsProjectRepository implements ProjectRepository {
           _count: { select: { comments: true, likes: true } }, // 댓글 및 좋아요 개수 포함
         },
       });
+      return projects.map((project) => ({
+        ...project,
+        leaderName: project.leader.nickname,
+        commentCount: project._count.comments,
+        likeCount: project._count.likes,
+        projectTags: project.projectTags,
+      }));
     } catch (error) {
       console.log("Error finding all projects:", error);
       throw new Error("프로젝트 목록 조회에 실패했습니다.");
