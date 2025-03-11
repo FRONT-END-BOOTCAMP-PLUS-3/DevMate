@@ -199,7 +199,21 @@ export default function SignUpForm({ state, dispatch, onSubmit }: SignUpFormProp
         </label>
       </div>
 
-      <Button className={container__submit} variant="main" size="long" onClick={onSubmit}>
+      <Button
+        className={container__submit}
+        variant="main"
+        size="long"
+        onClick={onSubmit}
+        disabled={
+          !state.email ||
+          !state.password ||
+          !passwordConfirm ||
+          state.password !== passwordConfirm ||
+          Object.values(state.errors).some((error) => error)
+          // 더 많은 state 추가?
+          // defultimg 수정
+        }
+      >
         가입하기
       </Button>
 

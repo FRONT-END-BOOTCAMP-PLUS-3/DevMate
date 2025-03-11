@@ -21,6 +21,13 @@
     margin-top: 21px;
     width: 100%;
     min-height: 48px;
+    &:disabled {
+      border: $color-light-gray;
+      background-color: $color-light-gray; // 비활성화 시 배경색 (연한 회색)
+      color: $color-black; // 텍스트 색상 변경
+      cursor: not-allowed; // 마우스 커서를 '금지' 아이콘으로 변경
+      opacity: 0.6; // 투명도 적용
+    }
   }
 
   &__profileImg {
