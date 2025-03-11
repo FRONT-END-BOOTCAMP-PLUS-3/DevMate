@@ -30,7 +30,7 @@ export default function RecruitmentsItem({ recruitment }: { recruitment: Recruit
           </header>
           <p className={styles["main__post-description"]}>{recruitment.description.replace(/<\/?[^>]+(>|$)/g, "")}</p>
 
-          <RecruitmentsTag key={recruitment.id} tags={recruitment.projectTags.map((tag) => tag.tag.tagName)} />
+          <RecruitmentsTag key={recruitment.id} tags={recruitment.projectTags?.map((tag) => tag.tag.tagName) ?? []} />
 
           <footer className={styles["main__post-meta"]}>
             <div>
