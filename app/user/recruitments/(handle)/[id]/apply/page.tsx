@@ -11,10 +11,13 @@ import { decodeToken } from "@/utils/cookie";
 
 import styles from "./apply.module.scss";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
 const Apply: React.FC = () => {
   const params = useParams();
   const id = params.id;
 
+  const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
   const [projectName, setProjectName] = useState<string>("");
 
@@ -88,6 +91,7 @@ const Apply: React.FC = () => {
   // 프로젝트 정보 가져오기
   const getProjectTitle = async () => {
     try {
+      setLoading(true);
       const response = await fetch(`/api/recruitments/${id}/apply`);
 
       if (!response.ok) {
@@ -100,12 +104,22 @@ const Apply: React.FC = () => {
     } catch (error) {
       console.log("Error fetching project:", error);
       return null;
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getProjectTitle();
   }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.loading}>
+        <ClipLoader color="#868e96" loading={loading} size={100} aria-label="Loading Spinner" />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.apply}>
