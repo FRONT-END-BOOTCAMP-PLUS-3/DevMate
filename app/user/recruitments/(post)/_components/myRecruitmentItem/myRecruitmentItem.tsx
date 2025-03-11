@@ -7,12 +7,13 @@ import { FaHeart, FaEye, FaComment } from "react-icons/fa";
 interface MyRecruitmentItemProps {
   projectTitle: string;
   description: string;
-  status: "모집중" | "마감";
+  status: "모집중" | "모집완료";
   likeCount: number;
   viewCount: number;
   commentCount: number;
   nickName: string;
   timePassed: string;
+  onClick?: () => void;
 }
 export default function MyRecruitmentItem({
   projectTitle,
@@ -23,10 +24,11 @@ export default function MyRecruitmentItem({
   likeCount,
   viewCount,
   commentCount,
+  onClick,
 }: MyRecruitmentItemProps) {
   const badgeColor = status === "모집중" ? "primary" : "red";
   return (
-    <div>
+    <div onClick={onClick}>
       <div className={styles["myrecruitmentitem__post-item"]}>
         <div className={styles["myrecruitmentitem__post-content"]}>
           <div className={styles["myrecruitmentitem__post-header"]}>

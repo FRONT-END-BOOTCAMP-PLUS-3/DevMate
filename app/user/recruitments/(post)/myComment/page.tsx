@@ -1,26 +1,79 @@
+// 마이페이지 - 작성한 모집글
+"use client";
+import { useRouter } from "next/navigation";
+
+import { useEffect, useState } from "react";
+
 import MyRecruitmentItem from "@/app/user/recruitments/(post)/_components/myRecruitmentItem/myRecruitmentItem";
 
+import { useFilterStore } from "@/hooks/use-filterStore";
+
+import { decodeToken } from "@/utils/cookie";
+import { elapsedText } from "@/utils/elapsedText";
+import { getMyProjects } from "@/utils/service/getMyProjects";
+
+import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/rectuitmentsDto";
+
 export default function Page() {
-  const exampleData = {
-    projectTitle: "웹 개발 프로젝트 모집",
-    description: "우리는 경험 있는 웹 개발자를 찾고 있습니다. 관심 있는 분은 지원해 주세요.",
-    status: "모집중" as "모집중" | "마감",
-    nickName: "JohnDoe",
-    timePassed: 5, // 5분 전
-    LikeCount: 25,
-    ViewCount: 180,
-    CommentCount: 4,
+  const { selectedFilter } = useFilterStore();
+  const [userId, setUserId] = useState<string>();
+  const [projects, setProjects] = useState<RecruitmentsDto[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const fetchUserId = async () => {
+    const id = await decodeToken("id");
+    setUserId(id as string);
   };
+
+  const fetchProjects = async () => {
+    if (!userId) return;
+    try {
+      setLoading(true);
+      const data = await getMyProjects({ userId, status: "ALL", filter: "COMMENT" });
+      setProjects(data);
+      console.log("data", data);
+    } catch (err) {
+      console.log("프로젝트를 불러오는 데 실패했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      fetchProjects();
+    }
+  }, [userId]);
+  const filteredProjects = projects?.filter((data) => {
+    const isRecruitmentActive = new Date() < new Date(data.recruitmentEnd) ? "모집중" : "모집완료";
+    if (selectedFilter === "전체") return true;
+    return selectedFilter === isRecruitmentActive;
+  });
   return (
-    <MyRecruitmentItem
-      projectTitle={exampleData.projectTitle}
-      description={exampleData.description}
-      status={exampleData.status}
-      nickName={exampleData.nickName}
-      timePassed={exampleData.timePassed}
-      LikeCount={exampleData.LikeCount}
-      ViewCount={exampleData.ViewCount}
-      CommentCount={exampleData.CommentCount}
-    />
+    <>
+      {loading ? (
+        <div>로딩 중...</div>
+      ) : filteredProjects?.length ? (
+        filteredProjects.map((data) => (
+          <MyRecruitmentItem
+            onClick={() => router.push(`/recruitments/${data.id}`)}
+            key={data.id}
+            projectTitle={data.projectTitle}
+            description={data.description.replace(/<\/?[^>]+(>|$)/g, "")}
+            status={new Date() < new Date(data.recruitmentEnd) ? "모집중" : "모집완료"}
+            nickName={data.leaderName}
+            timePassed={elapsedText(new Date(data.createdAt))}
+            likeCount={data.likeCount}
+            viewCount={data.hits}
+            commentCount={data.commentCount}
+          />
+        ))
+      ) : (
+        <div>작성한 모집글이 없습니다.</div>
+      )}
+    </>
   );
 }
