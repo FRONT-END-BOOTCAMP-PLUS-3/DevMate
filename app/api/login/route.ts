@@ -2,12 +2,14 @@ import { NextResponse } from "next/server";
 
 import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository";
 
+import type { NextRequest } from "next/server";
+
 import { LoginUsecase } from "@/application/usecases/auth/login/loginUsecase";
 
 const userRepository = new PsUserRepository();
 const loginUsecase = new LoginUsecase(userRepository);
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
 
