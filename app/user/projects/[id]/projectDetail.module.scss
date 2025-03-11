@@ -25,7 +25,7 @@
   }
 
   &__button_exit {
-    align-self: center;
+    align-self: flex-end;
     width: fit-content;
     padding: 5px 20px;
     color: $color-white;
@@ -114,6 +114,7 @@
 // 모달 스타일
 .modal__list {
   max-width: 700px;
+  min-width: 500px;
   margin: 15px 10px;
   display: flex;
   flex-direction: column;
