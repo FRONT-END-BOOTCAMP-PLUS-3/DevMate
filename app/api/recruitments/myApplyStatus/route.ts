@@ -7,14 +7,18 @@ import type { MyApplyDto } from "@/application/usecases/recruitment/dtos/myApply
 
 import { GetMyApplyStatusUsecase } from "@/application/usecases/recruitment/getMyApplyStatusUsecase";
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   try {
     const applyRepository: ApplyRepository = new PsApplyRepository();
     const getMyApplyStatusUsecase = new GetMyApplyStatusUsecase(applyRepository);
 
-    const { userId } = await req.json();
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-    if (!userId || typeof userId !== "string") {
+    const userId = authHeader.replace("Bearer ", "").trim();
+    if (!userId) {
       return NextResponse.json({ error: "Invalid or missing userId" }, { status: 400 });
     }
 

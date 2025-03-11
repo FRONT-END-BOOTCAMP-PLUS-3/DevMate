@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+// 오류가 계속 생겨서 이 파일에서만 프리티어를 비활성화 했습니다.
+// 수정 시 유의해주세요
 import { getEncryptionKey } from "@/utils/security";
 
 import type { ApplyRepository } from "@/domain/repositories/applyRepository";

@@ -1,7 +1,7 @@
 .myapplystatus {
   &__title-container {
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     gap: 13px;
     margin-bottom: 30px;
   }
@@ -45,6 +45,15 @@
   &__separator {
     border-bottom: 1px solid $color-solid-line;
     margin-bottom: 16px;
+  }
+
+  &__loading,
+  &__error {
+    width: 850px;
+    height: 100px;
+    display: grid;
+    place-items: center;
+    color: $color-red;
   }
 }
 
