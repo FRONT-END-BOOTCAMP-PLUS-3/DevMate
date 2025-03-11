@@ -1,5 +1,5 @@
 // application/usecases/CreateCommentUseCase.ts
-import type { CommentRepository } from "@/domain/repositories/CommentRepository";
+import type { CommentRepository } from "@/domain/repositories/commentRepository";
 
 export class CreateCommentUseCase {
   constructor(private commentRepository: CommentRepository) {}

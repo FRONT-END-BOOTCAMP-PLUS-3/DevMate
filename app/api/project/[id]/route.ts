@@ -136,8 +136,9 @@ export async function PATCH(req: Request, props: { params: Promise<{ id: string 
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, props: { params: Promise<{ id: string }> }) {
   try {
+    const params = await props.params;
     const projectRepository: ProjectRepository = new PsProjectRepository();
     const deleteProjectUsecase = new DeleteProjectUsecase(projectRepository);
 

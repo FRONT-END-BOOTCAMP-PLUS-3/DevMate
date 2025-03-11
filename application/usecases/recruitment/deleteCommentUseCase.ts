@@ -1,4 +1,4 @@
-import type { CommentRepository } from "@/domain/repositories/CommentRepository";
+import type { CommentRepository } from "@/domain/repositories/commentRepository";
 
 export class DeleteCommentUseCase {
   constructor(private commentRepository: CommentRepository) {}

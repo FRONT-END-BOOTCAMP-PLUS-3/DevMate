@@ -1,4 +1,4 @@
-import type { CommentRepository } from "@/domain/repositories/CommentRepository";
+import type { CommentRepository } from "@/domain/repositories/commentRepository";
 
 import { PrismaClient } from "@prisma/client";
 
