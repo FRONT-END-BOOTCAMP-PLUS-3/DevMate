@@ -64,11 +64,11 @@ export default function Page() {
             projectTitle={data.projectTitle}
             description={data.description.replace(/<\/?[^>]+(>|$)/g, "")}
             status={new Date() < new Date(data.recruitmentEnd) ? "모집중" : "모집완료"}
-            nickName={data.leaderName}
+            nickName={data.leaderName ?? ""}
             timePassed={elapsedText(new Date(data.createdAt))}
-            likeCount={data.likeCount}
+            likeCount={data.likeCount ?? 0}
             viewCount={data.hits}
-            commentCount={data.commentCount}
+            commentCount={data.commentCount ?? 0}
           />
         ))
       ) : (
