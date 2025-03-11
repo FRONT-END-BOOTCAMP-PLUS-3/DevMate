@@ -14,7 +14,7 @@ export class GetMyProjectsUsecase {
     status?: "ALL" | "RECRUITING" | "COMPLETED";
     filter?: "CREATE" | "LIKE" | "COMMENT" | "MEMBER";
   }): Promise<RecruitmentsDto[]> {
-    const response = await this.projectRepository.findByUserId(userId, status, filter);
+    const response: RecruitmentsDto[] = await this.projectRepository.findByUserId(userId, status, filter);
 
     const recruitments: RecruitmentsDto[] = response.map((item) => ({
       id: item.id,
@@ -30,10 +30,10 @@ export class GetMyProjectsUsecase {
       hits: item.hits,
       createdAt: item.createdAt,
       notice: item.notice,
-      leaderName: item.leader.nickname,
+      leaderName: item.leaderName,
       projectTags: item.projectTags,
-      commentCount: item._count.comments,
-      likeCount: item._count.likes,
+      commentCount: item.commentCount,
+      likeCount: item.likeCount,
     }));
 
     return recruitments;

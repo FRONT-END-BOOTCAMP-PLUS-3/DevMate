@@ -191,7 +191,7 @@ export class PsProjectRepository implements ProjectRepository {
       }));
     } catch (error) {
       console.log("Error finding all projects:", error);
-      throw new Error("프로젝트 목록 조회에 실패했습니다.");
+      return [];
     } finally {
       await prisma.$disconnect();
     }
@@ -226,7 +226,7 @@ export class PsProjectRepository implements ProjectRepository {
         }
       }
 
-      return await prisma.project.findMany({
+      const projects = await prisma.project.findMany({
         where,
         include: {
           leader: { select: { nickname: true } },
@@ -238,6 +238,14 @@ export class PsProjectRepository implements ProjectRepository {
           _count: { select: { comments: true, likes: true } },
         },
       });
+
+      return projects.map((project) => ({
+        ...project,
+        leaderName: project.leader.nickname,
+        commentCount: project._count.comments,
+        likeCount: project._count.likes,
+        projectTags: project.projectTags,
+      }));
     } catch (error) {
       console.log("Error finding projects by user ID:", error);
       return [];
