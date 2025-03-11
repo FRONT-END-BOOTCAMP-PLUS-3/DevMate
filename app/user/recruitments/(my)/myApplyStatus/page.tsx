@@ -139,6 +139,7 @@ export default function Page() {
         !error &&
         applyStatusData
           .filter((item) => activeFilter === "전체" || item.status === activeFilter)
+          .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
           .map((item) => (
             <MyApplyStatusItem key={item.id} apply={item} handleModal={handleModal} handleClick={handleClick} />
           ))}
