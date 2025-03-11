@@ -1,4 +1,6 @@
-export const formatDateToString = (date: Date): string => {
-  const newDate = new Date(date);
-  return `${newDate.getFullYear()}년 ${newDate.getMonth() + 1}월 ${newDate.getDate()}일`;
+export const formatDateToString = (date: Date | string): string => {
+  const utcDate = new Date(date);
+  const kstDate = new Date(utcDate.getTime() - 9 * 60 * 60 * 1000);
+
+  return `${kstDate.getFullYear()}년 ${kstDate.getMonth() + 1}월 ${kstDate.getDate()}일`;
 };
