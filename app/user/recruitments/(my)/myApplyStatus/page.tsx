@@ -14,6 +14,8 @@ import type { MyApplyDto } from "@/application/usecases/recruitment/dtos/myApply
 
 import MyApplyStatusItem from "./_components/myApplyStatusItem";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
 /* ---------------------------------- component --------------------------------- */
 export default function Page() {
   /* ---------------------------------- state --------------------------------- */
@@ -70,11 +72,10 @@ export default function Page() {
 
       try {
         const response = await fetch("/api/recruitments/myApplyStatus", {
-          method: "POST",
+          method: "GET",
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${decodedId}`,
           },
-          body: JSON.stringify({ userId: decodedId }),
         });
 
         if (!response.ok) {
@@ -118,7 +119,11 @@ export default function Page() {
       <div className={styles["myapplystatus__separator"]} />
 
       {/* 로딩 중 표시 */}
-      {loading && <p className={styles["myapplystatus__loading"]}>로딩 중...</p>}
+      {loading && (
+        <div className={styles["myapplystatus__loading"]}>
+          <ClipLoader color="#868e96" loading={loading} size={50} aria-label="Loading Spinner" />
+        </div>
+      )}
 
       {/* 에러 발생 시 표시 */}
       {error && <p className={styles["myapplystatus__error"]}>{error}</p>}

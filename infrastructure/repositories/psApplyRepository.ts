@@ -26,14 +26,25 @@ export class PsApplyRepository implements ApplyRepository {
           project: {
             include: {
               leader: true,
-              likes: true,
-              comments: true,
+              _count: {
+                select: {
+                  likes: true,
+                  comments: true,
+                },
+              },
             },
           },
           user: true,
         },
       });
-      return applyData;
+      return applyData.map((apply) => ({
+        ...apply,
+        project: {
+          ...apply.project,
+          likes: apply.project._count.likes,
+          comments: apply.project._count.comments,
+        },
+      }));
     } catch (error) {
       console.error("Error finding apply by user:", error);
       return [];
