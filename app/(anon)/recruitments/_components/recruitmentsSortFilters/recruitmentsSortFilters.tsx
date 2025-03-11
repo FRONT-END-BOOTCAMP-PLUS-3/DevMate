@@ -17,7 +17,7 @@ export default function RecruitmentsSortFilters() {
 
   return (
     <div className={styles["main__sort-options"]}>
-      {["최신순", "조회수순", "댓글많은순", "좋아요순"].map((sort) => (
+      {["최신순", "조회순", "댓글순", "좋아요순"].map((sort) => (
         <button
           key={sort}
           className={`${styles["main__sort-item"]} ${activeSort === sort ? styles["main__sort-item--active"] : ""}`}

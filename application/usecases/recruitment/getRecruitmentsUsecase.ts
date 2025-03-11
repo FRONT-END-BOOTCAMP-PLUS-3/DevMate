@@ -1,4 +1,5 @@
 import type { ProjectRepository } from "@/domain/repositories/projectRepository";
+import type { RecruitmentSort, RecruitmentStatus } from "@/constants/recruitmentTypes";
 
 import type { RecruitmentsDto } from "./dtos/recruitmentsDto";
 
@@ -11,8 +12,8 @@ export class GetRecruitmentsUsecase {
     search = "",
     tags = [],
   }: {
-    status?: "전체" | "모집중" | "모집완료";
-    sort?: "최신순" | "조회수순" | "댓글많은순" | "좋아요순";
+    status?: RecruitmentStatus;
+    sort?: RecruitmentSort;
     search?: string;
     tags?: string[];
   }): Promise<RecruitmentsDto[]> {
