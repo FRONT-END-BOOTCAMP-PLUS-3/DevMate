@@ -80,7 +80,12 @@ export default function EditProject() {
       }
 
       alert("프로젝트 수정이 완료되었습니다.");
-      router.back();
+
+      if (window.history.length > 2) {
+        window.history.go(-2);
+      } else {
+        router.push("/user/information");
+      }
     } catch (err) {
       console.error("❌ 프로젝트 수정 오류:", err);
       alert("프로젝트 수정 중 오류가 발생했습니다.");
