@@ -107,7 +107,7 @@ export default function ProjectDetail() {
 
       alert("프로젝트 나가기에 성공했습니다.");
 
-      setTimeout(() => setRefresh((prev) => !prev), 100);
+      setTimeout(() => router.push("/recruitments"), 100);
     } catch (error) {
       console.error("❌ 프로젝트 나가기 실패.", error);
       alert("프로젝트 나가기 중 오류가 발생했습니다.");
@@ -129,7 +129,7 @@ export default function ProjectDetail() {
 
       alert("프로젝트 삭제에 성공했습니다.");
 
-      setTimeout(() => router.push("/user/information"), 100);
+      setTimeout(() => router.push("/user/projects/myOpen"), 100);
     } catch (error) {
       console.error("❌ 프로젝트 삭제 실패.", error);
       alert("프로젝트 삭제 중 오류가 발생했습니다.");
@@ -211,7 +211,7 @@ export default function ProjectDetail() {
   if (userRole === "guest") {
     return <div className={styles.error}>❌ 접근 권한이 없습니다.</div>;
   }
-  if (userRole === "realGuest") {
+  if (!loading && userRole === "realGuest") {
     return <div className={styles.error}>❌ 토큰이 유효하지 않습니다.</div>;
   }
 
