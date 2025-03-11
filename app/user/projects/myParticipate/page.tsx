@@ -7,7 +7,7 @@ import { getMyProjects } from "@/utils/service/getMyProjects";
 
 import styles from "./myParticipate.module.scss";
 
-import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/rectuitmentsDto";
+import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/recruitmentsDto";
 
 import MyProjectItem from "../_components/myProjectItem/myProjectItem";
 

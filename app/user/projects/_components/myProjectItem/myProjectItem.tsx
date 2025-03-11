@@ -4,7 +4,7 @@ import { formatDateToString } from "@/utils/formatDateToString";
 
 import styles from "./myProjectItem.module.scss";
 
-import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/rectuitmentsDto";
+import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/recruitmentsDto";
 
 export default function MyProjectItem({ project }: { project: RecruitmentsDto }) {
   return (

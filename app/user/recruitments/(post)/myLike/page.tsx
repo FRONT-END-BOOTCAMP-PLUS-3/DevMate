@@ -12,7 +12,7 @@ import { decodeToken } from "@/utils/cookie";
 import { elapsedText } from "@/utils/elapsedText";
 import { getMyProjects } from "@/utils/service/getMyProjects";
 
-import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/rectuitmentsDto";
+import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/recruitmentsDto";
 
 export default function Page() {
   const { selectedFilter } = useFilterStore();

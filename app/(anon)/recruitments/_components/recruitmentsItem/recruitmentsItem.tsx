@@ -6,7 +6,7 @@ import { elapsedText } from "@/utils/elapsedText";
 
 import styles from "./recruitmentsItem.module.scss";
 
-import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/rectuitmentsDto";
+import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/recruitmentsDto";
 
 import RecruitmentsTag from "../recruitmentsTag/recruitmentsTag";
 
