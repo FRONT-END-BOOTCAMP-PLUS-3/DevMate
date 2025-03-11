@@ -227,7 +227,7 @@ export default function ProjectDetail() {
       <div className={styles.container__title}>
         <h1>{project.projectTitle}</h1>
         {userRole === "leader" && (
-          <div className={styles.container__title___buttons}>
+          <div className={styles.container__title__buttons}>
             <button type="button" onClick={handleEdit}>
               수정
             </button>
