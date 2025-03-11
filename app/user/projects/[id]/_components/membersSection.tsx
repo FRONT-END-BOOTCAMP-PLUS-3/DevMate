@@ -23,7 +23,7 @@ export default function MembersSection({ members, leaderId }: MembersSectionProp
   });
 
   return (
-    <div className={styles.container__content} style={{ width: "50%" }}>
+    <div className={styles.container__content} style={{ width: "100%" }}>
       <label>✨ 참여 멤버</label>
       <Table
         headers={[
