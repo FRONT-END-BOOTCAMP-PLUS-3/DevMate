@@ -60,6 +60,7 @@
 // 모달 스타일
 .modal__list {
   max-width: 700px;
+  min-width: 500px;
   margin: 15px 10px;
   display: flex;
   flex-direction: column;
