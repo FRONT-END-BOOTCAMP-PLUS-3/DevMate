@@ -4,6 +4,7 @@ import React from "react";
 
 import Button from "@/components/button/button";
 
+import { decodeToken } from "@/utils/cookie";
 import { formatDateTime } from "@/utils/formatDateTime";
 import { formatDateToString } from "@/utils/formatDateToString";
 
@@ -34,6 +35,9 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = async ({ project }
     recruitmentEnd,
     likes,
   } = project;
+
+  const userId = await decodeToken("id");
+  const isLeader = userId === leader?.id;
 
   return (
     <div className={styles["recruitmentContent"]}>
@@ -77,9 +81,11 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = async ({ project }
         <div className={styles["recruitmentContent__content"]} dangerouslySetInnerHTML={{ __html: description }} />
         <div className={styles["recruitmentContent__actions"]}>
           <LikeButton projectId={id} likes={likes} />
-          <Button>
-            <Link href={`/user/recruitments/${id}/apply`}>지원하기</Link>
-          </Button>
+          {!isLeader && (
+            <Button>
+              <Link href={`/user/recruitments/${id}/apply`}>지원하기</Link>
+            </Button>
+          )}
         </div>
       </section>
     </div>

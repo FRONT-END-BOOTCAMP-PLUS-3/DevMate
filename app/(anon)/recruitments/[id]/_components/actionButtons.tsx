@@ -65,7 +65,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ leaderId = null }) => {
   return (
     <div className={styles.actionButtons}>
       <button className={styles["actionButtons__button"]}>
-        <Link href={`/user/recruitments/${id}/edit`}>수정</Link>
+        <Link href={`/user/projects/${id}/edit`}>수정</Link>
       </button>
       |
       <button className={styles["actionButtons__button"]} onClick={deleteRecruitment} disabled={loading}>
