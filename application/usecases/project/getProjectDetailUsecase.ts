@@ -72,7 +72,7 @@ export class GetProjectDetailUsecase {
             user: apply.user
               ? {
                   ...apply.user,
-                  address: apply.user.address ? this.decryptAddress(apply.user.address) : "주소 변환 실패",
+                  address: apply.user.address ? this.decryptAddress(apply.user.address) : "주소 미공개",
                   gender:
                     apply.user.gender === "FEMALE" ? "여성" : apply.user.gender === "MALE" ? "남성" : "알 수 없음",
                 }

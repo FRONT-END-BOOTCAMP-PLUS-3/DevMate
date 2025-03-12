@@ -43,7 +43,7 @@ export class GetMyApplyStatusUsecase {
           user: app.user
             ? {
                 ...app.user,
-                address: app.user.address ? this.decryptAddress(app.user.address) : "주소 변환 실패",
+                address: app.user.address ? this.decryptAddress(app.user.address) : "주소 미공개",
                 gender: app.user.gender === "FEMALE" ? "여성" : app.user.gender === "MALE" ? "남성" : "알 수 없음",
               }
             : undefined,
