@@ -1,11 +1,14 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 
 import Button from "@/components/button/button";
 import InputField from "@/components/inputField/inputField";
+
+import { getAuthStatus } from "@/utils/cookie";
 
 import styles from "./login.module.scss";
 
@@ -14,14 +17,43 @@ import { loginSeverAction } from "./_actions/loginSeverAction";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { SiKakaotalk } from "react-icons/si";
+import ClipLoader from "react-spinners/ClipLoader";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+
 const initialState = {
   message: "",
 };
 export default function Login() {
-  const { container, container__links, container__social, container__social__icon, container__social__text } = styles;
+  const {
+    container,
+    container__links,
+    container__social,
+    container__social__icon,
+    container__social__text,
+    error,
+    loading,
+  } = styles;
   const [state, formAction, pending] = useActionState(loginSeverAction, initialState);
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const isLogin = await getAuthStatus();
+      if (isLogin) {
+        setIsLoading(true);
+        router.push("/recruitments");
+      }
+    };
+    checkLoginStatus();
+  }, [router]);
+  if (isLoading) {
+    return (
+      <div className={loading}>
+        <ClipLoader color="#868e96" loading={isLoading} size={100} aria-label="Loading Spinner" />
+      </div>
+    );
+  }
   return (
     <div className={container}>
       <Link href="/">
@@ -39,7 +71,9 @@ export default function Login() {
           onIconClick={() => setShowPassword((prev) => !prev)}
           iconSize={showPassword ? 18 : 20}
         />
-        {state.message && <div>😒 오류 : {state.message}</div>}
+        {state.message && (
+          <div className={error}>아이디 또는 비밀번호가 잘못 되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요.</div>
+        )}
 
         <Button type="submit" size="long" disabled={pending}>
           로그인

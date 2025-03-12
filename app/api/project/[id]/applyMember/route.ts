@@ -4,6 +4,7 @@ import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository
 import { PsApplyRepository } from "@/infrastructure/repositories/psApplyRepository";
 import { PsMemberRepository } from "@/infrastructure/repositories/psMemberRepository";
 
+import type { NextRequest } from "next/server";
 import type { UserRepository } from "@/domain/repositories/userRepository";
 import type { ApplyRepository } from "@/domain/repositories/applyRepository";
 import type { MemberRepository } from "@/domain/repositories/memberRepository";
@@ -14,7 +15,7 @@ import { CreateMemberUsecase } from "@/application/usecases/project/createMember
 import { DeleteMemberUsecase } from "@/application/usecases/project/deleteMemberUsecase";
 import { RejectApplicantUsecase } from "@/application/usecases/project/rejectApplicantUsecase";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const { applyId } = await req.json();
 
@@ -38,7 +39,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function PATCH(req: Request, props: { params: Promise<{ id: string }> }) {
+export async function PATCH(req: NextRequest, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const applyRepository: ApplyRepository = new PsApplyRepository();
   const userRepository: UserRepository = new PsUserRepository();
@@ -57,7 +58,7 @@ export async function PATCH(req: Request, props: { params: Promise<{ id: string 
   return NextResponse.json(projectDetailApplyDto);
 }
 
-export async function DELETE(req: Request, props: { params: Promise<{ id: string }> }) {
+export async function DELETE(req: NextRequest, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   try {
     const applyRepository: ApplyRepository = new PsApplyRepository();

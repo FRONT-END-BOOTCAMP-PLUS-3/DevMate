@@ -4,6 +4,7 @@ import { PsTagRepository } from "@/infrastructure/repositories/psTagRepository";
 import { PsProjectRepository } from "@/infrastructure/repositories/psProjectRepository";
 import { PsProjectTagRepository } from "@/infrastructure/repositories/psProjectTagRepository";
 
+import type { NextRequest } from "next/server";
 import type { TagRepository } from "@/domain/repositories/tagRepository";
 import type { ProjectRepository } from "@/domain/repositories/projectRepository";
 import type { ProjectTagRepository } from "@/domain/repositories/projectTagRepository";
@@ -15,7 +16,7 @@ import { DeleteProjectUsecase } from "@/application/usecases/project/deleteProje
 import { CreateProjectUsecase } from "@/application/usecases/project/createProjectUsecase";
 import { GetProjectDetailUsecase } from "@/application/usecases/project/getProjectDetailUsecase";
 
-export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
+export async function GET(req: NextRequest, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const projectRepository: ProjectRepository = new PsProjectRepository();
   const tagRepository: TagRepository = new PsTagRepository();
@@ -39,7 +40,7 @@ export async function GET(req: Request, props: { params: Promise<{ id: string }>
   return NextResponse.json(projectDetailDto);
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const projectRepository: ProjectRepository = new PsProjectRepository();
     const tagRepository = new PsTagRepository();
@@ -69,7 +70,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function PATCH(req: Request, props: { params: Promise<{ id: string }> }) {
+export async function PATCH(req: NextRequest, props: { params: Promise<{ id: string }> }) {
   try {
     const params = await props.params;
     const projectRepository: ProjectRepository = new PsProjectRepository();
@@ -136,7 +137,7 @@ export async function PATCH(req: Request, props: { params: Promise<{ id: string 
   }
 }
 
-export async function DELETE(req: Request, props: { params: Promise<{ id: string }> }) {
+export async function DELETE(req: NextRequest, props: { params: Promise<{ id: string }> }) {
   try {
     const params = await props.params;
     const projectRepository: ProjectRepository = new PsProjectRepository();
