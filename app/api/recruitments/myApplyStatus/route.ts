@@ -2,12 +2,13 @@ import { NextResponse } from "next/server";
 
 import { PsApplyRepository } from "@/infrastructure/repositories/psApplyRepository";
 
+import type { NextRequest } from "next/server";
 import type { ApplyRepository } from "@/domain/repositories/applyRepository";
 import type { MyApplyDto } from "@/application/usecases/recruitment/dtos/myApply/myApplyDto";
 
 import { GetMyApplyStatusUsecase } from "@/application/usecases/recruitment/getMyApplyStatusUsecase";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     const applyRepository: ApplyRepository = new PsApplyRepository();
     const getMyApplyStatusUsecase = new GetMyApplyStatusUsecase(applyRepository);

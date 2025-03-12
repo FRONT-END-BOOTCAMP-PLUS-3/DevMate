@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 
 import { PsLikeRepository } from "@/infrastructure/repositories/psLikeRepository";
 
-import { CreateToggleLikeUsecase } from "@/application/usecases/recruitment/createToggleLikeUsecase";
+import type { NextRequest } from "next/server";
 
-export async function POST(req: Request) {
+import { CreateToggleLikeUsecase } from "@/application/usecases/recruitment/createToggleLikeUsecase";
+export async function POST(req: NextRequest) {
   try {
     const { userId, projectId } = await req.json();
 
@@ -23,7 +24,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function DELETE(req: Request) {
+export async function DELETE(req: NextRequest) {
   try {
     const { userId, projectId } = await req.json();
 

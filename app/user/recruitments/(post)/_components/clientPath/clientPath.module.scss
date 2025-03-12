@@ -1,0 +1,17 @@
+.layout__title {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  gap: 13px;
+  margin-bottom: 30px;
+  &__main {
+    color: $color-main;
+    font-size: 25px;
+  }
+
+  &__sub {
+    font-size: 16px;
+    font-weight: 500;
+    padding-bottom: 3px;
+  }
+}

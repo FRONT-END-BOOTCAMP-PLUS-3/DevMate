@@ -14,11 +14,13 @@ import { getMyProjects } from "@/utils/service/getMyProjects";
 
 import type { RecruitmentsDto } from "@/application/usecases/recruitment/dtos/recruitmentsDto";
 
+import Loading from "../_components/loading/loading";
+
 export default function Page() {
   const { selectedFilter } = useFilterStore();
   const [userId, setUserId] = useState<string>();
   const [projects, setProjects] = useState<RecruitmentsDto[] | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const fetchUserId = async () => {
     const id = await decodeToken("id");
@@ -28,14 +30,14 @@ export default function Page() {
   const fetchProjects = async () => {
     if (!userId) return;
     try {
-      setLoading(true);
+      setIsLoading(true);
       const data = await getMyProjects({ userId, status: "ALL", filter: "COMMENT" });
       setProjects(data);
       console.log("data", data);
     } catch (err) {
       console.log("프로젝트를 불러오는 데 실패했습니다.");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -54,8 +56,8 @@ export default function Page() {
   });
   return (
     <>
-      {loading ? (
-        <div>로딩 중...</div>
+      {isLoading ? (
+        <Loading isLoading={isLoading} />
       ) : filteredProjects?.length ? (
         filteredProjects.map((data) => (
           <MyRecruitmentItem

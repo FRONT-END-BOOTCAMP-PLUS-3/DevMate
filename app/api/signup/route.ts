@@ -4,6 +4,7 @@ import { PsTagRepository } from "@/infrastructure/repositories/psTagRepository";
 import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository";
 import { PsTechStackTagRepository } from "@/infrastructure/repositories/psTechStackTagRepository";
 
+import type { NextRequest } from "next/server";
 import type { SignUpDto } from "@/application/usecases/auth/signup/dtos/signupDto";
 
 import { SignupUsecase } from "@/application/usecases/auth/signup/signupUsecase";
@@ -12,7 +13,7 @@ const userRepository = new PsUserRepository();
 const tagRepository = new PsTagRepository();
 const techStackTagRepository = new PsTechStackTagRepository();
 const signupUsecase = new SignupUsecase(userRepository, tagRepository, techStackTagRepository);
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const body: Partial<SignUpDto> = await req.json();
     if (

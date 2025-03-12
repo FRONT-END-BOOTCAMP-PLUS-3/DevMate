@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 import { PsUserRepository } from "@/infrastructure/repositories/psUserRepository";
 
+import type { NextRequest } from "next/server";
+
 import { GetUserIdUsecase } from "@/application/usecases/user/getUserIdUsecase";
 import { DeleteAccountUsecase } from "@/application/usecases/user/deleteAccountUsecase";
 
@@ -10,7 +12,7 @@ const deleteAccountUsecase = new DeleteAccountUsecase(userRepository);
 const getUserIdUsecase = new GetUserIdUsecase(userRepository);
 
 // GET 요청: userId로 사용자 조회
-export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id: userId } = await params;
 
@@ -27,7 +29,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 }
 
 // DELETE 요청: userId로 계정 삭제
-export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id: userId } = await params;
 
