@@ -109,7 +109,7 @@ export default function ProjectDetail() {
 
       setTimeout(() => router.push("/recruitments"), 100);
     } catch (error) {
-      console.error("❌ 프로젝트 나가기 실패.", error);
+      console.log("❌ 프로젝트 나가기 실패.", error);
       alert("프로젝트 나가기 중 오류가 발생했습니다.");
     }
   };
@@ -131,7 +131,7 @@ export default function ProjectDetail() {
 
       setTimeout(() => router.push("/user/projects/myOpen"), 100);
     } catch (error) {
-      console.error("❌ 프로젝트 삭제 실패.", error);
+      console.log("❌ 프로젝트 삭제 실패.", error);
       alert("프로젝트 삭제 중 오류가 발생했습니다.");
     }
   };
@@ -152,7 +152,7 @@ export default function ProjectDetail() {
           setdecodedId(id);
         }
       } catch (error) {
-        console.error("토큰 디코딩 실패:", error);
+        console.log("토큰 디코딩 실패:", error);
       } finally {
         setLoading(false);
       }

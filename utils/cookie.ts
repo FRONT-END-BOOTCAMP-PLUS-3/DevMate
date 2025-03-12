@@ -12,7 +12,7 @@ export async function setCookie(key: string, value: string) {
     const cookieStore = await cookies();
     return cookieStore.set(key, value);
   } catch (error) {
-    console.error("쿠키 설정 중 오류 발생:", error);
+    console.log("쿠키 설정 중 오류 발생:", error);
     throw new Error("쿠키 설정에 실패했습니다.");
   }
 }
@@ -23,7 +23,7 @@ export async function getCookie(key: string) {
     const cookieStore = await cookies();
     return cookieStore.get(key)?.value;
   } catch (error) {
-    console.error("쿠키 가져오기 중 오류 발생:", error);
+    console.log("쿠키 가져오기 중 오류 발생:", error);
     throw new Error("쿠키 가져오기에 실패했습니다.");
   }
 }
@@ -59,7 +59,7 @@ export async function removeAuthToken() {
     // 'token' 쿠키를 삭제
     cookieStore.delete("token");
   } catch (error) {
-    console.error("쿠키 삭제 중 오류 발생:", error);
+    console.log("쿠키 삭제 중 오류 발생:", error);
     throw new Error("쿠키 삭제에 실패했습니다.");
   }
 }

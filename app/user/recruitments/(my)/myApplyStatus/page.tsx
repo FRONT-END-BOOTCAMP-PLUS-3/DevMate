@@ -56,7 +56,7 @@ export default function Page() {
           setError("유효하지 않은 사용자 ID입니다.");
         }
       } catch (error) {
-        console.error("토큰 디코딩 실패:", error);
+        console.log("토큰 디코딩 실패:", error);
         setError("토큰을 디코딩하는 중 오류가 발생했습니다.");
       }
     };
@@ -86,7 +86,7 @@ export default function Page() {
         const data: MyApplyDto[] = await response.json();
         setApplyStatusData(data);
       } catch (error) {
-        console.error("Error fetching apply status data:", error);
+        console.log("Error fetching apply status data:", error);
         setError("apply status를 불러오는 중 오류가 발생했습니다.");
       } finally {
         setLoading(false);

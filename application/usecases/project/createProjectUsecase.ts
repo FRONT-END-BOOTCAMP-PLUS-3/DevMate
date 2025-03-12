@@ -10,7 +10,7 @@ export class CreateProjectUsecase {
     private tagRepository: PsTagRepository,
     private projectTagRepository: PsProjectTagRepository,
     // eslint-disable-next-line prettier/prettier
-  ) { }
+  ) {}
 
   async execute(project: CreateProjectDto): Promise<CreateProjectDto> {
     try {
@@ -29,7 +29,7 @@ export class CreateProjectUsecase {
       const createdProject = { ...newProject, projectTags: project.projectTags };
       return createdProject;
     } catch (error) {
-      console.error("Error occurred creating projcet", error);
+      console.log("Error occurred creating projcet", error);
       throw new Error("Error occurred creating projcet");
     }
   }

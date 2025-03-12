@@ -39,10 +39,10 @@ export default function SignUp() {
       }, 500);
     } catch (error) {
       if (error instanceof Error) {
-        console.error("회원가입 실패:", error);
+        console.log("회원가입 실패:", error);
         alert("회원가입에 실패했습니다. 다시 시도해주세요.");
       } else {
-        console.error("알 수 없는 오류:", error);
+        console.log("알 수 없는 오류:", error);
         alert("회원가입에 실패했습니다. 다시 시도해주세요.");
       }
     }

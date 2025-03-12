@@ -2,7 +2,7 @@ import { simpleDateTimeFormat } from "./simpleDataTimeFormat";
 
 export const elapsedText = (date: Date) => {
   if (!(date instanceof Date)) {
-    console.error("Invalid date value:", date);
+    console.log("Invalid date value:", date);
     return "날짜 오류";
   }
 

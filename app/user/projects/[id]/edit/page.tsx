@@ -94,7 +94,7 @@ export default function EditProject() {
         router.push("/user/information");
       }
     } catch (err) {
-      console.error("❌ 프로젝트 수정 오류:", err);
+      console.log("❌ 프로젝트 수정 오류:", err);
       alert("프로젝트 수정 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
@@ -141,7 +141,7 @@ export default function EditProject() {
         // ✅ 태그 설정 수정
         setTags(data.projectTags?.map((tag) => tag) || []);
       } catch (error) {
-        console.error("❌ 오류 발생:", error);
+        console.log("❌ 오류 발생:", error);
         setError(error instanceof Error ? error.message : "알 수 없는 오류");
       } finally {
         setLoading(false);

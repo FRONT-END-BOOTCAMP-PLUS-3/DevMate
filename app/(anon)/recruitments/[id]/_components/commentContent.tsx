@@ -39,7 +39,7 @@ const CommentContent: React.FC<CommentProps> = ({ comment, replies }) => {
 
       window.location.reload();
     } catch (error) {
-      console.error(error);
+      console.log(error);
       return null;
     }
   };

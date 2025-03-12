@@ -53,7 +53,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ leaderId = null }) => {
       alert("삭제되었습니다.");
       router.push("/recruitments");
     } catch (error) {
-      console.error(error);
+      console.log(error);
       alert("삭제 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);

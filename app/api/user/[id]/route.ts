@@ -23,7 +23,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const user = await getUserIdUsecase.execute(userId);
     return NextResponse.json(user, { status: 200 });
   } catch (error) {
-    console.error("Error in GET /user/[id]:", error);
+    console.log("Error in GET /user/[id]:", error);
     return NextResponse.json({ message: "User retrieval failed" }, { status: 500 });
   }
 }
@@ -40,7 +40,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     await deleteAccountUsecase.execute(userId);
     return NextResponse.json({ message: "Account deleted successfully" }, { status: 200 });
   } catch (error) {
-    console.error("Error in DELETE /user/[id]:", error);
+    console.log("Error in DELETE /user/[id]:", error);
     return NextResponse.json({ message: "Account deletion failed" }, { status: 500 });
   }
 }

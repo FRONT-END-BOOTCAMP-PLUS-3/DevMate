@@ -28,7 +28,7 @@ export async function getMyProjects({
 
     return await res.json();
   } catch (error) {
-    console.error("Error fetching projects:", error);
+    console.log("Error fetching projects:", error);
     return null;
   }
 }

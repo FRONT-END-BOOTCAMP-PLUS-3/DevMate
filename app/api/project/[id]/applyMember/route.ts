@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(projectDetailMemberDto);
   } catch (error) {
-    console.error("❌ Error creating member:", error);
+    console.log("❌ Error creating member:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -76,7 +76,7 @@ export async function DELETE(req: NextRequest, props: { params: Promise<{ id: st
 
     return NextResponse.json({ message: "Member and application successfully deleted" }, { status: 200 });
   } catch (error) {
-    console.error("❌ Error deleting member:", error);
+    console.log("❌ Error deleting member:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

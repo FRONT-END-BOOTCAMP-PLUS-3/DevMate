@@ -21,7 +21,7 @@ export default async function middleware(req: NextRequest) {
     // 토큰 디코딩 시도
     JSON.parse(Buffer.from(jwtToken.split(".")[1], "base64").toString());
   } catch (error) {
-    console.error("Invalid token:", error);
+    console.log("Invalid token:", error);
 
     const returnUrl = req.nextUrl.href;
     const response = NextResponse.redirect(new URL("/login", req.url));

@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: "프로젝트 생성 성공", data: createdProject }, { status: 201 });
   } catch (error) {
-    console.error("❌ 프로젝트 생성 오류:", error);
+    console.log("❌ 프로젝트 생성 오류:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -132,7 +132,7 @@ export async function PATCH(req: NextRequest, props: { params: Promise<{ id: str
 
     return NextResponse.json(updatedProject);
   } catch (error) {
-    console.error("❌ 프로젝트 업데이트 오류:", error);
+    console.log("❌ 프로젝트 업데이트 오류:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -154,7 +154,7 @@ export async function DELETE(req: NextRequest, props: { params: Promise<{ id: st
 
     return NextResponse.json({ message: "Project deleted successfully" }, { status: 200 });
   } catch (error) {
-    console.error("❌ 프로젝트 삭제 중 오류 발생:", error);
+    console.log("❌ 프로젝트 삭제 중 오류 발생:", error);
     return NextResponse.json({ error: "Failed to delete project" }, { status: 500 });
   }
 }

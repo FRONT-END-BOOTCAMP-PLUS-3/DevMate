@@ -65,7 +65,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ projectId, likes = [] }) => {
         body: JSON.stringify({ userId, projectId }),
       });
     } catch (error) {
-      console.error("Failed to update like", error);
+      console.log("Failed to update like", error);
       // 롤백 처리 (API 요청 실패 시 상태 되돌리기)
       setLiked(!newLikedState);
       setLikeCount(newLikedState ? likeCount - 1 : likeCount + 1);

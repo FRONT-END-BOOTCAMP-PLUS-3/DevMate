@@ -43,7 +43,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ projectId, parentId, onClickC
 
       window.location.reload();
     } catch (error) {
-      console.error(error);
+      console.log(error);
       return null;
     }
   };

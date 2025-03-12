@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: "회원가입 성공", data: createdUser }, { status: 201 });
   } catch (error) {
-    console.error("회원가입 요청 처리 중 에러:", error);
+    console.log("회원가입 요청 처리 중 에러:", error);
     return NextResponse.json({ error: "서버 에러" }, { status: 500 });
   }
 }

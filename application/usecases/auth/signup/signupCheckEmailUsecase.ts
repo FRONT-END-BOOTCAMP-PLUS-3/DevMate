@@ -17,9 +17,9 @@ export class SignupCheckEmailUsecase {
       return { email, password };
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        console.log(error.message);
       } else {
-        console.error("An unknown error occurred");
+        console.log("An unknown error occurred");
       }
       return null;
     }

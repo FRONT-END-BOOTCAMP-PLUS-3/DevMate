@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(userInfo, { status: 200 });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return NextResponse.json({ message: "User not found or an error occurred." }, { status: 500 });
   }
 }
@@ -41,7 +41,7 @@ export async function PATCH(req: NextRequest) {
     const updatedUser = await updateUserInfoUsecase.execute(String(userId), userInfo);
     return NextResponse.json(updatedUser, { status: 200 }); // 업데이트 성공 응답
   } catch (error) {
-    console.error("사용자 정보 업데이트 중 오류 발생:", error);
+    console.log("사용자 정보 업데이트 중 오류 발생:", error);
     return NextResponse.json({ error: "사용자 정보를 업데이트할 수 없습니다." }, { status: 500 });
   }
 }

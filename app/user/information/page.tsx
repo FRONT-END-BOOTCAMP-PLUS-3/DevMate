@@ -89,7 +89,7 @@ export default function Information() {
   };
   const editClickHandler = async () => {
     if (!state) {
-      console.error("유저 정보가 없습니다.");
+      console.log("유저 정보가 없습니다.");
     }
     const userDetailInfoApiData = transformUserInfo(state);
     try {
@@ -109,7 +109,7 @@ export default function Information() {
       }
       setEdit((prev) => !prev);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -140,7 +140,7 @@ export default function Information() {
         setUserBasicInfo(data.nonEditInfo);
         setUserDetailInfo(data.editInfo);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
     if (userId) {

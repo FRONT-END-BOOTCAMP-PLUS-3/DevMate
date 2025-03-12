@@ -12,7 +12,7 @@ export async function checkEmailDup(email: string): Promise<boolean> {
 
     return await response.json(); // `true | false` 반환
   } catch (error) {
-    console.error("이메일 중복 확인 오류:", error);
+    console.log("이메일 중복 확인 오류:", error);
     return false; // 서버 오류 시 기본적으로 false 반환
   }
 }

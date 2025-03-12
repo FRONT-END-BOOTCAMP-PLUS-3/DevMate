@@ -9,7 +9,7 @@ export class DeleteMemberUsecase {
     private applyRepository: ApplyRepository,
     private memberRepository: MemberRepository,
     // eslint-disable-next-line prettier/prettier
-  ) { }
+  ) {}
 
   async execute(userId: string, projectId: number): Promise<void> {
     try {
@@ -30,7 +30,7 @@ export class DeleteMemberUsecase {
 
       await Promise.all(deletePromises);
     } catch (error) {
-      console.error("Error executing DeleteMemberUsecase:", error);
+      console.log("Error executing DeleteMemberUsecase:", error);
       throw new Error("멤버 삭제에 실패했습니다.");
     }
   }

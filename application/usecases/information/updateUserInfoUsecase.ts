@@ -76,7 +76,7 @@ export class UpdateUserInfoUsecase {
       }
       return updatedUser;
     } catch (error) {
-      console.error("사용자 정보를 수정하는 중 오류 발생:", error);
+      console.log("사용자 정보를 수정하는 중 오류 발생:", error);
       throw new Error("사용자 정보를 수정하는 데 실패했습니다.");
     }
   }

@@ -13,7 +13,7 @@ export class DeleteAccountUsecase {
       const cookieStore = await cookies();
       cookieStore.delete("token"); // 'token' 쿠키 삭제
     } catch (error) {
-      console.error("토큰 삭제 중 오류 발생:", error);
+      console.log("토큰 삭제 중 오류 발생:", error);
       throw new Error("토큰 삭제에 실패했습니다.");
     }
   }
@@ -22,7 +22,7 @@ export class DeleteAccountUsecase {
       await this.userRepository.delete(userId);
       await this.deleteToken();
     } catch (error) {
-      console.error("계정 삭제 중 오류 발생:", error);
+      console.log("계정 삭제 중 오류 발생:", error);
       throw new Error("계정 삭제에 실패했습니다.");
     }
   }

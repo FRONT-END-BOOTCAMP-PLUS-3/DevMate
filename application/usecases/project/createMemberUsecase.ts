@@ -9,7 +9,7 @@ export class CreateMemberUsecase {
     private applyRepository: ApplyRepository,
     private memberRepository: MemberRepository,
     // eslint-disable-next-line prettier/prettier
-  ) { }
+  ) {}
 
   async execute(applyId: number): Promise<ProjectDetailMemberDto | null> {
     try {
@@ -25,7 +25,7 @@ export class CreateMemberUsecase {
 
       return createdMember;
     } catch (error) {
-      console.error("Error executing CreateMemberUsecase:", error);
+      console.log("Error executing CreateMemberUsecase:", error);
       return null;
     }
   }

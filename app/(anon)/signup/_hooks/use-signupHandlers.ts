@@ -117,7 +117,7 @@ export function useSignupHandlers(state: SignupState, dispatch: Dispatch<SignupA
 
       dispatch({ type: "SET_EMAIL_CHECKED", value: !isDuplicated });
     } catch (error) {
-      console.error("이메일 중복 확인 오류:", error);
+      console.log("이메일 중복 확인 오류:", error);
       dispatch({
         type: "SET_ERRORS",
         errors: { ...state.errors, email: "이메일 중복 확인에 실패했습니다." },

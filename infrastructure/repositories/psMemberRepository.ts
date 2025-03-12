@@ -16,7 +16,7 @@ export class PsMemberRepository implements MemberRepository {
       });
       return createdMember;
     } catch (error) {
-      console.error("Error creating member:", error);
+      console.log("Error creating member:", error);
       throw new Error("멤버 생성에 실패했습니다.");
     } finally {
       await prisma.$disconnect();
@@ -28,7 +28,7 @@ export class PsMemberRepository implements MemberRepository {
       const memberData = await prisma.member.findFirst({ where: { userId, projectId } });
       return memberData;
     } catch (error) {
-      console.error("Error finding member by user and project:", error);
+      console.log("Error finding member by user and project:", error);
       return null;
     } finally {
       await prisma.$disconnect();
@@ -39,7 +39,7 @@ export class PsMemberRepository implements MemberRepository {
     try {
       await prisma.member.delete({ where: { id } });
     } catch (error) {
-      console.error("Error deleting member:", error);
+      console.log("Error deleting member:", error);
       throw new Error("멤버 삭제에 실패했습니다.");
     } finally {
       await prisma.$disconnect();

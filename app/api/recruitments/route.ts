@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     // 프로젝트 정보 반환
     return NextResponse.json(recruitments, { status: 200 });
   } catch (error) {
-    console.error("Error fetching project detail:", error);
+    console.log("Error fetching project detail:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

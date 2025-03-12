@@ -16,7 +16,7 @@ export class GetUserIdUsecase {
       }
       return { ...data };
     } catch (error) {
-      console.error("계정 조회 중 오류 발생:", error);
+      console.log("계정 조회 중 오류 발생:", error);
       throw new Error("계정 조회에 실패했습니다.");
     }
   }

@@ -11,7 +11,7 @@ export class UpdateProjectUsecase {
     private tagRepository: PsTagRepository,
     private projectTagRepository: PsProjectTagRepository,
     // eslint-disable-next-line prettier/prettier
-  ) { }
+  ) {}
 
   async execute(id: number, updateData: Partial<UpdateProjectDto>): Promise<ProjectDetailDto | null> {
     try {
@@ -36,7 +36,7 @@ export class UpdateProjectUsecase {
 
       return { ...updatedProject, projectTags: projectTags || [] };
     } catch (error) {
-      console.error("❌ 프로젝트 업데이트 중 오류 발생:", error);
+      console.log("❌ 프로젝트 업데이트 중 오류 발생:", error);
       return null;
     }
   }

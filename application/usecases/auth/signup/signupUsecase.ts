@@ -71,9 +71,9 @@ export class SignupUsecase {
       return createdUser;
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        console.log(error.message);
       } else {
-        console.error("An unknown error occurred");
+        console.log("An unknown error occurred");
       }
       throw new Error("An error occurred during signup");
     }

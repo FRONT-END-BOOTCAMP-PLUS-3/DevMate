@@ -38,7 +38,7 @@ export class LoginUsecase {
       if (error instanceof Error) {
         throw new Error(`비밀번호가 일치하지 않습니다 catch에러 ${error.message}`);
       } else {
-        console.error("An unknown error occurred");
+        console.log("An unknown error occurred");
       }
       return null;
     }

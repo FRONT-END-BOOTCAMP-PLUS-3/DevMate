@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const isDuplicated = await signupCheckEmailUsecase.execute(email);
     return NextResponse.json(isDuplicated, { status: 200 });
   } catch (error) {
-    console.error("서버 오류:", error);
+    console.log("서버 오류:", error);
     return NextResponse.json(false, { status: 500 });
   }
 }

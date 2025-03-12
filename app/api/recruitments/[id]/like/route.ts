@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     const result = await toggleLikeUsecase.execute(userId, Number(projectId));
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
-    console.error("Error toggling like:", error);
+    console.log("Error toggling like:", error);
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -39,7 +39,7 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
-    console.error("Error removing like:", error);
+    console.log("Error removing like:", error);
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }

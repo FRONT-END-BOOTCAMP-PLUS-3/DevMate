@@ -2,7 +2,7 @@ import type { ProjectRepository } from "@/domain/repositories/projectRepository"
 
 export class DeleteProjectUsecase {
   // eslint-disable-next-line prettier/prettier
-  constructor(private projectRepository: ProjectRepository) { }
+  constructor(private projectRepository: ProjectRepository) {}
 
   async execute(id: number): Promise<void> {
     try {
@@ -13,7 +13,7 @@ export class DeleteProjectUsecase {
 
       await this.projectRepository.delete(id);
     } catch (error) {
-      console.error(`프로젝트 삭제 중 오류 발생 (ID: ${id}):`, error);
+      console.log(`프로젝트 삭제 중 오류 발생 (ID: ${id}):`, error);
     }
   }
 }

@@ -14,9 +14,9 @@ export class PsUserRepository implements UserRepository {
       return createdUser;
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        console.log(error.message);
       } else {
-        console.error("An unknown error occurred");
+        console.log("An unknown error occurred");
       }
       throw new Error("An error occurred during user creation");
     } finally {
@@ -30,9 +30,9 @@ export class PsUserRepository implements UserRepository {
       return user || null;
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        console.log(error.message);
       } else {
-        console.error("An unknown error occurred");
+        console.log("An unknown error occurred");
       }
       return null;
     } finally {
@@ -49,9 +49,9 @@ export class PsUserRepository implements UserRepository {
       return user || null;
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        console.log(error.message);
       } else {
-        console.error("An unknown error occurred");
+        console.log("An unknown error occurred");
       }
       return null;
     } finally {
@@ -65,9 +65,9 @@ export class PsUserRepository implements UserRepository {
       return user || null;
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        console.log(error.message);
       } else {
-        console.error("An unknown error occurred");
+        console.log("An unknown error occurred");
       }
       return null;
     } finally {
@@ -84,9 +84,9 @@ export class PsUserRepository implements UserRepository {
       return updatedUser;
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        console.log(error.message);
       } else {
-        console.error("An unknown error occurred");
+        console.log("An unknown error occurred");
       }
       throw new Error("An error occurred during user update");
     } finally {
@@ -99,9 +99,9 @@ export class PsUserRepository implements UserRepository {
       await prisma.user.delete({ where: { id } });
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        console.log(error.message);
       } else {
-        console.error("An unknown error occurred");
+        console.log("An unknown error occurred");
       }
       throw new Error("An error occurred during user deletion");
     } finally {

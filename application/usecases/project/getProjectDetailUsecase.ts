@@ -71,11 +71,11 @@ export class GetProjectDetailUsecase {
             createdAt: apply.createdAt,
             user: apply.user
               ? {
-                ...apply.user,
-                address: apply.user.address ? this.decryptAddress(apply.user.address) : "주소 변환 실패",
-                gender:
-                  apply.user.gender === "FEMALE" ? "여성" : apply.user.gender === "MALE" ? "남성" : "알 수 없음",
-              }
+                  ...apply.user,
+                  address: apply.user.address ? this.decryptAddress(apply.user.address) : "주소 변환 실패",
+                  gender:
+                    apply.user.gender === "FEMALE" ? "여성" : apply.user.gender === "MALE" ? "남성" : "알 수 없음",
+                }
               : undefined,
           })),
 
@@ -90,7 +90,7 @@ export class GetProjectDetailUsecase {
         projectTags: tagNames,
       };
     } catch (error) {
-      console.error("Error executing GetProjectDetailUsecase:", error);
+      console.log("Error executing GetProjectDetailUsecase:", error);
       return null;
     }
   }

@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ title: projectTitle }, { status: 200 });
   } catch (error) {
-    console.error("Error fetching project title:", error);
+    console.log("Error fetching project title:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ message: "지원 완료!", apply }, { status: 201 });
   } catch (error) {
-    console.error("Error applying:", error);
+    console.log("Error applying:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

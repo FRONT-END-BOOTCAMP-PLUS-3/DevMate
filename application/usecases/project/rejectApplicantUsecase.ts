@@ -9,7 +9,7 @@ export class RejectApplicantUsecase {
     private applyRepository: ApplyRepository,
     private userRepository: UserRepository,
     // eslint-disable-next-line prettier/prettier
-  ) { }
+  ) {}
 
   async execute(id: number): Promise<ProjectDetailApplyDto | null> {
     try {
@@ -39,7 +39,7 @@ export class RejectApplicantUsecase {
         user: filteredUserData,
       };
     } catch (error) {
-      console.error("Error executing RejectApplicantUsecase:", error);
+      console.log("Error executing RejectApplicantUsecase:", error);
       return null;
     }
   }
