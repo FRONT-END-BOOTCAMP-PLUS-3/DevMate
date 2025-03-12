@@ -7,102 +7,86 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 성별 Enum = "MALE" | "FEMALE" | "OTHER"
-
-// 지원 상태 Enum = "WAITING" | "ACCEPT" | "REJECT"
-
-// 사용자
 model User {
-  id         String   @id @default(uuid()) // 고유 ID
-  email      String   @unique // 이메일 (로그인 ID)
-  password   String   // 비밀번호
-  name       String   // 이름
-  nickname   String   // 닉네임
-  gender     String   // 성별 (Enum)
-  birthDate  DateTime // 생년월일
-  position   String   // 직군
-  address    String   // 주소
-  career     Int      @default(0) // 경력 (단위: 년)
-  profileImg String?  // 프로필 이미지 URL
-  createdAt  DateTime @default(now()) // 생성일
-
-  techStackTags  TechStackTag[] // 사용자의 기술 스택
-  comments   Comment[]      // 사용자가 작성한 댓글
-  applications Apply[]      // 사용자가 지원한 프로젝트 목록
-  members     Member[]       // 사용자가 속한 프로젝트 멤버 정보
-  projects    Project[]      // 사용자가 만든 프로젝트
-  likes       Like[]         // 사용자가 누른 좋아요 목록
+  id            String         @id @default(uuid())
+  email         String         @unique
+  password      String
+  name          String
+  nickname      String
+  birthDate     DateTime
+  position      String
+  address       String
+  career        Int            @default(0)
+  profileImg    String?
+  createdAt     DateTime       @default(now())
+  gender        String
+  applications  Apply[]
+  comments      Comment[]
+  likes         Like[]
+  members       Member[]
+  projects      Project[]
+  techStackTags TechStackTag[]
 
   @@index([email])
   @@index([nickname])
 }
 
-// 프로젝트
 model Project {
-  id                 Int        @id @default(autoincrement()) // 프로젝트 ID
-  leaderId           String     // 프로젝트 리더 ID
-  recruitmentTitle   String     // 모집글 제목
-  projectTitle       String     // 프로젝트명
-  goal               String     // 프로젝트 목표
-  description        String     // 프로젝트 설명
-  projectPeriodStart DateTime   // 프로젝트 시작 기간
-  projectPeriodEnd   DateTime   // 프로젝트 종료 기간
-  recruitmentStart   DateTime   // 모집 시작일
-  recruitmentEnd     DateTime   // 모집 마감일
-  hits               Int        @default(0)        // 조회수
-  createdAt          DateTime   @default(now())    // 생성일
-  notice             String     @default("")       // 공지사항 
-
-  leader            User       @relation(fields: [leaderId], references: [id], onDelete: Cascade) // 프로젝트 리더
-  
-  comments          Comment[]  // 프로젝트 관련 댓글
-  projectTags       ProjectTag[] // 프로젝트 관련 태그
-  applications      Apply[]    // 프로젝트 지원자 목록
-  members           Member[]   // 프로젝트 멤버 목록
-  likes             Like[]     // 프로젝트가 받은 좋아요 목록
+  id                 Int          @id @default(autoincrement())
+  leaderId           String
+  recruitmentTitle   String
+  projectTitle       String
+  goal               String
+  description        String
+  projectPeriodStart DateTime
+  projectPeriodEnd   DateTime
+  recruitmentStart   DateTime
+  recruitmentEnd     DateTime
+  hits               Int          @default(0)
+  createdAt          DateTime     @default(now())
+  notice             String       @default("")
+  applications       Apply[]
+  comments           Comment[]
+  likes              Like[]
+  members            Member[]
+  leader             User         @relation(fields: [leaderId], references: [id], onDelete: Cascade)
+  projectTags        ProjectTag[]
 
   @@index([leaderId])
 }
 
-// 프로젝트 멤버
 model Member {
-  id           Int      @id @default(autoincrement()) // 멤버 ID
-  projectId    Int      // 프로젝트 ID
-  userId       String   // 사용자 ID
-
-  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade) // 프로젝트와 연결
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade) // 사용자와 연결
+  id        Int     @id @default(autoincrement())
+  projectId Int
+  userId    String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, userId])
   @@index([userId])
 }
 
-// 프로젝트 좋아요
 model Like {
-  id         Int     @id @default(autoincrement()) // 좋아요 ID
-  userId     String  // 좋아요를 누른 사용자 ID
-  projectId  Int     // 좋아요를 받은 프로젝트 ID
-  createdAt  DateTime @default(now()) // 좋아요 누른 날짜
+  id        Int      @id @default(autoincrement())
+  userId    String
+  projectId Int
+  createdAt DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade) // 사용자와 연결
-  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade) // 프로젝트와 연결
-
-  @@unique([userId, projectId]) // 같은 사용자가 같은 프로젝트에 중복 좋아요 금지
+  @@unique([userId, projectId])
   @@index([projectId])
 }
 
-// 프로젝트 지원서
 model Apply {
-  id           Int      @id @default(autoincrement()) // 지원 ID
-  projectId    Int      // 지원한 프로젝트 ID
-  userId       String   // 지원자 ID
-  position     String   // 지원 포지션
-  introduction String   // 자기소개서
-  portfolioUrl String?  // 포트폴리오 URL
-  status       String   @default("WAITING") // 지원 상태 (Enum)
-  createdAt  DateTime @default(now())
-
-
+  id           Int      @id @default(autoincrement())
+  projectId    Int
+  userId       String
+  position     String
+  introduction String
+  portfolioUrl String?
+  status       String   @default("WAITING")
+  createdAt    DateTime @default(now())
   project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -110,57 +94,50 @@ model Apply {
   @@index([userId])
 }
 
-// 댓글
 model Comment {
-  id             Int      @id @default(autoincrement()) // 댓글 ID
-  userId         String? @default("deleted_user") // 기본값을 지정해서 사용자가 삭제 되더라도 댓글은 남아있도록
-  projectId      Int      // 프로젝트 ID
-  parentCommentId Int?  // 부모 댓글 ID (대댓글)
-  content        String   // 댓글 내용
-  createdAt      DateTime @default(now()) // 작성일
-
-  user           User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
-  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  parentComment  Comment? @relation("CommentToParent", fields: [parentCommentId], references: [id], onDelete: Cascade) // 부모 댓글
-  replies        Comment[] @relation("CommentToParent") // 대댓글 목록
+  id              Int       @id @default(autoincrement())
+  userId          String?   @default("deleted_user")
+  projectId       Int
+  parentCommentId Int?
+  content         String
+  createdAt       DateTime  @default(now())
+  parentComment   Comment?  @relation("CommentToParent", fields: [parentCommentId], references: [id], onDelete: Cascade)
+  replies         Comment[] @relation("CommentToParent")
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user            User?     @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([projectId])
 }
 
-// 태그
 model Tag {
-  id           Int    @id @default(autoincrement()) // 태그 ID
-  tagName      String @unique // 태그명
-
-  projectTags     ProjectTag[] // 프로젝트 태그 관계
-  techStackTags TechStackTag[] // 기술 스택 태그 관계
+  id            Int            @id @default(autoincrement())
+  tagName       String         @unique
+  projectTags   ProjectTag[]
+  techStackTags TechStackTag[]
 }
 
-// 프로젝트 태그 (다대다 관계)
 model ProjectTag {
   projectId Int
   tagId     Int
-
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, tagId])
   @@index([tagId])
 }
 
-// 기술 스택 태그 (다대다 관계)
 model TechStackTag {
   userId String
   tagId  Int
-
-  user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tag    Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, tagId])
   @@index([tagId])
 }
-
 // npx prisma migrate dev --name init
 // npx prisma migrate dev --name update
 // npx prisma db push
+// npx prisma db pull
+// npx prisma generate
