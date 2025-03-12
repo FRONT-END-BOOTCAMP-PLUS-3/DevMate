@@ -1,0 +1,16 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  width: 1080px;
+
+  &__sidebar {
+    width: 200px;
+    height: 100%;
+  }
+
+  &__content {
+    flex-grow: 1;
+    padding-left: 30px;
+    padding-top: 40px;
+  }
+}

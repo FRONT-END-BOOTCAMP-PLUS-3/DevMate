@@ -1,11 +1,20 @@
 import type { ReactNode } from "react";
 
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+
+import styles from "./layout.module.scss";
+
 export default function AnonLayout({ children }: { children: ReactNode }) {
   return (
-    <div>
-      <header>헤더</header>
-      <main>{children}</main>
-      <footer>푸터</footer>
+    <div className={styles.layout}>
+      <header>
+        <Header />
+      </header>
+      <main className={styles.main}>{children}</main> {/* main에 클래스 추가 */}
+      <footer className={styles.footer}>
+        <Footer />
+      </footer>
     </div>
   );
 }

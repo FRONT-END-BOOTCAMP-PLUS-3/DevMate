@@ -1,0 +1,83 @@
+@use "sass:color";
+
+.button {
+  border-radius: 4px;
+  outline: none;
+
+  font-size: 14px;
+  // font-weight: bold;
+  text-align: center;
+
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 1.5px solid transparent;
+
+  svg {
+    position: relative;
+    bottom: -2px;
+    margin-right: 7px;
+  }
+}
+
+/* 색상 */
+.main {
+  background-color: $color-main;
+  color: white;
+  border-color: $color-main;
+
+  &:active {
+    background-color: color.adjust($color-main, $lightness: -10%);
+  }
+}
+
+.sub {
+  background-color: white;
+  color: black;
+  border-color: $color-solid-line;
+
+  &:active {
+    background-color: color.adjust(white, $lightness: -10%);
+  }
+}
+
+.black {
+  background-color: #3e4042;
+  color: white;
+  border-color: $color-solid-line;
+
+  &:active {
+    background-color: color.adjust(#3e4042, $lightness: -10%);
+  }
+}
+
+.outline {
+  background-color: white;
+  color: black;
+  border-color: $color-main;
+
+  &:active {
+    background-color: color.adjust(white, $lightness: -10%);
+  }
+}
+
+.disabled {
+  background-color: $color-dark-gray;
+  color: $color-white;
+  cursor: not-allowed;
+}
+
+/* 크기 */
+.small {
+  width: 80px;
+  padding: 5px;
+}
+
+.large {
+  width: 100px;
+  padding: 15px;
+}
+
+.long {
+  width: 150px;
+  padding: 5px;
+}

@@ -1,0 +1,44 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #303740;
+  color: #ced4da;
+  width: 100vw;
+  height: 120px;
+  padding: 0 50px;
+}
+
+.footer__left,
+.footer__center,
+.footer__right {
+  display: flex;
+  align-items: center;
+}
+
+.footer__logo {
+  object-fit: contain;
+}
+
+.footer__text {
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: normal;
+}
+
+.footer__githubLink {
+  display: flex;
+  align-items: center;
+  color: #ced4da;
+  text-decoration: none;
+}
+
+.footer__githubIcon {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.footer__githubText {
+  font-size: 14px;
+}

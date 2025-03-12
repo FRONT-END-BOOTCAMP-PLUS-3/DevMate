@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  &__error {
+    color: red;
+    font-size: 12px;
+  }
+}
+.genderSelector {
+  display: flex;
+  gap: 10px;
+
+  &__label {
+    position: relative;
+    cursor: pointer;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__button {
+    display: inline-block;
+    padding: 15px 20px;
+    border: 1.5px solid $color-solid-line;
+    border-radius: 4px;
+
+    transition: all 0.2s ease-in-out;
+
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+
+    background-color: white;
+    color: black;
+
+    &:active {
+      background-color: $color-main;
+    }
+  }
+
+  /* 선택된 경우 (라디오 버튼이 체크된 상태) */
+  &__input:checked + &__button {
+    background-color: $color-main;
+    color: white;
+    border-color: $color-main;
+  }
+}

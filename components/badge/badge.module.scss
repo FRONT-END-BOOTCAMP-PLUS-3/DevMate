@@ -1,0 +1,31 @@
+.badge {
+  display: inline-flex;
+  width: auto;
+  height: auto;
+  white-space: nowrap;
+  padding: 3px 7.5px;
+  border-radius: 80px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+.badge-primary {
+  background-color: $color-main;
+  color: $color-white;
+}
+
+.badge-darkGray {
+  background-color: $color-dark-gray;
+  color: $color-white;
+}
+
+.badge-lightGray {
+  background-color: $color-light-gray;
+  color: $color-black;
+}
+
+.badge-red {
+  background-color: $color-red;
+  color: $color-white;
+}

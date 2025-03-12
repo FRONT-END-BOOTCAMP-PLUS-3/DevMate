@@ -1,0 +1,77 @@
+.inputField {
+  width: 100%;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+
+  .inputContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+
+    input {
+      flex: 1;
+      padding: 15px;
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      outline: none;
+      font-size: 14px;
+      transition: padding 0.2s ease-in-out;
+
+      &::placeholder {
+        color: #898989;
+      }
+
+      &:focus {
+        border-color: #2563eb;
+      }
+    }
+  }
+
+  .iconContainer {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 100%;
+    color: #898989;
+  }
+
+  .hasIconLeft input {
+    padding-left: 45px;
+  }
+
+  .hasIconRight input {
+    padding-right: 45px;
+  }
+
+  .iconContainer:first-child {
+    left: 5px;
+  }
+
+  .iconContainer:last-child {
+    right: 5px;
+  }
+
+  &.errorField input {
+    border-color: red;
+  }
+
+  .errorMessage {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .successMessage {
+    color: $color-main;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+}

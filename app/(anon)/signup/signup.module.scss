@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 1080px;
+  padding: 45px;
+  gap: 45px;
+  &__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      font-style: normal;
+    }
+  }
+}
+.loading {
+  width: 100%;
+  max-width: 768px;
+  height: calc(100vh - 64px);
+  display: grid;
+  place-items: center;
+  color: $color-red;
+}

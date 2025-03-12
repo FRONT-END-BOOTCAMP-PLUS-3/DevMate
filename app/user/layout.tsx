@@ -1,11 +1,20 @@
-import { ReactNode } from "react";
+// 글로벌 레이아웃
+
+import type { ReactNode } from "react";
+
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+
+import styles from "./layout.module.scss";
 
 export default function UserLayout({ children }: { children: ReactNode }) {
   return (
-    <div>
-      <header>헤더</header>
-      <main>{children}</main>
-      <footer>푸터</footer>
+    <div className={styles.layout}>
+      <Header />
+
+      <main className={styles.main}>{children}</main>
+
+      <Footer />
     </div>
   );
 }

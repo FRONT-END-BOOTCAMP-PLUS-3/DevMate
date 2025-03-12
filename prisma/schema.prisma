@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  password      String
+  name          String
+  nickname      String
+  birthDate     DateTime
+  position      String
+  address       String
+  career        Int            @default(0)
+  profileImg    String?
+  createdAt     DateTime       @default(now())
+  gender        String
+  applications  Apply[]
+  comments      Comment[]
+  likes         Like[]
+  members       Member[]
+  projects      Project[]
+  techStackTags TechStackTag[]
+
+  @@index([email])
+  @@index([nickname])
+}
+
+model Project {
+  id                 Int          @id @default(autoincrement())
+  leaderId           String
+  recruitmentTitle   String
+  projectTitle       String
+  goal               String
+  description        String
+  projectPeriodStart DateTime
+  projectPeriodEnd   DateTime
+  recruitmentStart   DateTime
+  recruitmentEnd     DateTime
+  hits               Int          @default(0)
+  createdAt          DateTime     @default(now())
+  notice             String       @default("")
+  applications       Apply[]
+  comments           Comment[]
+  likes              Like[]
+  members            Member[]
+  leader             User         @relation(fields: [leaderId], references: [id], onDelete: Cascade)
+  projectTags        ProjectTag[]
+
+  @@index([leaderId])
+}
+
+model Member {
+  id        Int     @id @default(autoincrement())
+  projectId Int
+  userId    String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+  @@index([userId])
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  projectId Int
+  createdAt DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+  @@index([projectId])
+}
+
+model Apply {
+  id           Int      @id @default(autoincrement())
+  projectId    Int
+  userId       String
+  position     String
+  introduction String
+  portfolioUrl String?
+  status       String   @default("WAITING")
+  createdAt    DateTime @default(now())
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([userId])
+}
+
+model Comment {
+  id              Int       @id @default(autoincrement())
+  userId          String?   @default("deleted_user")
+  projectId       Int
+  parentCommentId Int?
+  content         String
+  createdAt       DateTime  @default(now())
+  parentComment   Comment?  @relation("CommentToParent", fields: [parentCommentId], references: [id], onDelete: Cascade)
+  replies         Comment[] @relation("CommentToParent")
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user            User?     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([projectId])
+}
+
+model Tag {
+  id            Int            @id @default(autoincrement())
+  tagName       String         @unique
+  projectTags   ProjectTag[]
+  techStackTags TechStackTag[]
+}
+
+model ProjectTag {
+  projectId Int
+  tagId     Int
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, tagId])
+  @@index([tagId])
+}
+
+model TechStackTag {
+  userId String
+  tagId  Int
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tagId])
+  @@index([tagId])
+}
+// npx prisma migrate dev --name init
+// npx prisma migrate dev --name update
+// npx prisma db push
+// npx prisma db pull
+// npx prisma generate

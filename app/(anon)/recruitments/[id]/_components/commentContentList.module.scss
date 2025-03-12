@@ -1,0 +1,11 @@
+.commentContentList {
+  padding-top: 20px;
+
+  p {
+    font-size: 18px;
+
+    & > span {
+      color: $color-main;
+    }
+  } // p
+}

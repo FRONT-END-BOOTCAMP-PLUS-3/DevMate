@@ -1,0 +1,107 @@
+@use "sass:color";
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    display: flex;
+    align-items: flex-end;
+    gap: 13px;
+    margin-bottom: 10px;
+    h1 {
+      color: $color-main;
+      font-size: 25px;
+    }
+  }
+  &__subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    padding-bottom: 3px;
+  }
+  &__separator {
+    border-bottom: 1px solid $color-solid-line;
+    margin-bottom: 16px;
+  }
+  &__section {
+    display: flex;
+    margin-top: 30px;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-radius: 10px;
+    border: 1px solid $color-solid-line;
+    padding: 36px 30px;
+    gap: 70px;
+    &__content {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      gap: 15px;
+    }
+    &__button {
+      height: 36px;
+    }
+  }
+
+  &__img {
+    display: flex;
+    padding: 12px 10px;
+    gap: 10px;
+    height: 100%;
+    &__title {
+      display: flex;
+      font-size: 16px;
+      min-width: 100px;
+    }
+    &__box {
+      display: flex;
+      gap: 10px;
+    }
+    &__button {
+      background-color: $color-main;
+      color: $color-white;
+      margin-top: auto;
+      height: 30%;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-left: 10px;
+      &:hover {
+        background-color: color.adjust($color-main, $lightness: -10%);
+      }
+    }
+    &__input {
+      display: none;
+    }
+    &__label {
+      background-color: $color-main;
+      color: $color-white;
+      margin-top: auto;
+      height: 30%;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        background-color: color.adjust($color-main, $lightness: -10%);
+      }
+    }
+  }
+}
+.button__icon {
+  width: 62px;
+  height: 48px;
+}
+.red {
+  border: none;
+  color: $color-white;
+  background-color: $color-red;
+}
+.last {
+  margin-bottom: 48px;
+}

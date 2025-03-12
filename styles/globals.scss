@@ -1,15 +1,34 @@
 @use "./reset.scss" as *;
 @use "./colors.scss" as *;
 @use "./mixin.scss" as *;
-@use "./fonts.scss" as *;
-
+html,
 body {
-  min-height: 100vh;
+  overflow-x: hidden;
+  height: 100%;
+  margin: 0;
+}
+body {
   position: relative;
   font-family: "Pretendard", "Inter";
+}
+div {
+  user-select: none;
+}
+table {
+  user-select: none;
 }
 
 header {
   position: relative;
   //z-index: 100;
+}
+a {
+  color: inherit;
+}
+input {
+  z-index: 0;
+}
+textarea,
+input {
+  font-family: "Pretendard", "Inter";
 }

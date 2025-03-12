@@ -1,0 +1,41 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+
+  z-index: 999;
+}
+
+.wrapper {
+  width: 500px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  border-radius: 4px;
+  background-color: $color-main;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: #fff;
+  height: 50px;
+  width: 500px;
+}
+
+.postcode {
+  height: 500px;
+  width: 500px;
+}

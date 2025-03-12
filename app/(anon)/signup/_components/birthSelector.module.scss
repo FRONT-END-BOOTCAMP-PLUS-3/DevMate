@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 7px;
+  &___item {
+    display: flex;
+    width: 100%;
+    gap: 7px;
+    flex-direction: row;
+    > * {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+  &__error {
+    color: red;
+    font-size: 12px;
+  }
+}
