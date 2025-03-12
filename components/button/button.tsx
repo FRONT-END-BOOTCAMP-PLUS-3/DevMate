@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes } from "react";
 
 import styles from "./button.module.scss";
 
-type buttonVariant = "main" | "sub" | "black" | "outline";
+type buttonVariant = "main" | "sub" | "black" | "outline" | "disabled";
 type buttonSize = "small" | "large" | "long";
 
 interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
