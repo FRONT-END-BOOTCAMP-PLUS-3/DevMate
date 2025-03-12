@@ -27,7 +27,7 @@ export default function ProjectDetail() {
   const [error, setError] = useState<string | null>(null);
   const [refresh, setRefresh] = useState<boolean>(false);
   const [decodedId, setdecodedId] = useState<string | null>(null);
-  const [userRole, setUserRole] = useState<"leader" | "member" | "guest" | "realGuest">("realGuest");
+  const [userRole, setUserRole] = useState<"leader" | "member" | "guest" | "realGuest">("guest");
 
   /* ---------------------------------- api call function --------------------------------- */
   const updateNotice = async (newNotice: string) => {
@@ -145,7 +145,10 @@ export default function ProjectDetail() {
 
   /* ---------------------------------- useEffect --------------------------------- */
   useEffect(() => {
-    const fetchDecodedToken = async () => {
+    setLoading(true);
+    setError(null);
+
+    const fetchDecodedToken = async (): Promise<void> => {
       try {
         const id = await decodeToken("id");
         if (typeof id === "string") {
@@ -153,8 +156,7 @@ export default function ProjectDetail() {
         }
       } catch (error) {
         console.error("토큰 디코딩 실패:", error);
-      } finally {
-        setLoading(false);
+        setUserRole("realGuest");
       }
     };
 
@@ -162,9 +164,9 @@ export default function ProjectDetail() {
   }, []);
 
   useEffect(() => {
+    if (decodedId === null && userRole !== "realGuest") return;
+
     const fetchProjectDetail = async () => {
-      setLoading(true);
-      setError(null);
       try {
         const response = await fetch(`/api/project/${projectId}`, { method: "GET" });
         if (!response.ok) {
@@ -183,17 +185,15 @@ export default function ProjectDetail() {
         }
 
         setProject(data);
-      } catch (err) {
-        setError((err as Error).message);
+      } catch (error) {
+        setError((error as Error).message);
       } finally {
         setLoading(false);
       }
     };
 
-    if (decodedId) {
-      fetchProjectDetail();
-    }
-  }, [projectId, refresh, decodedId]);
+    fetchProjectDetail();
+  }, [projectId, refresh, decodedId, userRole]);
 
   /* ---------------------------------- return --------------------------------- */
   if (loading) {
