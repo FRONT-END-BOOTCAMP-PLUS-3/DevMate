@@ -1,5 +1,5 @@
-// 마이페이지 - 작성한 모집글
 "use client";
+
 import { useRouter } from "next/navigation";
 
 import { useEffect, useState } from "react";
@@ -31,7 +31,6 @@ export default function Page() {
       setLoading(true);
       const data = await getMyProjects({ userId, status: "ALL", filter: "LIKE" });
       setProjects(data);
-      console.log("data", data);
     } catch (err) {
       console.log("프로젝트를 불러오는 데 실패했습니다.");
     } finally {
