@@ -68,7 +68,14 @@ const CommentForm: React.FC<CommentFormProps> = ({ projectId, parentId, onClickC
         rows={4}
       />
       <div className={styles.commentForm__buttonWrapper}>
-        <Button onClick={postComment}>등록</Button>
+        <Button
+          onClick={postComment}
+          variant={!content.trim() ? "disabled" : "main"}
+          size="small"
+          disabled={!content.trim()}
+        >
+          등록
+        </Button>
         {parentId && onClickCloseReplyForm && (
           <Button onClick={onClickCloseReplyForm} variant={"sub"}>
             취소

@@ -54,10 +54,11 @@ export default function Page() {
       </div>
       {loading && (
         <div className={styles["myopen__loading"]}>
-          <ClipLoader color="#868e96" loading={loading} size={100} aria-label="Loading Spinner" />
+          <ClipLoader color="#868e96" loading={loading} size={50} aria-label="Loading Spinner" />
         </div>
       )}
       {projects?.map((project) => <MyProjectItem key={project.id} project={project} />)}
+      {projects?.length === 0 && <div className={styles["myopen__empty"]}>개설한 프로젝트가 없습니다.</div>}
     </div>
   );
 }

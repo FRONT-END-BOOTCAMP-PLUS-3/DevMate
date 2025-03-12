@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { PsProjectRepository } from "@/infrastructure/repositories/psProjectRepository";
 
 import type { NextRequest } from "next/server";
+import type { RecruitmentSort, RecruitmentStatus } from "@/constants/recruitmentTypes";
 
 import { GetRecruitmentsUsecase } from "@/application/usecases/recruitment/getRecruitmentsUsecase";
 
@@ -11,12 +12,8 @@ export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
 
-    const status = decodeURIComponent(searchParams.get("status") || "전체") as "전체" | "모집중" | "모집완료";
-    const sort = decodeURIComponent(searchParams.get("sort") || "최신순") as
-      | "최신순"
-      | "조회수순"
-      | "댓글많은순"
-      | "좋아요순";
+    const status = decodeURIComponent(searchParams.get("status") || "전체") as RecruitmentStatus;
+    const sort = decodeURIComponent(searchParams.get("sort") || "최신순") as RecruitmentSort;
     const search = decodeURIComponent(searchParams.get("search") || "") as string;
     const tagsString = decodeURIComponent(searchParams.get("tags") || "");
     const tags = tagsString ? tagsString.split(",") : [];

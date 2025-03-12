@@ -1,3 +1,5 @@
+import { RecruitmentSort, RecruitmentStatus } from "@/constants/recruitmentTypes";
+
 import type { Project } from "@prisma/client";
 import type { ProjectRepository } from "@/domain/repositories/projectRepository";
 
@@ -65,18 +67,27 @@ export class PsProjectRepository implements ProjectRepository {
     }
   }
 
-  async findProjectTitleById(id: number): Promise<string | null> {
+  async findProjectTitleById(projectId: number, userId: string): Promise<string | null> {
     try {
+      // 지원 내역 확인
+      const existingApplication = await prisma.apply.findFirst({
+        where: { projectId, userId },
+      });
+
+      if (existingApplication) {
+        return "USER_ALREADY_APPLIED";
+      }
+
+      // 프로젝트 제목 가져오기
       const project = await prisma.project.findUnique({
-        where: { id },
+        where: { id: projectId },
         select: { projectTitle: true },
       });
+
       return project ? project.projectTitle : null;
     } catch (error) {
-      console.error("Error finding project name by ID:", error);
+      console.log("Error finding project name by ID:", error);
       return null;
-    } finally {
-      await prisma.$disconnect();
     }
   }
 
@@ -131,10 +142,10 @@ export class PsProjectRepository implements ProjectRepository {
       const today = new Date();
 
       // 모집 상태 필터링
-      if (status && status !== "전체") {
-        if (status === "모집중") {
+      if (status && status !== RecruitmentStatus.ALL) {
+        if (status === RecruitmentStatus.RECRUITING) {
           where.recruitmentEnd = { gte: today }; // 모집 마감일이 오늘 이후
-        } else if (status === "모집완료") {
+        } else if (status === RecruitmentStatus.CLOSED) {
           where.recruitmentEnd = { lt: today }; // 모집 마감일이 오늘 이전
         }
       }
@@ -151,15 +162,15 @@ export class PsProjectRepository implements ProjectRepository {
 
       // 정렬 조건
       let orderBy = {};
-      if (sort === "조회수순") {
+      if (sort === RecruitmentSort.MOST_VIEWED) {
         orderBy = { hits: "desc" };
-      } else if (sort === "댓글많은순") {
+      } else if (sort === RecruitmentSort.MOST_COMMENTED) {
         orderBy = {
           comments: {
             _count: "desc",
           },
         };
-      } else if (sort === "좋아요순") {
+      } else if (sort === RecruitmentSort.MOST_LIKED) {
         orderBy = {
           likes: {
             _count: "desc",

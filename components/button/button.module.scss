@@ -60,6 +60,12 @@
   }
 }
 
+.disabled {
+  background-color: $color-dark-gray;
+  color: $color-white;
+  cursor: not-allowed;
+}
+
 /* 크기 */
 .small {
   width: 80px;
