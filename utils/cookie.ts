@@ -41,7 +41,7 @@ export async function decodeToken(value?: DecodedInfo): Promise<DecodedToken | s
     }
     return value ? decoded[value] : decoded;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     if (error instanceof jwt.JsonWebTokenError) {
       throw new Error("만료되었거나 유효하지 않은 토큰입니다.");
     } else {

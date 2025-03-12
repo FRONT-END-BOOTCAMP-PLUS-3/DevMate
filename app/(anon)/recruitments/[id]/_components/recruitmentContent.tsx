@@ -36,8 +36,14 @@ const RecruitmentContent: React.FC<RecruitmentContentProps> = async ({ project }
     likes,
   } = project;
 
-  const userId = await decodeToken("id");
-  const isLeader = userId === leader?.id;
+  let isLeader = false;
+
+  try {
+    const userId = await decodeToken("id");
+    isLeader = userId === leader?.id;
+  } catch (error) {
+    console.log(error);
+  }
 
   return (
     <div className={styles["recruitmentContent"]}>
