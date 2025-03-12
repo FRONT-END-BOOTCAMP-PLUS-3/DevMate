@@ -37,7 +37,13 @@ export default function Create() {
     goal: "",
   });
 
-  const [description, setDescription] = useState("내용 없음");
+  const [description, setDescription] = useState(`
+    <p>🗺️ 프로젝트를 진행할 지역 :</p>
+    <p>🌱 모집 요건(인원수, 기술스택 등) :</p>
+    <p>📞 지원 방법 (이메일, 카카오 오픈채팅방, 구글폼 등) :</p>
+    <p>😆 팀원은 이런 사람이였으면 좋겠어요 :</p>
+    <p>📢 사전 공지사항 :</p>
+  `);
   const [projectPeriod, setProjectPeriod] = useState<SelectionRange[]>([
     { startDate: new Date(), endDate: new Date(), key: "selection" },
   ]);
@@ -63,6 +69,13 @@ export default function Create() {
       <p>📢 사전 공지사항 :</p>
     `,
     onUpdate: ({ editor }) => setDescription(editor.getHTML()),
+    editorProps: {
+      handleDOMEvents: {
+        beforeinput: () => false, // Next.js Hydration 오류 방지
+      },
+    },
+    injectCSS: false, // CSS 관련 Hydration 방지
+    immediatelyRender: false, // Hydration 오류 방지
   });
 
   /* ---------------------------------- event handler --------------------------------- */
@@ -79,14 +92,12 @@ export default function Create() {
     const requestBody = {
       ...projectData,
       description,
-      projectPeriodStart: projectPeriod[0].startDate ? new Date(projectPeriod[0].startDate) : null, // ✅ 변환
-      projectPeriodEnd: projectPeriod[0].endDate ? new Date(projectPeriod[0].endDate) : null, // ✅ 변환
-      recruitmentStart: recruitmentPeriod[0].startDate ? new Date(recruitmentPeriod[0].startDate) : null, // ✅ 변환
-      recruitmentEnd: recruitmentPeriod[0].endDate ? new Date(recruitmentPeriod[0].endDate) : null, // ✅ 변환
+      projectPeriodStart: projectPeriod[0].startDate ? new Date(projectPeriod[0].startDate) : null,
+      projectPeriodEnd: projectPeriod[0].endDate ? new Date(projectPeriod[0].endDate) : null,
+      recruitmentStart: recruitmentPeriod[0].startDate ? new Date(recruitmentPeriod[0].startDate) : null,
+      recruitmentEnd: recruitmentPeriod[0].endDate ? new Date(recruitmentPeriod[0].endDate) : null,
       projectTags: tags,
     };
-
-    console.log("📢 요청 데이터:", requestBody); // ✅ 요청 데이터 확인
 
     try {
       const response = await fetch("/api/project/1", {

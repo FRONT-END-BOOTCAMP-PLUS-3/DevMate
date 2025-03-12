@@ -6,4 +6,5 @@ export interface ApplyDto {
   introduction: string;
   portfolioUrl: string | null;
   status: string;
+  createdAt: Date;
 }

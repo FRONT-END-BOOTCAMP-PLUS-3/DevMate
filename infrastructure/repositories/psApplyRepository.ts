@@ -91,7 +91,7 @@ export class PsApplyRepository implements ApplyRepository {
     }
   }
 
-  async create(applyData: Omit<Apply, "id" | "status">): Promise<Apply> {
+  async create(applyData: Omit<Apply, "id" | "status" | "createdAt">): Promise<Apply> {
     try {
       const apply = await prisma.apply.create({
         data: applyData,

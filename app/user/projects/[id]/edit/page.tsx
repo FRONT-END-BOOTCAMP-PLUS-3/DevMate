@@ -53,6 +53,13 @@ export default function EditProject() {
     extensions: [StarterKit, Underline, TextStyle, Heading.configure({ levels: [1, 2, 3] })],
     content: "",
     onUpdate: ({ editor }) => setDescription(editor.getHTML()),
+    editorProps: {
+      handleDOMEvents: {
+        beforeinput: () => false, // Next.js Hydration 오류 방지
+      },
+    },
+    injectCSS: false, // CSS 관련 Hydration 방지
+    immediatelyRender: false, // Hydration 오류 방지
   });
 
   /* ---------------------------------- 이벤트 핸들러 --------------------------------- */
@@ -80,7 +87,12 @@ export default function EditProject() {
       }
 
       alert("프로젝트 수정이 완료되었습니다.");
-      router.back();
+
+      if (window.history.length > 2) {
+        window.history.go(-2);
+      } else {
+        router.push("/user/information");
+      }
     } catch (err) {
       console.error("❌ 프로젝트 수정 오류:", err);
       alert("프로젝트 수정 중 오류가 발생했습니다.");

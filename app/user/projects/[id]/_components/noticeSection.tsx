@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-import InputField from "@/components/inputField/inputField";
-
 import styles from "../projectDetail.module.scss";
 
 interface NoticeSectionProps {
@@ -36,7 +34,12 @@ export default function NoticeSection({ notice, updateNotice, userRole }: Notice
       </div>
 
       {isNoticeEdit ? (
-        <InputField value={noticeContent} onChange={(e) => setNoticeContent(e.target.value)} />
+        <textarea
+          className={styles.noticeTextarea}
+          value={noticeContent}
+          onChange={(e) => setNoticeContent(e.target.value)}
+          rows={4}
+        />
       ) : (
         <p>{noticeContent}</p>
       )}

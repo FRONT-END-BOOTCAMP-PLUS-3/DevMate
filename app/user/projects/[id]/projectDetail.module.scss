@@ -49,11 +49,20 @@
 
   &__buttons {
     font-size: 12px;
+
+    button {
+      color: $color-black;
+      transition: color 0.2s ease;
+      &:hover {
+        color: $color-main;
+      }
+    }
   }
 }
 
 .container__content {
   flex: 1;
+  min-width: calc(50% - 7.5px);
   padding: 15px;
   display: flex;
   flex-direction: column;
@@ -69,6 +78,33 @@
 
   p {
     font-size: 14px;
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  .noticeTextarea {
+    max-width: 100%;
+    min-height: 80px;
+    padding: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    border: 1px solid $color-dark-gray;
+    border-radius: 4px;
+    resize: none;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-light-gray;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
   }
 }
 
@@ -148,7 +184,7 @@
   margin: 10px 0;
   display: flex;
   justify-content: space-around;
-  gap: 10px;
+  gap: 15px;
 
   button {
     cursor: pointer;

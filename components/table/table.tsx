@@ -22,11 +22,11 @@ interface TableProps {
 export const renderCell = (key: string, value: string | number | ReactNode, onFormClick?: (id: number) => void) => {
   if (key === "status") {
     const statusClass =
-      value === "accept" ? styles.statusAccepted : value === "reject" ? styles.statusRejected : styles.statusWaiting;
+      value === "ACCEPT" ? styles.statusAccepted : value === "REJECT" ? styles.statusRejected : styles.statusWaiting;
 
     return (
       <span className={`${styles.status} ${statusClass}`}>
-        {value === "accept" ? "수락됨" : value === "reject" ? "거절됨" : "대기 중"}
+        {value === "ACCEPT" ? "수락됨" : value === "REJECT" ? "거절됨" : "대기 중"}
       </span>
     );
   }

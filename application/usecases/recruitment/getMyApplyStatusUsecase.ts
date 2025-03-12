@@ -38,6 +38,7 @@ export class GetMyApplyStatusUsecase {
           introduction: app.introduction,
           portfolioUrl: app.portfolioUrl,
           status: app.status === "WAITING" ? "수락대기" : app.status === "ACCEPT" ? "수락됨" : "거절됨",
+          createdAt: app.createdAt,
           project: app.project,
           user: app.user
             ? {

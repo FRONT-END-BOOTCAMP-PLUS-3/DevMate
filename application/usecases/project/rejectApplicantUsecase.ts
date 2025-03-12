@@ -18,7 +18,7 @@ export class RejectApplicantUsecase {
       if (!applicantData) return null;
 
       // 지원 상태를 "reject"로 변경
-      const updatedApply = await this.applyRepository.updateStatus(id, "REJECT");
+      const updatedApply: ApplyDto = await this.applyRepository.updateStatus(id, "REJECT");
 
       // 지원자 정보를 찾음
       const userData = await this.userRepository.findById(applicantData.userId);
@@ -35,6 +35,7 @@ export class RejectApplicantUsecase {
         introduction: updatedApply.introduction,
         portfolioUrl: updatedApply.portfolioUrl,
         status: updatedApply.status,
+        createdAt: updatedApply.createdAt,
         user: filteredUserData,
       };
     } catch (error) {
