@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import React, { useEffect, useState } from "react";
 
@@ -14,6 +14,7 @@ import styles from "./apply.module.scss";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Apply: React.FC = () => {
+  const router = useRouter();
   const params = useParams();
   const id = params.id;
 
@@ -51,7 +52,7 @@ const Apply: React.FC = () => {
 
   const cancelHandle = () => {
     if (confirm("작성하시던 내용이 모두 초기화됩니다. 취소하겠습니까?")) {
-      window.history.back();
+      router.push(`/recruitments/${id}`);
     }
   };
 
@@ -78,7 +79,7 @@ const Apply: React.FC = () => {
       }
 
       alert("지원 완료!");
-      history.back();
+      router.push(`/recruitments/${id}`);
     } catch (error) {
       console.log("Error submitting application:", error);
     }
@@ -94,6 +95,7 @@ const Apply: React.FC = () => {
       if (!response.ok) {
         if (response.status === 409) {
           alert("이미 해당 프로젝트에 지원서를 작성하셨습니다.");
+          router.push(`/recruitments/${id}`);
         } else {
           alert("프로젝트 정보를 불러오는데 실패했습니다.");
         }

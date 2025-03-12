@@ -74,8 +74,6 @@ export class PsProjectRepository implements ProjectRepository {
         where: { projectId, userId },
       });
 
-      console.log("existingApplication", existingApplication);
-
       if (existingApplication) {
         return "USER_ALREADY_APPLIED";
       }
