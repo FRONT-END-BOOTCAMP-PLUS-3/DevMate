@@ -9,7 +9,7 @@ export default async function middleware(req: NextRequest) {
   if (!jwtToken) {
     console.log("Token not found");
 
-    const returnUrl = req.nextUrl.href; // 현재 URL 저장
+    const returnUrl = req.nextUrl.pathname; // 현재 URL 저장
     const response = NextResponse.redirect(new URL("/login", req.url));
     response.cookies.set("returnUrl", returnUrl);
 
@@ -23,7 +23,7 @@ export default async function middleware(req: NextRequest) {
   } catch (error) {
     console.log("Invalid token:", error);
 
-    const returnUrl = req.nextUrl.href;
+    const returnUrl = req.nextUrl.pathname;
     const response = NextResponse.redirect(new URL("/login", req.url));
     response.cookies.set("returnUrl", returnUrl);
 
@@ -34,6 +34,7 @@ export default async function middleware(req: NextRequest) {
   const response = NextResponse.next();
   response.cookies.set("token", jwtToken, {
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: 60 * 60 * 6,
   });
