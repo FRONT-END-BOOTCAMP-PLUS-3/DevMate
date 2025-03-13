@@ -19,7 +19,6 @@ export async function getMyProjects({
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store", // 최신 데이터 가져오기
     });
 
     if (!res.ok) {

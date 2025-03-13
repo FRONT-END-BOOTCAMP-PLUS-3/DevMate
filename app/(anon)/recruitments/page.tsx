@@ -31,9 +31,7 @@ const Recruitments = async ({
     queryString += `&tags=${query.tags}`;
   }
 
-  const res = await fetch(`${basicUrl}api/recruitments?${queryString}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(`${basicUrl}api/recruitments?${queryString}`);
 
   if (!res.ok) {
     console.log("프로젝트 정보를 불러오는 중 오류가 발생했습니다");
