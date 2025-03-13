@@ -64,7 +64,7 @@ export default function Page() {
             onClick={() => router.push(`/recruitments/${data.id}`)}
             key={data.id}
             projectTitle={data.projectTitle}
-            description={data.description.replace(/<\/?[^>]+(>|$)/g, "")}
+            description={data.description.replace(/<\/?[^>]+(>|$)/g, " ")}
             status={new Date() < new Date(data.recruitmentEnd) ? "모집중" : "모집완료"}
             nickName={data.leaderName ?? ""}
             timePassed={elapsedText(new Date(data.createdAt))}

@@ -74,7 +74,7 @@ export default function Page() {
           />
         ))
       ) : (
-        <div>작성한 모집글이 없습니다.</div>
+        <div>댓글 단 모집글이 없습니다.</div>
       )}
     </>
   );

@@ -28,7 +28,7 @@ export default function RecruitmentsItem({ recruitment }: { recruitment: Recruit
             </Badge>
             <h2 className={styles["main__post-title"]}>{recruitment.recruitmentTitle}</h2>
           </header>
-          <p className={styles["main__post-description"]}>{recruitment.description.replace(/<\/?[^>]+(>|$)/g, "")}</p>
+          <p className={styles["main__post-description"]}>{recruitment.description.replace(/<\/?[^>]+(>|$)/g, " ")}</p>
 
           <RecruitmentsTag key={recruitment.id} tags={recruitment.projectTags?.map((tag) => tag.tag.tagName) ?? []} />
 

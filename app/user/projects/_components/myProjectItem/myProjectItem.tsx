@@ -15,7 +15,7 @@ export default function MyProjectItem({ project }: { project: RecruitmentsDto })
             <h2 className={styles["myprojectitem__post-title"]}>{project.projectTitle}</h2>
           </div>
           <p className={styles["myprojectitem__post-description"]}>
-            {project.description.replace(/<\/?[^>]+(>|$)/g, "")}
+            {project.description.replace(/<\/?[^>]+(>|$)/g, " ")}
           </p>
         </div>
         <div className={styles["myprojectitem__post-meta"]}>
