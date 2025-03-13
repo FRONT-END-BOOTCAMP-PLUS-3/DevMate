@@ -31,4 +31,4 @@ jobs:
 
     steps:
       - name: Deploy Next.js Project
-        run: echo "Deploy Next.js Project"
+        run: /home/devmate03/next-app-update.sh
