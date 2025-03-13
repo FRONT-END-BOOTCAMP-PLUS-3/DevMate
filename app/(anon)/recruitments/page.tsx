@@ -44,7 +44,7 @@ const Recruitments = async ({
       <div className={styles["main__visual"]}>
         <div className={styles["main__visual-container"]}>
           <h1 className={styles["main__visual-title"]}>프로젝트 팀원을 모집해보세요.</h1>
-          <p className={styles["main__visual-subtitle"]}>협업을 통한 경험 노하우 쌓기</p>
+          <p className={styles["main__visual-subtitle"]}>협업을 통한 경험 노하우 쌓기✨</p>
         </div>
       </div>
       <div className={styles["main__container"]}>
