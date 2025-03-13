@@ -29,6 +29,12 @@ jobs:
   deploy:
     runs-on: [self-hosted, dev-mate-server]
 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      NEXT_PUBLIC_API_BASE: ${{ secrets.NEXT_PUBLIC_API_BASE }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
     steps:
       - name: Deploy Next.js Project
         run: /home/devmate03/next-app-update.sh
