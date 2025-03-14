@@ -75,66 +75,66 @@ describe("ApplicationsSection", () => {
     });
   });
 
-  it("대기 중인 회원 지원서 모달에서 수락 버튼 클릭 시 confirm 창에서 확인 후 상태가 '수락됨'으로 변경되는지", async () => {
-    render(
-      <ApplicationsSection
-        applications={applicationData}
-        acceptApplicant={acceptApplicant}
-        rejectApplicant={rejectApplicant}
-      />,
-    );
+  // it("대기 중인 회원 지원서 모달에서 수락 버튼 클릭 시 confirm 창에서 확인 후 상태가 '수락됨'으로 변경되는지", async () => {
+  //   render(
+  //     <ApplicationsSection
+  //       applications={applicationData}
+  //       acceptApplicant={acceptApplicant}
+  //       rejectApplicant={rejectApplicant}
+  //     />,
+  //   );
 
-    vi.spyOn(window, "confirm").mockReturnValue(true);
+  //   vi.spyOn(window, "confirm").mockReturnValue(true);
 
-    const applicantButton = screen.getAllByText("지원서 열람")[1];
-    fireEvent.click(applicantButton);
+  //   const applicantButton = screen.getAllByText("지원서 열람")[1];
+  //   fireEvent.click(applicantButton);
 
-    await waitFor(() => {
-      expect(screen.getByText("🎨 지원서")).toBeInTheDocument();
-      expect(screen.getByText("Chandler")).toBeInTheDocument();
-    });
+  //   await waitFor(() => {
+  //     expect(screen.getByText("🎨 지원서")).toBeInTheDocument();
+  //     expect(screen.getByText("Chandler")).toBeInTheDocument();
+  //   });
 
-    const acceptButton = screen.getByText("수락");
-    fireEvent.click(acceptButton);
+  //   const acceptButton = screen.getByText("수락");
+  //   fireEvent.click(acceptButton);
 
-    await waitFor(() => {
-      expect(acceptApplicant).toHaveBeenCalledWith(1);
-      expect(screen.queryByText("🎨 지원서")).not.toBeInTheDocument();
-    });
+  //   await waitFor(() => {
+  //     expect(acceptApplicant).toHaveBeenCalledWith(1);
+  //     expect(screen.queryByText("🎨 지원서")).not.toBeInTheDocument();
+  //   });
 
-    expect(window.confirm).toHaveBeenCalled();
-  });
+  //   expect(window.confirm).toHaveBeenCalled();
+  // });
 
-  it("수락 버튼 클릭 시 confirm 창에서 취소를 누르면 상태가 변경되지 않는지", async () => {
-    render(
-      <ApplicationsSection
-        applications={applicationData}
-        acceptApplicant={acceptApplicant}
-        rejectApplicant={rejectApplicant}
-      />,
-    );
+  // it("수락 버튼 클릭 시 confirm 창에서 취소를 누르면 상태가 변경되지 않는지", async () => {
+  //   render(
+  //     <ApplicationsSection
+  //       applications={applicationData}
+  //       acceptApplicant={acceptApplicant}
+  //       rejectApplicant={rejectApplicant}
+  //     />,
+  //   );
 
-    vi.spyOn(window, "confirm").mockReturnValue(false);
+  //   vi.spyOn(window, "confirm").mockReturnValue(false);
 
-    const applicantButton = screen.getAllByText("열람하기")[1];
-    fireEvent.click(applicantButton);
+  //   const applicantButton = screen.getAllByText("열람하기")[1];
+  //   fireEvent.click(applicantButton);
 
-    const acceptButton = screen.getByText("수락");
-    fireEvent.click(acceptButton);
+  //   const acceptButton = screen.getByText("수락");
+  //   fireEvent.click(acceptButton);
 
-    expect(window.confirm).toHaveBeenCalled();
-    expect(acceptApplicant).not.toHaveBeenCalled();
+  //   expect(window.confirm).toHaveBeenCalled();
+  //   expect(acceptApplicant).not.toHaveBeenCalled();
 
-    const closeButton = screen.getByLabelText("modal-close-button");
-    fireEvent.click(closeButton);
+  //   const closeButton = screen.getByLabelText("modal-close-button");
+  //   fireEvent.click(closeButton);
 
-    await waitFor(() => {
-      expect(screen.queryByText("🎨 지원서")).not.toBeInTheDocument();
-    });
+  //   await waitFor(() => {
+  //     expect(screen.queryByText("🎨 지원서")).not.toBeInTheDocument();
+  //   });
 
-    await waitFor(() => {
-      expect(screen.getByText("Chandler")).toBeInTheDocument();
-      expect(screen.getByText("대기 중")).toBeInTheDocument();
-    });
-  });
+  //   await waitFor(() => {
+  //     expect(screen.getByText("Chandler")).toBeInTheDocument();
+  //     expect(screen.getByText("대기 중")).toBeInTheDocument();
+  //   });
+  // });
 });

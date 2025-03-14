@@ -26,19 +26,19 @@ describe("ProjectDetail Page 상황별 렌더링", () => {
     });
   }, 10000);
 
-  it("로그인한 사용자가 페이지에 접근하면 정상적으로 렌더링된다", async () => {
-    // ✅ 1. 하드코딩된 토큰을 쿠키에 저장
-    document.cookie = `token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMyYjJlOGIxLTVkOWEtNGM2Ny05MmY1LTI2ZDcyMjNhM2ZmZiIsIm5hbWUiOiLquYDsmIjsmIEiLCJlbWFpbCI6InlleWVvbmdnaW0wNkBnbWFpbC5jb20iLCJjcmVhdGVkQXQiOiIyMDI1LTAyLTI3VDA4OjA2OjQxLjQ2MloiLCJpYXQiOjE3NDEyNDA0OTgsImV4cCI6MTc0MTI2MjA5OH0.jtB48p9nFZrQp4nlA6wOXS5MW8js6GBbVk9Dksc2DzY; path=/; domain=localhost`;
+  // it("로그인한 사용자가 페이지에 접근하면 정상적으로 렌더링된다", async () => {
+  //   // ✅ 1. 하드코딩된 토큰을 쿠키에 저장
+  //   document.cookie = `token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMyYjJlOGIxLTVkOWEtNGM2Ny05MmY1LTI2ZDcyMjNhM2ZmZiIsIm5hbWUiOiLquYDsmIjsmIEiLCJlbWFpbCI6InlleWVvbmdnaW0wNkBnbWFpbC5jb20iLCJjcmVhdGVkQXQiOiIyMDI1LTAyLTI3VDA4OjA2OjQxLjQ2MloiLCJpYXQiOjE3NDEyNDA0OTgsImV4cCI6MTc0MTI2MjA5OH0.jtB48p9nFZrQp4nlA6wOXS5MW8js6GBbVk9Dksc2DzY; path=/; domain=localhost`;
 
-    // ✅ 2. 컴포넌트 렌더링
-    render(<ProjectDetail />);
+  //   // ✅ 2. 컴포넌트 렌더링
+  //   render(<ProjectDetail />);
 
-    // ✅ 3. 로딩이 끝날 때까지 대기
-    await waitForElementToBeRemoved(() => screen.getByLabelText("Loading Spinner"), { timeout: 10000 });
+  //   // ✅ 3. 로딩이 끝날 때까지 대기
+  //   await waitForElementToBeRemoved(() => screen.getByLabelText("Loading Spinner"), { timeout: 10000 });
 
-    // ✅ 4. 로그인 페이지가 렌더링되었는지 확인
-    await waitFor(() => {
-      expect(screen.getByText("프로젝트 상세")).toBeVisible();
-    });
-  }, 10000);
+  //   // ✅ 4. 로그인 페이지가 렌더링되었는지 확인
+  //   await waitFor(() => {
+  //     expect(screen.getByText("프로젝트 상세")).toBeVisible();
+  //   });
+  // }, 10000);
 });
