@@ -33,7 +33,7 @@
 - 개발 언어: HTML, CSS, JavaScript
 - 사용 기술: React, Next.js, TypeScript, ModuleSCSS
 - 데이터베이스: PostgreSQL
-- 배포: Linux 기반 미니 PC, Nginx Reverse Proxy, GitHub Actions (CI/CD 자동 배포)
+- 배포: Linux 기반 미니 PC, Nginx Reverse Proxy, GitHub Actions
 - 버전 관리 및 협업: Git, Figma, Discord, Notion
 
 <br>
@@ -141,7 +141,7 @@
 | 기술적 도전 | Why | How | Result |  
 |:-----------------------------:|---|---|------|  
 | **테스트 코드 도입 및 TDD 적용** | 프로젝트의 안정성 및 유지보수성을 높이고, 코드 변경 시 발생할 수 있는 문제를 조기에 발견 | Vitest와 React Testing Library(RTL)를 활용한 단위 테스트 및 통합 테스트 진행, 주요 기능 중심으로 TDD 적용 | 코드 품질 및 신뢰성 향상, 리팩토링 시 정상 동작 보장 | 
-| **E2E 테스트 도입** | SSR 환경에서 RTL 사용이 불가능하여 기존 테스트 방식의 한계 발생 | Playwright를 활용해 실제 사용자 플로우 기반의 테스트 진행 | SSR 환경에서도 원활한 테스트 가능, 주요 사용자 시나리오 검증 강화 |   
+| **E2E 테스트 도입** | SSR 환경에서 RTL 사용이 불가능하여 기존 테스트 방식의 한계 발생 | Playwright를 활용해 실제 사용자 플로우 기반의(e2e) 테스트 진행 | SSR 환경에서도 원활한 테스트 가능, 주요 사용자 시나리오 검증 강화 |   
 | **CI/CD 파이프라인 구축** | 배포 과정 자동화가 필요, 지속적인 통합 및 배포 환경 구축 | GitHub Actions를 활용한 자동화된 빌드 및 배포 파이프라인 구축 | 배포 속도 향상 및 배포 안정성 확보 |  
 | **성능 최적화** | 페이지 로딩 속도 저하 및 불필요한 리렌더링 발생 | Lighthouse 및 SpeedPage를 활용한 성능 분석 및 최적화 | 렌더링 최적화로 성능 개선 (평균 점수 60 → 90) |
 
