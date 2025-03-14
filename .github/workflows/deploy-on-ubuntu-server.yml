@@ -10,20 +10,20 @@ on:
 # 위에 설정된 push 이벤트를 실행할 job들의 순서를 정한다.
 jobs:
   # 첫번째 단계 : 빌드
-  build:
-    runs-on: [self-hosted, dev-mate-server]
+ # build:
+  #  runs-on: [self-hosted, dev-mate-server]
 
-    steps:
-      - name: Build Next.js Project
-        run: echo "Build Next.js Project"
+   # steps:
+    #  - name: Build Next.js Project
+     #   run: echo "Build Next.js Project"
 
   # 두번째 단계: 테스트
-  test:
-    runs-on: [self-hosted, dev-mate-server]
+# test:
+   # runs-on: [self-hosted, dev-mate-server]
 
-    steps:
-      - name: Test Next.js Project
-        run: echo "Test Next.js Project"
+  #  steps:
+   #   - name: Test Next.js Project
+    #    run: echo "Test Next.js Project"
 
   # 세번째 단계: 배포
   deploy:
