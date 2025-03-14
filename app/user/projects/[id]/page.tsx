@@ -165,7 +165,7 @@ export default function ProjectDetail() {
 
   useEffect(() => {
     if (decodedId === null && userRole !== "realGuest") return;
-
+    setLoading(true);
     const fetchProjectDetail = async () => {
       try {
         const response = await fetch(`/api/project/${projectId}`, { method: "GET" });
