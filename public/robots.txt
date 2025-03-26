@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://dev-mate.newlecture.com
+
+# Sitemaps
+Sitemap: https://dev-mate.newlecture.com/sitemap.xml

@@ -8,10 +8,34 @@ import type { Metadata } from "next";
 import "@/styles/globals.scss";
 
 export const metadata: Metadata = {
-  title: "dev-mate",
-  description: "dev-mate site of the lionCat team.",
+  title: "팀 프로젝트 - devmate | 개발자 프로젝트 팀 모집 및 협업 플랫폼",
+  description:
+    "누구나 함께하는 devmate 커뮤니티. 관심있는 주제에 대한 팀프로젝트(사이드프로젝트)를 함께 해보세요. - 팀프로젝트 ㅣ devmate",
   icons: "/favicon.ico",
+  openGraph: {
+    type: "website",
+    title: "팀 프로젝트 - devmate | 개발자 프로젝트 팀 모집 및 협업 플랫폼",
+    description:
+      "누구나 함께하는 devmate 커뮤니티. 관심있는 주제에 대한 팀프로젝트(사이드프로젝트)를 함께 해보세요. - 팀프로젝트 ㅣ devmate",
+    images: ["https://dev-mate.newlecture.com/logoWidthMata.png"],
+    url: "https://dev-mate.newlecture.com",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "팀 프로젝트 - devmate | 개발자 프로젝트 팀 모집 및 협업 플랫폼",
+    description:
+      "누구나 함께하는 devmate 커뮤니티. 관심있는 주제에 대한 팀프로젝트(사이드프로젝트)를 함께 해보세요. - 팀프로젝트 ㅣ devmate",
+    images: ["https://dev-mate.newlecture.com/logoWidthMata.png"],
+  },
+  robots: "index, follow",
+  verification: {
+    google: "hQF97uWNeNaq9ByIdR4TdnK1VVwHa8r2bONGpWszwuU",
+    other: {
+      "naver-site-verification": "77749f05a3997551c0aa50899c8de1b07f3e5d54",
+    },
+  },
 };
+
 const pretendard = localFont({
   src: "../public/fonts/PretendardVariable.woff2",
   display: "swap",

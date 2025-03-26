@@ -100,5 +100,11 @@
     ],
 
     "@typescript-eslint/no-implied-eval": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["next-sitemap.config.cjs"],
+      "parser": "babel-eslint"
+    }
+  ]
 }
