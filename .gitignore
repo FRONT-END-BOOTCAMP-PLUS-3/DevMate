@@ -45,3 +45,6 @@ test-results/
 
 # development
 public/data/*
+
+# test code
+__tests__/
