@@ -11,8 +11,11 @@ export default async function middleware(req: NextRequest) {
 
     const returnUrl = req.nextUrl.pathname; // 현재 URL 저장
     const response = NextResponse.redirect(new URL("/login", req.url));
-    response.cookies.set("returnUrl", returnUrl);
-
+    response.cookies.set("returnUrl", returnUrl, {
+      secure: process.env.NODE_ENV === "production", // 프로덕션에서만 secure 설정
+      sameSite: "strict", // 다른 도메인에서 요청 시 쿠키 전송하지 않음
+      maxAge: 60 * 60 * 6, // 6시간 후 만료
+    });
     return response;
   }
 
@@ -25,7 +28,11 @@ export default async function middleware(req: NextRequest) {
 
     const returnUrl = req.nextUrl.pathname;
     const response = NextResponse.redirect(new URL("/login", req.url));
-    response.cookies.set("returnUrl", returnUrl);
+    response.cookies.set("returnUrl", returnUrl, {
+      secure: process.env.NODE_ENV === "production", // 프로덕션에서만 secure 설정
+      sameSite: "strict", // 다른 도메인에서 요청 시 쿠키 전송하지 않음
+      maxAge: 60 * 60 * 6, // 6시간 후 만료
+    });
 
     return response;
   }
