@@ -30,7 +30,7 @@ export const elapsedText = (date: Date) => {
   } else if (elapsedTime < day * 15) {
     elapsedText = Math.trunc(elapsedTime / day) + "일 전";
   } else {
-    elapsedText = simpleDateTimeFormat(date, "yyyy.M.d");
+    elapsedText = simpleDateTimeFormat(date, "yyyy.MM.dd");
   }
 
   return elapsedText;
