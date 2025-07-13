@@ -29,26 +29,33 @@ export async function getCookie(key: string) {
 }
 
 // 토큰 디코딩 (쿠키에서 토큰 값을 가져와 디코딩)
-export async function decodeToken(value?: DecodedInfo): Promise<DecodedToken | string | JwtPayload> {
+type DecodedToken = JwtPayload & {
+  [key: string]: any;
+};
+
+type DecodedInfo = keyof DecodedToken;
+
+export async function decodeToken(
+  value?: DecodedInfo,
+): Promise<DecodedToken[keyof DecodedToken] | DecodedToken | null> {
   try {
     const token = await getCookie("token");
-    if (!token) {
-      throw new Error("토큰이 필요합니다.");
+    if (!token || typeof token !== "string") {
+      return null; // ❗ 예외 대신 null 반환
     }
+
     const decoded = jwt.decode(token);
     if (!decoded || typeof decoded !== "object") {
-      throw new Error("유효하지 않은 토큰입니다.");
+      return null; // ❗ 예외 대신 null 반환
     }
+
     return value ? decoded[value] : decoded;
   } catch (error) {
-    console.log(error);
-    if (error instanceof jwt.JsonWebTokenError) {
-      throw new Error("만료되었거나 유효하지 않은 토큰입니다.");
-    } else {
-      throw new Error("토큰을 디코딩하는 데 실패했습니다.");
-    }
+    console.error("토큰 디코딩 실패:", error);
+    return null; // ❗ 예외 대신 null 반환
   }
 }
+
 export async function getAuthStatus(): Promise<boolean> {
   const cookieStore = await cookies();
   return cookieStore.has("token");
