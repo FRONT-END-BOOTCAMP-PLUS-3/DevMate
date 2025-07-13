@@ -2,18 +2,9 @@
 import { cookies } from "next/headers";
 
 import type { JwtPayload } from "jsonwebtoken";
+import type { DecodedInfo, DecodedToken } from "@/types/cookie";
 
 import jwt from "jsonwebtoken";
-
-export type DecodedToken = JwtPayload & {
-  name?: string;
-  id?: string;
-  createdAt?: string;
-  nickname?: string;
-  email?: string;
-};
-
-export type DecodedInfo = keyof DecodedToken;
 
 // 쿠키 설정
 export async function setCookie(key: string, value: string) {
@@ -38,27 +29,26 @@ export async function getCookie(key: string) {
 }
 
 // 토큰 디코딩 (쿠키에서 토큰 값을 가져와 디코딩)
-export async function decodeToken(
-  value?: DecodedInfo,
-): Promise<DecodedToken[keyof DecodedToken] | DecodedToken | null> {
+export async function decodeToken(value?: DecodedInfo): Promise<DecodedToken | string | JwtPayload> {
   try {
     const token = await getCookie("token");
-    if (!token || typeof token !== "string") {
-      return null; // ❗ 예외 대신 null 반환
+    if (!token) {
+      throw new Error("토큰이 필요합니다.");
     }
-
     const decoded = jwt.decode(token);
     if (!decoded || typeof decoded !== "object") {
-      return null; // ❗ 예외 대신 null 반환
+      throw new Error("유효하지 않은 토큰입니다.");
     }
-
     return value ? decoded[value] : decoded;
   } catch (error) {
-    console.error("토큰 디코딩 실패:", error);
-    return null; // ❗ 예외 대신 null 반환
+    console.log(error);
+    if (error instanceof jwt.JsonWebTokenError) {
+      throw new Error("만료되었거나 유효하지 않은 토큰입니다.");
+    } else {
+      throw new Error("토큰을 디코딩하는 데 실패했습니다.");
+    }
   }
 }
-
 export async function getAuthStatus(): Promise<boolean> {
   const cookieStore = await cookies();
   return cookieStore.has("token");
